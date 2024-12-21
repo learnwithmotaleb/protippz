@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
 import 'package:protippz/app/utils/app_colors.dart';
 
@@ -49,7 +48,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               CustomText(
                 text: widget.appBarContent!,
                 fontWeight: FontWeight.w500,
-                fontSize: 24.sp,
+                fontSize:20,
                 color: AppColors.gray500,
               ),
             const Spacer(),

@@ -4,15 +4,17 @@ import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/widgets/custom_network_image/custom_network_image.dart';
 import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
 import 'package:protippz/app/utils/app_colors.dart';
-import 'package:protippz/app/utils/app_constants.dart';
+
 import 'package:protippz/app/utils/app_strings.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
-    required this.scaffoldKey,
+    required this.scaffoldKey, required this.name, required this.image,
   });
 
+  final String name;
+  final String image;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
@@ -35,7 +37,7 @@ class HomeAppBar extends StatelessWidget {
                   ///==================== Profile image =====================
                   CustomNetworkImage(
                       boxShape: BoxShape.circle,
-                      imageUrl: AppConstants.profileImage,
+                      imageUrl: image,
                       height: 46,
                       width: 46),
 
@@ -43,10 +45,10 @@ class HomeAppBar extends StatelessWidget {
                     width: 16.w,
                   ),
 
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
+                      const CustomText(
                         text: AppStrings.hello,
                         fontWeight: FontWeight.w500,
                         color: AppColors.green500,
@@ -55,7 +57,7 @@ class HomeAppBar extends StatelessWidget {
 
                       ///=====================user name =======================
                       CustomText(
-                        text: 'Ronald Richards',
+                        text: name,
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                         color: AppColors.blue500,

@@ -15,6 +15,10 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/close_small.svg
+  SvgGenImage get closeSmall =>
+      const SvgGenImage('assets/icons/close_small.svg');
+
   /// File path: assets/icons/contacts.svg
   SvgGenImage get contacts => const SvgGenImage('assets/icons/contacts.svg');
 
@@ -23,6 +27,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/deposite.svg
   SvgGenImage get deposite => const SvgGenImage('assets/icons/deposite.svg');
+
+  /// File path: assets/icons/dolar.svg
+  SvgGenImage get dolar => const SvgGenImage('assets/icons/dolar.svg');
 
   /// File path: assets/icons/drawer.svg
   SvgGenImage get drawer => const SvgGenImage('assets/icons/drawer.svg');
@@ -80,6 +87,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/icons/logout.svg');
 
+  /// File path: assets/icons/money.svg
+  SvgGenImage get money => const SvgGenImage('assets/icons/money.svg');
+
   /// File path: assets/icons/notification_selected.svg
   SvgGenImage get notificationSelected =>
       const SvgGenImage('assets/icons/notification_selected.svg');
@@ -113,6 +123,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/settings.svg
   SvgGenImage get settings => const SvgGenImage('assets/icons/settings.svg');
 
+  /// File path: assets/icons/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
+
   /// File path: assets/icons/terms.svg
   SvgGenImage get terms => const SvgGenImage('assets/icons/terms.svg');
 
@@ -128,9 +141,11 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        closeSmall,
         contacts,
         delete,
         deposite,
+        dolar,
         drawer,
         dropdown,
         edit,
@@ -147,6 +162,7 @@ class $AssetsIconsGen {
         inviteFriends,
         key,
         logout,
+        money,
         notificationSelected,
         notificationUnselected,
         photoCamera,
@@ -156,6 +172,7 @@ class $AssetsIconsGen {
         rightCheck,
         search,
         settings,
+        star,
         terms,
         transactionLog,
         withdraw,
@@ -166,6 +183,23 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/ach.png
+  AssetGenImage get ach => const AssetGenImage('assets/images/ach.png');
+
+  /// File path: assets/images/bg_image.png
+  AssetGenImage get bgImage =>
+      const AssetGenImage('assets/images/bg_image.png');
+
+  /// File path: assets/images/check.png
+  AssetGenImage get check => const AssetGenImage('assets/images/check.png');
+
+  /// File path: assets/images/earning.png
+  AssetGenImage get earning => const AssetGenImage('assets/images/earning.png');
+
+  /// File path: assets/images/indiana22.png
+  AssetGenImage get indiana22 =>
+      const AssetGenImage('assets/images/indiana22.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
@@ -173,8 +207,70 @@ class $AssetsImagesGen {
   AssetGenImage get noInternet =>
       const AssetGenImage('assets/images/no_internet.png');
 
+  /// File path: assets/images/paypal.png
+  AssetGenImage get paypal => const AssetGenImage('assets/images/paypal.png');
+
+  /// File path: assets/images/player.png
+  AssetGenImage get player => const AssetGenImage('assets/images/player.png');
+
+  /// File path: assets/images/playerz.png
+  AssetGenImage get playerz => const AssetGenImage('assets/images/playerz.png');
+
+  /// File path: assets/images/pt.png
+  AssetGenImage get pt => const AssetGenImage('assets/images/pt.png');
+
+  /// File path: assets/images/ptis.png
+  AssetGenImage get ptis => const AssetGenImage('assets/images/ptis.png');
+
+  /// File path: assets/images/reward.png
+  AssetGenImage get reward => const AssetGenImage('assets/images/reward.png');
+
+  /// File path: assets/images/star_selected.png
+  AssetGenImage get starSelected =>
+      const AssetGenImage('assets/images/star_selected.png');
+
+  /// File path: assets/images/start_unselected.png
+  AssetGenImage get startUnselected =>
+      const AssetGenImage('assets/images/start_unselected.png');
+
+  /// File path: assets/images/stripe.png
+  AssetGenImage get stripe => const AssetGenImage('assets/images/stripe.png');
+
+  /// File path: assets/images/stripee.png
+  AssetGenImage get stripee => const AssetGenImage('assets/images/stripee.png');
+
+  /// File path: assets/images/team.png
+  AssetGenImage get team => const AssetGenImage('assets/images/team.png');
+
+  /// File path: assets/images/tips.png
+  AssetGenImage get tips => const AssetGenImage('assets/images/tips.png');
+
+  /// File path: assets/images/visa.png
+  AssetGenImage get visa => const AssetGenImage('assets/images/visa.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [logo, noInternet];
+  List<AssetGenImage> get values => [
+        ach,
+        bgImage,
+        check,
+        earning,
+        indiana22,
+        logo,
+        noInternet,
+        paypal,
+        player,
+        playerz,
+        pt,
+        ptis,
+        reward,
+        starSelected,
+        startUnselected,
+        stripe,
+        stripee,
+        team,
+        tips,
+        visa
+      ];
 }
 
 class Assets {
