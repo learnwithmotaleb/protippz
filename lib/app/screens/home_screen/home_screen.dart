@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       key: scaffoldKey,
 
       ///==========================Side Drawer===================
-      drawer: SideDrawer(),
+      drawer: const SideDrawer(),
       bottomNavigationBar: const NavBar(currentIndex: 0),
       body: Obx(
     () {

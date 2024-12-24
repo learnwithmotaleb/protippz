@@ -26,6 +26,7 @@ class AppStrings {
   static const addressColon = "Address:";
   static const enterYourAddress = "Enter your address";
   static const password = "Password";
+  static const enterAddressDetails = "Enter Address Details";
   static const enterYourPassword = "Enter your password";
   static const confirmPassword = "Confirm Password";
   static const alreadyHaveAnAccount = "Already have an account? ";
