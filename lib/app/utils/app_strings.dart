@@ -23,6 +23,7 @@ class AppStrings {
   static const howTOReceive = " How to receive the prize :";
   static const enterYourUserName = "Enter your user name";
   static const address = "Address";
+  static const addressColon = "Address:";
   static const enterYourAddress = "Enter your address";
   static const password = "Password";
   static const enterYourPassword = "Enter your password";
@@ -198,7 +199,11 @@ class AppStrings {
   static const String enterValidEamil = "Please Enter Your Email Address";
   static const String passwordLengthAndContain =
       "Password must be at least 8 characters long and at least one uppercase letter, one lowercase letter, one number";
-///================================Onboard screen=====================================
-
+///================================Player screen=====================================
+  static const String totalTippz = "Total Tippz";
+  static const String playerName = "Player Name:";
+  static const String currentBalance = "Current Balance";
+  static const String teamName = "Team Name:";
+  static const String taxInformation  = "Tax Information:";
 
 }
