@@ -114,24 +114,25 @@ class SignInScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                              value: authController.isRemember.value,
-                              checkColor: AppColors.white50,
-                              activeColor: AppColors.green500,
-                              focusColor: Colors.red,
-                              onChanged: (value) {
-                                authController.toggleRemember();
-                              }),
-                          const CustomText(
-                            text: 'Remember me',
-                            color: AppColors.gray500,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
+                      const SizedBox(),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //         value: authController.isRemember.value,
+                      //         checkColor: AppColors.white50,
+                      //         activeColor: AppColors.green500,
+                      //         focusColor: Colors.red,
+                      //         onChanged: (value) {
+                      //           authController.toggleRemember();
+                      //         }),
+                      //     const CustomText(
+                      //       text: 'Remember me',
+                      //       color: AppColors.gray500,
+                      //       fontWeight: FontWeight.w400,
+                      //       fontSize: 14,
+                      //     ),
+                      //   ],
+                      // ),
                       TextButton(
                           onPressed: () {
                             Get.toNamed(AppRoute.forgotPasswordScreen);
