@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:protippz/app/player_screen/address_edit/address_edit.dart';
 import 'package:protippz/app/player_screen/player_home_screen/player_home_screen.dart';
 import 'package:protippz/app/player_screen/player_tippz_history/player_tippz_history.dart';
-import 'package:protippz/app/player_screen/player_withdraw_screen/player_withdraw_screen.dart';
 import 'package:protippz/app/player_screen/tax_inforamation/tax_information.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_ach.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_check.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/withdraw_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/forgot_password_screen/forgot_password_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/otp_screen/otp_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/reset_password_screen/reset_password_screen.dart';
@@ -31,9 +33,7 @@ import 'package:protippz/app/screens/teamz_screen/teamz_screen.dart';
 import 'package:protippz/app/screens/terms_condition_screen/terms_condition_screen.dart';
 import 'package:protippz/app/screens/tipz_screen/tipz_screen.dart';
 import 'package:protippz/app/screens/transaction_screen/transaction_screen.dart';
-import 'package:protippz/app/screens/withdraw_screen/inner_screen/withdraw_ach.dart';
-import 'package:protippz/app/screens/withdraw_screen/inner_screen/withdraw_check.dart';
-import 'package:protippz/app/screens/withdraw_screen/withdraw_screen.dart';
+
 
 
 class AppRoute {
@@ -80,7 +80,6 @@ class AppRoute {
   static const String playerTippzHistory = '/PlayerTippzHistory';
   static const String taxInformation = '/TaxInformation';
   static const String addressEdit = '/AddressEdit';
-  static const String playerWithdrawScreen = '/PlayerWithdrawScreen';
 
 
 
@@ -127,7 +126,6 @@ class AppRoute {
     GetPage(name: playerTippzHistory, page: () =>    const PlayerTippzHistory(),),
     GetPage(name: taxInformation, page: () =>    const TaxInformation(),),
     GetPage(name: addressEdit, page: () =>    const AddressEdit(),),
-    GetPage(name: playerWithdrawScreen, page: () =>    const PlayerWithdrawScreen(),),
 
 
   ];

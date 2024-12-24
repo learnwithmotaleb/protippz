@@ -39,12 +39,12 @@ class PlayerHomeScreen extends StatelessWidget {
 
               SizedBox(height: 12.h),
 
-              ///===========================Sign In Button=================
+              ///===========================Withdraw=================
               PlayerHeaderCard(
                 totalAmount: '\$2550',
                 currentAmount: '\$550',
                 onTap: () {
-                  Get.toNamed(AppRoute.playerWithdrawScreen);
+                  Get.toNamed(AppRoute.withdrawScreen);
                 },
               ),
               SizedBox(height: 12.h),

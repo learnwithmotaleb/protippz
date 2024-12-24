@@ -206,5 +206,8 @@ class AppStrings {
   static const String currentBalance = "Current Balance";
   static const String teamName = "Team Name:";
   static const String taxInformation  = "Tax Information:";
+  static const String enterYourTax  = "Enter Your Tax Details";
+  static const String taxId  = "Tax ID";
+  static const String residentialStatus  = "Residential Status";
 
 }

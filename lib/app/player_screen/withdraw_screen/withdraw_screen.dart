@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:protippz/app/controller/payment_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
@@ -16,10 +15,7 @@ import 'package:protippz/app/utils/app_strings.dart';
 class WithdrawScreen extends StatelessWidget {
   WithdrawScreen({super.key});
 
-  final ValueNotifier<String?> _selectedPaymentMethod =
-      ValueNotifier<String?>(null);
 
-  final PaymentController paymentController = Get.find<PaymentController>();
   final RxString selectedPaymentMethod = "Stripe".obs; // To track the selected payment method
 
   @override
