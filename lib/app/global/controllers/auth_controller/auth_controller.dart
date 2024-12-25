@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/data/services/api_check.dart';
@@ -25,9 +24,9 @@ class AuthController extends GetxController {
 
   ///============================All Controller =====================
   TextEditingController emailController =
-      TextEditingController(text: kDebugMode ? "masumrna927@gmail.com" : "");
+      TextEditingController();
   TextEditingController passwordController =
-      TextEditingController(text: kDebugMode ? "Masum017" : "");
+      TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController referralController = TextEditingController();
   TextEditingController nameController = TextEditingController();

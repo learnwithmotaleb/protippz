@@ -65,6 +65,7 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourEmailOrUser,
                     title: AppStrings.userNameOrEmail,
                     controller: authController.emailController,
+                    // validator: (v){},
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return AppStrings
@@ -98,6 +99,7 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourPassword,
                     title: AppStrings.password,
                     controller: authController.passwordController,
+                    // validator: (v){},
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppStrings.passwordMustHaveEightWith;
@@ -114,24 +116,25 @@ class SignInScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                              value: authController.isRemember.value,
-                              checkColor: AppColors.white50,
-                              activeColor: AppColors.green500,
-                              focusColor: Colors.red,
-                              onChanged: (value) {
-                                authController.toggleRemember();
-                              }),
-                          const CustomText(
-                            text: 'Remember me',
-                            color: AppColors.gray500,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
+                      const SizedBox(),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //         value: authController.isRemember.value,
+                      //         checkColor: AppColors.white50,
+                      //         activeColor: AppColors.green500,
+                      //         focusColor: Colors.red,
+                      //         onChanged: (value) {
+                      //           authController.toggleRemember();
+                      //         }),
+                      //     const CustomText(
+                      //       text: 'Remember me',
+                      //       color: AppColors.gray500,
+                      //       fontWeight: FontWeight.w400,
+                      //       fontSize: 14,
+                      //     ),
+                      //   ],
+                      // ),
                       TextButton(
                           onPressed: () {
                             Get.toNamed(AppRoute.forgotPasswordScreen);
@@ -155,6 +158,7 @@ class SignInScreen extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               authController.signInUser();
                             }
+                            // Get.toNamed(AppRoute.playerHomeScreen);
                           },
                           title: AppStrings.signIn,
                         ),

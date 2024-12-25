@@ -13,7 +13,7 @@ class InfoController extends GetxController{
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
 
   ///===================================getPrivacy=========================
-  PrivacyModel privacyModel = PrivacyModel();
+  Rx<PrivacyData> privacyModel = PrivacyData().obs;
   getPrivacy() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -21,8 +21,8 @@ class InfoController extends GetxController{
     setRxRequestStatus(Status.completed);
 
     if (response.statusCode == 200) {
-      privacyModel = PrivacyModel.fromJson(response.body['data']);
-      print('Value========================"${privacyModel.data?.description}"');
+      privacyModel.value = PrivacyData.fromJson(response.body['data']);
+      print('Value========================"${response.body['data']}"');
     } else {
       if (response.statusText == ApiClient.noInternetMessage) {
         setRxRequestStatus(Status.internetError);
@@ -35,8 +35,7 @@ class InfoController extends GetxController{
 
 
   ///===========================GetTerms===========================
-  PrivacyModel termsModel = PrivacyModel();
-
+  Rx<PrivacyData> termsModel = PrivacyData().obs;
   getTerms() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -44,8 +43,8 @@ class InfoController extends GetxController{
     setRxRequestStatus(Status.completed);
 
     if (response.statusCode == 200) {
-      termsModel = PrivacyModel.fromJson(response.body['data']);
-      print('Value========================"${termsModel.data?.description}"');
+      termsModel.value = PrivacyData.fromJson(response.body['data']);
+      print('Termsddd========================"${termsModel.value.description??""}"');
     } else {
       if (response.statusText == ApiClient.noInternetMessage) {
         setRxRequestStatus(Status.internetError);

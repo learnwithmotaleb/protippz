@@ -11,50 +11,49 @@ import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 
-
 class TermsConditionScreen extends StatelessWidget {
-   TermsConditionScreen({super.key});
+  TermsConditionScreen({super.key});
 
-  final InfoController _infoController = Get.find<InfoController>();
+  final InfoController infoController = Get.find<InfoController>();
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.bg500,
-
-      ///========================Terms And Conditions=======================
       appBar: const CustomAppBar(
         appBarContent: AppStrings.termsAndCondition,
         iconData: Icons.arrow_back,
       ),
-      body:  Obx(() {
-        switch (_infoController.rxRequestStatus.value) {
+      body: Obx(() {
+        switch (infoController.rxRequestStatus.value) {
           case Status.loading:
-            return const CustomLoader(); // Show loading indicator
+            return const CustomLoader();
 
           case Status.internetError:
             return NoInternetScreen(onTap: () {
-              _infoController.getPrivacy();
+              infoController.getTerms();
             });
 
           case Status.error:
-            return GeneralErrorScreen(
-              onTap: () {
-                _infoController.getPrivacy(); // Retry fetching data on error
-              },
-            );
+            return GeneralErrorScreen(onTap: () {
+              infoController.getTerms();
+            });
 
           case Status.completed:
+            final descriptions = infoController.termsModel.value.description??"";
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
-              child: HtmlWidget(
-                  _infoController.privacyModel.data?.description ?? "",
-                  textStyle: const TextStyle(
-                      color: AppColors.gray500, fontSize: 16)),
+              child:
+              HtmlWidget(
+                descriptions ?? "No description available.",
+
+              ),
             );
+
           default:
             return const SizedBox();
         }
-      })
+      }),
     );
   }
 }

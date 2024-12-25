@@ -47,13 +47,14 @@ class PrivacyPolicyScreen extends StatelessWidget {
               return SingleChildScrollView(
                 padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
                 child: HtmlWidget(
-                    _infoController.privacyModel.data?.description ?? "",
-                    textStyle: const TextStyle(
-                        color: AppColors.gray500, fontSize: 16)),
+
+                    _infoController.privacyModel.value.description?? "",
+                   ),
               );
             default:
               return const SizedBox();
           }
-        }));
+        })
+    );
   }
 }

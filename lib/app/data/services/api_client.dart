@@ -261,48 +261,45 @@ class ApiClient extends GetxService {
 
       var mainHeaders = {
         'Accept': 'application/json',
-        'Authorization': 'Bearer $bearerToken'
+        'Authorization': '$bearerToken'
       };
 
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
+      debugPrint('====> API Body: $body with ${multipartBody?.length ?? 0} picture(s)');
 
       var request =
       http.MultipartRequest('PATCH', Uri.parse(ApiUrl.baseUrl + uri));
       request.fields.addAll(body);
 
       if (haveImage) {
-        // ignore: avoid_function_literals_in_foreach_calls
-        multipartBody?.forEach((element) async {
-          debugPrint("path : ${element.file.path}");
-
-          var mimeType = lookupMimeType(element.file.path);
-
-          debugPrint("MimeType================$mimeType");
-
-          var multipartImg = await http.MultipartFile.fromPath(
-            element.key,
-            element.file.path,
-            contentType: MediaType.parse(mimeType!),
-          );
-          request.files.add(multipartImg);
-          //request.files.add(await http.MultipartFile.fromPath(element.key, element.file.path,contentType: MediaType('video', 'mp4')));
-        });
+        for (var element in multipartBody ?? []) {
+          if (element.file.existsSync()) {
+            debugPrint("path : ${element.file.path}");
+            var mimeType = lookupMimeType(element.file.path) ?? 'application/octet-stream';
+            debugPrint("MimeType================$mimeType");
+            var multipartImg = await http.MultipartFile.fromPath(
+              element.key,
+              element.file.path,
+              contentType: MediaType.parse(mimeType),
+            );
+            request.files.add(multipartImg);
+          } else {
+            debugPrint("File does not exist: ${element.file.path}");
+          }
+        }
       }
 
       request.headers.addAll(mainHeaders);
       http.StreamedResponse response = await request.send();
       final content = await response.stream.bytesToString();
-      debugPrint(
-          '====> API Response: [${response.statusCode}}] $uri\n$content');
+      debugPrint('====> API Response: [${response.statusCode}] $uri\n$content');
 
       return Response(
           statusCode: response.statusCode,
-          statusText: "somethingWentWrong",
-          body: content);
+          statusText: response.reasonPhrase,
+          body: jsonDecode(content));
     } catch (e) {
-      debugPrint('------------${e.toString()}');
-
+      debugPrint('Error in patchMultipartData: ${e.toString()}');
       return const Response(statusCode: 1, statusText: "somethingWentWrong");
     }
   }

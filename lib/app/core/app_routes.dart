@@ -1,5 +1,12 @@
 
 import 'package:get/get.dart';
+import 'package:protippz/app/player_screen/address_edit/address_edit.dart';
+import 'package:protippz/app/player_screen/player_home_screen/player_home_screen.dart';
+import 'package:protippz/app/player_screen/player_tippz_history/player_tippz_history.dart';
+import 'package:protippz/app/player_screen/tax_inforamation/tax_information.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_ach.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_check.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/withdraw_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/forgot_password_screen/forgot_password_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/otp_screen/otp_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/reset_password_screen/reset_password_screen.dart';
@@ -26,9 +33,7 @@ import 'package:protippz/app/screens/teamz_screen/teamz_screen.dart';
 import 'package:protippz/app/screens/terms_condition_screen/terms_condition_screen.dart';
 import 'package:protippz/app/screens/tipz_screen/tipz_screen.dart';
 import 'package:protippz/app/screens/transaction_screen/transaction_screen.dart';
-import 'package:protippz/app/screens/withdraw_screen/inner_screen/withdraw_ach.dart';
-import 'package:protippz/app/screens/withdraw_screen/inner_screen/withdraw_check.dart';
-import 'package:protippz/app/screens/withdraw_screen/withdraw_screen.dart';
+
 
 
 class AppRoute {
@@ -71,6 +76,10 @@ class AppRoute {
   static const String teamzScreen = '/TeamzScreen';
   static const String rewardzScreen = '/rewardzScreen';
   static const String dairekPayScreen = '/DairekPayScreen';
+  static const String playerHomeScreen = '/PlayerHomeScreen';
+  static const String playerTippzHistory = '/PlayerTippzHistory';
+  static const String taxInformation = '/TaxInformation';
+  static const String addressEdit = '/AddressEdit';
 
 
 
@@ -90,7 +99,7 @@ class AppRoute {
 
 
 
-    GetPage(name: homeScreen, page: () =>  HomeScreen(),),
+    GetPage(name: homeScreen, page: () =>  const HomeScreen(),),
     GetPage(name: notificationScreen, page: () =>  NotificationScreen(),),
     GetPage(name: favoriteScreen, page: () =>  const FavoriteScreen(),),
     GetPage(name: historyScreen, page: () => HistoryScreen(),),
@@ -108,11 +117,15 @@ class AppRoute {
     GetPage(name: withdrawCheck, page: () =>   WithdrawCheck(),),
     GetPage(name: withdrawAch, page: () =>   WithdrawAch(),),
     GetPage(name: depositeScreen, page: () =>  DepositeScreen(),),
-    GetPage(name: tipzScreen, page: () =>   TipzScreen(),),
+    GetPage(name: tipzScreen, page: () =>   const TipzScreen(),),
     GetPage(name: playerzScreen, page: () =>  const PlayerScreen(),),
     GetPage(name: teamzScreen, page: () =>   const TeamScreen(),),
     GetPage(name: rewardzScreen, page: () =>   const RewardScreen(),),
     GetPage(name: dairekPayScreen, page: () =>    DairekPayScreen(),),
+    GetPage(name: playerHomeScreen, page: () =>     PlayerHomeScreen(),),
+    GetPage(name: playerTippzHistory, page: () =>    const PlayerTippzHistory(),),
+    GetPage(name: taxInformation, page: () =>    const TaxInformation(),),
+    GetPage(name: addressEdit, page: () =>    const AddressEdit(),),
 
 
   ];

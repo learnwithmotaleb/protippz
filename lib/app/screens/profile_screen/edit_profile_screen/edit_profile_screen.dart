@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:protippz/app/controller/profile_controller.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
@@ -14,13 +13,26 @@ import 'package:protippz/app/global/widgets/custom_network_image/custom_network_
 import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
-import '../../../data/services/app_url.dart';
 
-class EditProfileScreen extends StatelessWidget {
-  EditProfileScreen({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
   final ProfileController profileController = Get.find<ProfileController>();
 
+
+  @override
+  void initState() {
+    profileController.fullNameController.text = profileController.profileModel.value.name!;
+    profileController.phoneNumberController.text = profileController.profileModel.value.phone!;
+    profileController.addressController.text = profileController.profileModel.value.address!;
+    profileController.image.value= profileController.profileModel.value.profileImage!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,45 +49,54 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 ///================== Edit Image==================
                 Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: profileController.selectImage,
-                      child: profileController.imagePath.value.isNotEmpty
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                      onTap: () {
+                        profileController.selectImage();
+                      },
+                      child: profileController.image.isNotEmpty
                           ? Container(
                               height: 94.h,
                               width: 94.w,
                               decoration: BoxDecoration(
+                                shape: BoxShape.circle,
                                 image: DecorationImage(
                                   image: FileImage(
-                                      File(profileController.imagePath.value)),
+                                    File(profileController.image.value),
+                                  ),
                                   fit: BoxFit.cover,
                                 ),
-                                shape: BoxShape.circle,
                               ),
                             )
                           : Stack(
                               children: [
                                 CustomNetworkImage(
                                   boxShape: BoxShape.circle,
-                                  imageUrl: profileController.profileModel.value
-                                                  .profileImage !=
-                                              null &&
-                                          profileController.profileModel.value
-                                              .profileImage!.isNotEmpty
-                                      ? AppConstants.profileImage
-                                      : "${ApiUrl.baseUrl}${profileController.imagePath}",
-                                  height: 94.w,
+                                  imageUrl: AppConstants.profileImage,
+                                  // imageUrl: (profileController
+                                  //     .profileModel.value.profileImage
+                                  //     ?.startsWith('https') ??
+                                  //     false)
+                                  //     ? profileController.profileModel.value
+                                  //     .profileImage ??
+                                  //     ""
+                                  //     : "${ApiUrl.baseUrl}${profileController.profileModel.value?.profileImage ?? ""}",
+                                  height: 94.h,
                                   width: 94.w,
                                 ),
                                 Positioned(
-                                  right: 0,
-                                  bottom: 0,
-                                  child: Assets.icons.photoCamera
-                                      .svg(color: AppColors.green500),
-                                )
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Container(
+                                        height: 30.h,
+                                        width: 30.w,
+                                        decoration: const BoxDecoration(
+                                            color: AppColors.green500,
+                                            shape: BoxShape.circle),
+                                        child: Assets.icons.photoCamera.svg()))
                               ],
-                            ),
-                    )),
+                            )),
+                ),
 
                 ///================== Form Fields ==================
                 Column(
@@ -103,13 +124,11 @@ class EditProfileScreen extends StatelessWidget {
                     Gap(25.h),
 
                     ///================= Save Button =================
-                    profileController.updateProfileLoding.value
+                    profileController.isUpdateLoading.value
                         ? const CustomLoader()
                         : CustomButton(
                             onTap: () {
-                              profileController.multipartRequest(
-                                imagePath: profileController.imagePath.value,
-                              );
+                              profileController.updateProfile();
                             },
                             title: AppStrings.save,
                           ),
