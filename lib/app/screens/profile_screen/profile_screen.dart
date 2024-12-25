@@ -88,6 +88,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               CustomNetworkImage(
                 boxShape: BoxShape.circle,
+                // imageUrl: AppConstants.profileImage,
                 imageUrl: data.profileImage != null && data.profileImage!.isNotEmpty
                     ? '${ApiUrl.netWorkUrl}${data.profileImage}'
                     : AppConstants.profileImage,
