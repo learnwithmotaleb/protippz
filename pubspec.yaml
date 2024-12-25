@@ -51,7 +51,7 @@ dependencies:
   google_fonts:
   gap: ^3.0.1
   fluttertoast: ^8.2.8
-  flutter_widget_from_html: ^0.15.3
+  flutter_widget_from_html: ^0.15.2
   device_preview:
   share_plus: ^10.1.2
   google_sign_in: ^6.2.1

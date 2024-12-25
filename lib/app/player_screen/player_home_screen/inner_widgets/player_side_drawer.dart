@@ -56,14 +56,14 @@ class _PlayerSideDrawerState extends State<PlayerSideDrawer> {
                   ),
                   // Terms & Conditions
                   CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.termsConditionScreen),
+                    onTap: () => Get.toNamed(AppRoute.addressEdit),
                     title: AppStrings.termsAndCondition,
                     icon: Assets.icons.terms.svg(),
                     isDevider: true,
                   ),
                   // Privacy Policy
                   CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.privacyPolicyScreen),
+                    onTap: () => Get.toNamed(AppRoute.addressEdit),
                     title: AppStrings.privacyPolicy,
                     icon: Assets.icons.privacy.svg(),
                     isDevider: true,
