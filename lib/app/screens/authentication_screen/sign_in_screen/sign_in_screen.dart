@@ -65,31 +65,31 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourEmailOrUser,
                     title: AppStrings.userNameOrEmail,
                     controller: authController.emailController,
-                    validator: (v){},
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return AppStrings
-                    //         .enterValidEmailOrUserName; // General error
-                    //   }
-                    //
-                    //   // Check if input contains "@" to identify email
-                    //   if (value.contains('@')) {
-                    //     // Email validation
-                    //     if (!AppStrings.emailRegexp.hasMatch(value)) {
-                    //       return AppStrings
-                    //           .enterValidEmail; // Invalid email message
-                    //     } else {
-                    //       return null; // Valid email
-                    //     }
-                    //   } else {
-                    //     // Username validation
-                    //     if (value.length < 4) {
-                    //       return 'UserNameToShort'; // "Username must be at least 4 characters"
-                    //     } else {
-                    //       return null; // Valid username
-                    //     }
-                    //   }
-                    // },
+                    // validator: (v){},
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings
+                            .enterValidEmailOrUserName; // General error
+                      }
+
+                      // Check if input contains "@" to identify email
+                      if (value.contains('@')) {
+                        // Email validation
+                        if (!AppStrings.emailRegexp.hasMatch(value)) {
+                          return AppStrings
+                              .enterValidEmail; // Invalid email message
+                        } else {
+                          return null; // Valid email
+                        }
+                      } else {
+                        // Username validation
+                        if (value.length < 4) {
+                          return 'UserNameToShort'; // "Username must be at least 4 characters"
+                        } else {
+                          return null; // Valid username
+                        }
+                      }
+                    },
                   ),
 
                   Gap(12.h),
@@ -99,17 +99,17 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourPassword,
                     title: AppStrings.password,
                     controller: authController.passwordController,
-                    validator: (v){},
-                    // validator: (value) {
-                    //   if (value!.isEmpty) {
-                    //     return AppStrings.passwordMustHaveEightWith;
-                    //   } else if (value.length < 8 ||
-                    //       !AppStrings.passRegexp.hasMatch(value)) {
-                    //     return AppStrings.passwordLengthAndContain;
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
+                    // validator: (v){},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return AppStrings.passwordMustHaveEightWith;
+                      } else if (value.length < 8 ||
+                          !AppStrings.passRegexp.hasMatch(value)) {
+                        return AppStrings.passwordLengthAndContain;
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
 
                   //==============================Forget========================
@@ -154,11 +154,12 @@ class SignInScreen extends StatelessWidget {
                       ? const CustomLoader()
                       : CustomButton(
                           isRadius: true,
-                          onTap: () {   // if (formKey.currentState!.validate()) {
-                            //   authController.signInUser();
-                            // }
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              authController.signInUser();
+                            }
 
-                            Get.toNamed(AppRoute.playerHomeScreen);
+                            // Get.toNamed(AppRoute.playerHomeScreen);
                           },
                           title: AppStrings.signIn,
                         ),

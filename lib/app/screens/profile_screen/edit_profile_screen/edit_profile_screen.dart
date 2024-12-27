@@ -60,6 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               width: 94.w,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
+                                color: Colors.grey,
                                 image: DecorationImage(
                                   image: FileImage(
                                     File(profileController.image.value),
@@ -73,6 +74,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 CustomNetworkImage(
                                   boxShape: BoxShape.circle,
                                   imageUrl: AppConstants.profileImage,
+                                  backgroundColor: AppColors.green50,
                                   // imageUrl: (profileController
                                   //     .profileModel.value.profileImage
                                   //     ?.startsWith('https') ??
