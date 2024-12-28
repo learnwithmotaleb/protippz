@@ -187,14 +187,15 @@ class _RewardScreenState extends State<RewardScreen> {
                   );
                 }
 
+
                 return GridView.builder(
                   itemCount: homeController.selectRewardList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
                     crossAxisSpacing: 16.w,
                     mainAxisSpacing: 16.h,
-                    mainAxisExtent: MediaQuery.of(context).size.height >640 ?280:400
-                    // childAspectRatio: 1 / 2.3,
+                    // mainAxisExtent: MediaQuery.of(context).size.height >600?280:400
+                    childAspectRatio: 1 / 2,
                   ),
                   itemBuilder: (context, index) {
                     var data = homeController.selectRewardList[index];

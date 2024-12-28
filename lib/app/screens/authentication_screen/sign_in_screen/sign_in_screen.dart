@@ -158,6 +158,7 @@ class SignInScreen extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               authController.signInUser();
                             }
+
                             // Get.toNamed(AppRoute.playerHomeScreen);
                           },
                           title: AppStrings.signIn,
