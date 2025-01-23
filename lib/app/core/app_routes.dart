@@ -124,7 +124,7 @@ class AppRoute {
     GetPage(name: dairekPayScreen, page: () =>    DairekPayScreen(),),
     GetPage(name: playerHomeScreen, page: () =>     PlayerHomeScreen(),),
     GetPage(name: playerTippzHistory, page: () =>     PlayerTippzHistory(),),
-    GetPage(name: taxInformation, page: () =>    const TaxInformation(),),
+    GetPage(name: taxInformation, page: () =>     TaxInformation(),),
     GetPage(name: addressEdit, page: () =>     AddressEdit(),),
 
 
