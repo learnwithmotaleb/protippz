@@ -38,7 +38,7 @@ class PlayerTippzHistoryController extends GetxController {
     }
   }
 
-  ///=====================================Player Bookmark===========================
+  ///=====================================addressEdi Team===========================
 
   final streeAddressController = TextEditingController();
   final cityController = TextEditingController();
@@ -46,7 +46,7 @@ class PlayerTippzHistoryController extends GetxController {
   final zipCondeController = TextEditingController();
   RxBool isAddress = false.obs;
 
-  addressEdit() async {
+  teamAddressEdit() async {
     isAddress.value = true;
     refresh();
     Map<String, dynamic> body = {
@@ -58,7 +58,7 @@ class PlayerTippzHistoryController extends GetxController {
       }
     };
     var response = await ApiClient.patchData(
-      ApiUrl.addressEditPlayerAndTeam,
+      ApiUrl.addressEditTeam,
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
@@ -74,6 +74,43 @@ class PlayerTippzHistoryController extends GetxController {
       ApiChecker.checkApi(response);
     }
     isAddress.value = false;
+    refresh();
+  }
+
+  ///=====================================Team Tax===========================
+
+final fullNameController = TextEditingController();
+  final taxIdController = TextEditingController();
+  final addressController = TextEditingController();
+  RxBool isTeamTax = false.obs;
+
+  teamTax() async {
+    isTeamTax.value = true;
+    refresh();
+    Map<String, dynamic> body = {
+      "taxInfo":{
+          "fullname":fullNameController.text,
+          "taxId":taxIdController.text,
+          "address":addressController.text,
+      }
+    };
+    var response = await ApiClient.patchData(
+      ApiUrl.addressEditTeam,
+      jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else if (response.statusCode == 400) {
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isTeamTax.value = false;
     refresh();
   }
 

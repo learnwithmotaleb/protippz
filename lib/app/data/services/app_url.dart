@@ -116,6 +116,7 @@ class ApiUrl {
   static const paypalIntend = "/deposit/execute-paypal-deposit-app";
 
   ///user
-  static const addressEditPlayerAndTeam = "/team/edit-address-tax";
+  static const addressEditTeam = "/team/edit-address-tax";
+  static const addressEditPlayer = "/player/edit-address-tax";
 
 }

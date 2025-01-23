@@ -89,7 +89,7 @@ class AddressEdit extends StatelessWidget {
                       : CustomButton(
                           isRadius: true,
                           onTap: () {
-                            controller.addressEdit();
+                            controller.teamAddressEdit();
                           },
                           title: AppStrings.save,
                         )
