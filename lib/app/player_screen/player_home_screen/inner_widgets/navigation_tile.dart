@@ -6,18 +6,16 @@ import 'package:protippz/app/utils/app_colors.dart';
 
 class NavigationTile extends StatelessWidget {
   final String title;
-  final String route;
+  final VoidCallback onTap;
 
-  const NavigationTile({super.key, required this.title, required this.route});
+  const NavigationTile({super.key, required this.title, required this.onTap});
 
 
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(route);
-      },
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.white50,

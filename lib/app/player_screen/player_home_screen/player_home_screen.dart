@@ -23,7 +23,7 @@ class PlayerHomeScreen extends StatelessWidget {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final PlayerTippzHistoryController profileController =
-  Get.find<PlayerTippzHistoryController>();
+      Get.find<PlayerTippzHistoryController>();
 
   final RxString role = ''.obs;
 
@@ -87,18 +87,16 @@ class PlayerHomeScreen extends StatelessWidget {
                     PlayerHeaderCard(
                       totalAmount: role.value == 'player'
                           ? profileController
-                          .playerGetProfileData.value.totalTips
-                          .toString()
-                          : profileController
-                          .teamGetProfileData.value.totalTips
-                          .toString(),
+                              .playerGetProfileData.value.totalTips
+                              .toString()
+                          : profileController.teamGetProfileData.value.totalTips
+                              .toString(),
                       currentAmount: role.value == 'player'
                           ? profileController
-                          .playerGetProfileData.value.dueAmount
-                          .toString()
-                          : profileController
-                          .teamGetProfileData.value.dueAmount
-                          .toString(),
+                              .playerGetProfileData.value.dueAmount
+                              .toString()
+                          : profileController.teamGetProfileData.value.dueAmount
+                              .toString(),
                       onTap: () {
                         Get.toNamed(AppRoute.withdrawScreen);
                       },
@@ -109,16 +107,16 @@ class PlayerHomeScreen extends StatelessWidget {
                     if (role.value == 'player')
                       PlayerInfoRow(
                         label: AppStrings.playerName,
-                        value: profileController
-                            .playerGetProfileData.value.name ??
-                            '',
+                        value:
+                            profileController.playerGetProfileData.value.name ??
+                                '',
                       )
                     else if (role.value == 'team')
                       PlayerInfoRow(
                         label: AppStrings.teamName,
-                        value: profileController
-                            .teamGetProfileData.value.name ??
-                            '',
+                        value:
+                            profileController.teamGetProfileData.value.name ??
+                                '',
                       ),
                     SizedBox(height: 12.h),
 
@@ -126,28 +124,35 @@ class PlayerHomeScreen extends StatelessWidget {
                     AddressSection(
                       address: role.value == 'player'
                           ? profileController.playerGetProfileData.value.address
-                          ?.streetAddress ??
-                          ''
+                                  ?.streetAddress ??
+                              ''
                           : profileController.teamGetProfileData.value.address
-                          ?.streetAddress ??
-                          '',
+                                  ?.streetAddress ??
+                              '',
                       onTap: () {
-                        Get.toNamed(AppRoute.addressEdit,arguments: role.value);
+                        Get.toNamed(AppRoute.addressEdit,
+                            arguments: role.value);
                       },
                     ),
                     SizedBox(height: 12.h),
 
                     ///===========================Tippz History=================
-                    const NavigationTile(
+                    NavigationTile(
                       title: AppStrings.tippzHistory,
-                      route: AppRoute.playerTippzHistory,
+                      onTap: () {
+                        Get.toNamed(AppRoute.playerTippzHistory);
+                      },
                     ),
                     SizedBox(height: 12.h),
 
                     ///===========================Tax Information=================
-                    const NavigationTile(
+
+                    NavigationTile(
                       title: AppStrings.taxInformation,
-                      route: AppRoute.taxInformation,
+                      onTap: () {
+                        Get.toNamed(AppRoute.taxInformation,
+                            arguments: role.value);
+                      },
                     ),
                   ],
                 ),

@@ -19,6 +19,11 @@ class TaxInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fetching role from previous screen
+    final String role = Get.arguments ?? '';
+
+
+    print("Role===================$role");
     return Scaffold(
       backgroundColor: AppColors.bg500,
       appBar: const CustomAppBar(
@@ -98,7 +103,7 @@ class TaxInformation extends StatelessWidget {
                           isRadius: true,
                           onTap: () {
                             if (formKey.currentState!.validate()) {
-                              controller.teamTax();
+                              controller.teamTax(role);
                             }
                           },
                           title: AppStrings.save,

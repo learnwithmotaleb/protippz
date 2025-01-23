@@ -47,6 +47,7 @@ class PlayerGetProfileData {
   User? user;
   String? username;
   Address? address;
+  TaxInfo? taxInfo;
 
   PlayerGetProfileData({
     this.id,
@@ -67,6 +68,7 @@ class PlayerGetProfileData {
     this.user,
     this.username,
     this.address,
+    this.taxInfo,
   });
 
   factory PlayerGetProfileData.fromRawJson(String str) => PlayerGetProfileData.fromJson(json.decode(str));
@@ -77,9 +79,7 @@ class PlayerGetProfileData {
     id: json["_id"],
     name: json["name"],
     league: json["league"],
-    team: json['team'] is Map<String, dynamic> // Check if it's a map
-        ? Team.fromJson(json['team'])
-        : null, // If it's not a map, set it as null
+    team: json["team"] == null ? null : Team.fromJson(json["team"]),
     position: json["position"],
     playerImage: json["player_image"],
     playerBgImage: json["player_bg_image"],
@@ -94,6 +94,7 @@ class PlayerGetProfileData {
     user: json["user"] == null ? null : User.fromJson(json["user"]),
     username: json["username"],
     address: json["address"] == null ? null : Address.fromJson(json["address"]),
+    taxInfo: json["taxInfo"] == null ? null : TaxInfo.fromJson(json["taxInfo"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -115,6 +116,7 @@ class PlayerGetProfileData {
     "user": user?.toJson(),
     "username": username,
     "address": address?.toJson(),
+    "taxInfo": taxInfo?.toJson(),
   };
 }
 
@@ -150,6 +152,38 @@ class Address {
     "state": state,
     "streetAddress": streetAddress,
     "zipCode": zipCode,
+    "_id": id,
+  };
+}
+
+class TaxInfo {
+  String? address;
+  String? fullname;
+  String? taxId;
+  String? id;
+
+  TaxInfo({
+    this.address,
+    this.fullname,
+    this.taxId,
+    this.id,
+  });
+
+  factory TaxInfo.fromRawJson(String str) => TaxInfo.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory TaxInfo.fromJson(Map<String, dynamic> json) => TaxInfo(
+    address: json["address"],
+    fullname: json["fullname"],
+    taxId: json["taxId"],
+    id: json["_id"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "address": address,
+    "fullname": fullname,
+    "taxId": taxId,
     "_id": id,
   };
 }

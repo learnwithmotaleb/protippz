@@ -40,7 +40,6 @@ class PlayerTippzHistoryController extends GetxController {
     }
   }
 
-
   ///=====================================Dynamic Address Edit===========================
   final streeAddressController = TextEditingController();
   final cityController = TextEditingController();
@@ -62,9 +61,8 @@ class PlayerTippzHistoryController extends GetxController {
     };
 
     // Determine the endpoint based on the role
-    String endpoint = role == 'player'
-        ? ApiUrl.addressEditPlayer
-        : ApiUrl.addressEditTeam;
+    String endpoint =
+        role == 'player' ? ApiUrl.addressEditPlayer : ApiUrl.addressEditTeam;
 
     var response = await ApiClient.patchData(
       endpoint, // Dynamic endpoint
@@ -86,34 +84,33 @@ class PlayerTippzHistoryController extends GetxController {
     refresh();
   }
 
-
-
   ///=====================================Team Tax===========================
 
-final fullNameController = TextEditingController();
+  final fullNameController = TextEditingController();
   final taxIdController = TextEditingController();
   final addressController = TextEditingController();
 
-
   RxBool isTeamTax = false.obs;
 
-
-  teamTax() async {
+  teamTax(String role) async {
     isTeamTax.value = true;
     refresh();
     Map<String, dynamic> body = {
-      "taxInfo":{
-          "fullname":fullNameController.text,
-          "taxId":taxIdController.text,
-          "address":addressController.text,
+      "taxInfo": {
+        "fullname": fullNameController.text,
+        "taxId": taxIdController.text,
+        "address": addressController.text,
       }
     };
+
+    String endpoint =
+        role == 'player' ? ApiUrl.addressEditPlayer : ApiUrl.addressEditTeam;
     var response = await ApiClient.patchData(
-      ApiUrl.addressEditTeam,
+      endpoint,
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
-
+      Get.back();
       toastMessage(
         message: response.body["message"],
       );
@@ -128,12 +125,8 @@ final fullNameController = TextEditingController();
     refresh();
   }
 
-
-
-
-
-
-  final Rx<PlayerGetProfileData> playerGetProfileData = PlayerGetProfileData().obs; // Holds profile data
+  final Rx<PlayerGetProfileData> playerGetProfileData =
+      PlayerGetProfileData().obs; // Holds profile data
   getPlayerProfile() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -141,8 +134,10 @@ final fullNameController = TextEditingController();
     setRxRequestStatus(Status.completed);
 
     if (response.statusCode == 200) {
-      playerGetProfileData.value = PlayerGetProfileData.fromJson(response.body["data"]);
-      print('playerGetProfileData==================${playerGetProfileData.value.totalTips}');
+      playerGetProfileData.value =
+          PlayerGetProfileData.fromJson(response.body["data"]);
+      print(
+          'playerGetProfileData==================${playerGetProfileData.value.totalTips}');
       refresh();
     } else {
       if (response.statusText == ApiClient.noInternetMessage) {
@@ -154,7 +149,8 @@ final fullNameController = TextEditingController();
     }
   }
 
-  final Rx<TeamGetProfileData> teamGetProfileData = TeamGetProfileData().obs; // Holds profile data
+  final Rx<TeamGetProfileData> teamGetProfileData =
+      TeamGetProfileData().obs; // Holds profile data
   getTeamProfile() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -162,7 +158,8 @@ final fullNameController = TextEditingController();
     setRxRequestStatus(Status.completed);
 
     if (response.statusCode == 200) {
-      teamGetProfileData.value = TeamGetProfileData.fromJson(response.body["data"]);
+      teamGetProfileData.value =
+          TeamGetProfileData.fromJson(response.body["data"]);
       print('teamGetProfileData==================${teamGetProfileData.value}');
 
       refresh();
@@ -175,7 +172,6 @@ final fullNameController = TextEditingController();
       ApiChecker.checkApi(response);
     }
   }
-
 
   @override
   void onInit() {

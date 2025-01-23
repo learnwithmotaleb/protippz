@@ -23,7 +23,7 @@ class AddressEdit extends StatelessWidget {
     final String role = Get.arguments ?? '';
 
 
-    print("Role===================${role}");
+    print("Role===================$role");
 
     return Scaffold(
       backgroundColor: AppColors.bg500,

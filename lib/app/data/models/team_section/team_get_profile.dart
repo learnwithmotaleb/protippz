@@ -32,7 +32,7 @@ class TeamGetProfileData {
   String? id;
   String? name;
   String? teamLogo;
-  String? league;
+  League? league;
   String? teamBgImage;
   String? sport;
   int? totalTips;
@@ -75,7 +75,9 @@ class TeamGetProfileData {
     id: json["_id"],
     name: json["name"],
     teamLogo: json["team_logo"],
-    league: json["league"],
+    league: json["league"] is Map<String, dynamic>
+        ? League.fromJson(json["league"])
+        : null,
     teamBgImage: json["team_bg_image"],
     sport: json["sport"],
     totalTips: json["totalTips"],
@@ -95,7 +97,7 @@ class TeamGetProfileData {
     "_id": id,
     "name": name,
     "team_logo": teamLogo,
-    "league": league,
+    "league": league?.toJson(),
     "team_bg_image": teamBgImage,
     "sport": sport,
     "totalTips": totalTips,
@@ -145,6 +147,30 @@ class Address {
     "streetAddress": streetAddress,
     "zipCode": zipCode,
     "_id": id,
+  };
+}
+
+class League {
+  String? id;
+  String? name;
+
+  League({
+    this.id,
+    this.name,
+  });
+
+  factory League.fromRawJson(String str) => League.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory League.fromJson(Map<String, dynamic> json) => League(
+    id: json["_id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "name": name,
   };
 }
 
