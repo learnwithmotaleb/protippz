@@ -50,7 +50,12 @@ class AddressEdit extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.streetAddress,
                       controller: controller.streeAddressController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -60,7 +65,12 @@ class AddressEdit extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.city,
                       controller: controller.cityController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -70,7 +80,12 @@ class AddressEdit extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.state,
                       controller: controller.stateController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -80,7 +95,12 @@ class AddressEdit extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.zipCode,
                       controller: controller.zipCondeController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),

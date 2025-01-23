@@ -47,7 +47,14 @@ class TaxInformation extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.fullName,
                       controller: controller.fullNameController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },
+
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -57,7 +64,12 @@ class TaxInformation extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.taxId,
                       controller: controller.taxIdController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -67,7 +79,12 @@ class TaxInformation extends StatelessWidget {
                       hinText: AppStrings.typeHere,
                       title: AppStrings.address,
                       controller: controller.addressController,
-                      validator: (v) {}),
+                    validator: (value) {
+                      if (value == null || value.toString().isEmpty) {
+                        return AppStrings.fieldCantBeEmpty;
+                      }
+                      return null;
+                    },),
                   SizedBox(
                     height: 12.h,
                   ),
