@@ -86,6 +86,8 @@ class _PlayerSideDrawerState extends State<PlayerSideDrawer> {
                                 AppConstants.bearerToken);
                             await SharePrefsHelper.remove(
                                 AppConstants.profileID);
+                            await SharePrefsHelper.remove(
+                                AppConstants.role);
 
                             print(
                                 'remove token========================"${AppConstants.bearerToken}"');

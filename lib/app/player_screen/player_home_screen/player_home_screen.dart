@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:protippz/app/controller/player_profile_controller.dart';
+import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/global/helper/local_db/local_db.dart';
 import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
@@ -22,8 +22,8 @@ class PlayerHomeScreen extends StatelessWidget {
   PlayerHomeScreen({super.key});
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final PlayerProfileController profileController =
-  Get.find<PlayerProfileController>();
+  final PlayerTippzHistoryController profileController =
+  Get.find<PlayerTippzHistoryController>();
 
   final RxString role = ''.obs;
 
@@ -132,7 +132,7 @@ class PlayerHomeScreen extends StatelessWidget {
                           ?.streetAddress ??
                           '',
                       onTap: () {
-                        Get.toNamed(AppRoute.addressEdit);
+                        Get.toNamed(AppRoute.addressEdit,arguments: role.value);
                       },
                     ),
                     SizedBox(height: 12.h),

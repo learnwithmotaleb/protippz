@@ -14,11 +14,17 @@ class AddressEdit extends StatelessWidget {
   AddressEdit({super.key});
 
   final PlayerTippzHistoryController controller =
-      Get.find<PlayerTippzHistoryController>();
+  Get.find<PlayerTippzHistoryController>();
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    // Fetching role from previous screen
+    final String role = Get.arguments ?? '';
+
+
+    print("Role===================${role}");
+
     return Scaffold(
       backgroundColor: AppColors.bg500,
 
@@ -110,17 +116,19 @@ class AddressEdit extends StatelessWidget {
                   SizedBox(
                     height: 12.h,
                   ),
+
                   controller.isAddress.value
                       ? const CustomLoader()
                       : CustomButton(
-                          isRadius: true,
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              controller.teamAddressEdit();
-                            }
-                          },
-                          title: AppStrings.save,
-                        )
+                    isRadius: true,
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        // Call the method dynamically based on the role
+                        controller.editAddress(role);
+                      }
+                    },
+                    title: AppStrings.save,
+                  )
                 ],
               ),
             ),
