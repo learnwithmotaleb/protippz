@@ -53,8 +53,8 @@ class _PlayerSideDrawerState extends State<PlayerSideDrawer> {
                 children: [
                   // Settings
                   CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.settingScreen),
-                    title: AppStrings.settings,
+                    onTap: () => Get.toNamed(AppRoute.changePasswordScreen),
+                    title: AppStrings.changePassword,
                     icon: Assets.icons.settings.svg(),
                     isDevider: true,
                   ),
