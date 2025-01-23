@@ -4,12 +4,14 @@ import 'package:protippz/app/data/models/team_section/team_get_profile.dart';
 import 'package:protippz/app/data/services/api_check.dart';
 import 'package:protippz/app/data/services/api_client.dart';
 import 'package:protippz/app/data/services/app_url.dart';
+import 'package:protippz/app/global/helper/local_db/local_db.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 
 class PlayerProfileController extends GetxController{
   final Rx<Status> rxRequestStatus = Status.loading.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+
 
   final Rx<PlayerGetProfileData> playerGetProfileData = PlayerGetProfileData().obs; // Holds profile data
   getPlayerProfile() async {

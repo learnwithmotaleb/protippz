@@ -1,9 +1,9 @@
 
 class AppConstants {
 
-  // AppConstants._();
   static String bearerToken = "BearerToken";
   static String resetToken = "BearerToken";
+  static String role = "role";
   static String userId = "UserId";
   static String onBoard = "Onboard";
   //============Strip===========================

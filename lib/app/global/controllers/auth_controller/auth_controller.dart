@@ -104,6 +104,9 @@ class AuthController extends GetxController {
       SharePrefsHelper.setString(
           AppConstants.bearerToken, response.body['data']["accessToken"]);
 
+      SharePrefsHelper.setString(
+          AppConstants.role, role);
+
       debugPrint(
           '======================token   ${response.body['data']['accessToken']}');
       if (role == 'team') {
