@@ -4,9 +4,13 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
+import 'package:protippz/app/global/helper/local_db/local_db.dart';
 import 'package:protippz/app/global/widgets/custom_menu_card/custom_menu_card.dart';
 import 'package:protippz/app/utils/app_colors.dart';
+import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
+
+import '../../../global/widgets/parmission_button/parmission_button.dart';
 
 class PlayerSideDrawer extends StatefulWidget {
   const PlayerSideDrawer({super.key});
@@ -66,6 +70,33 @@ class _PlayerSideDrawerState extends State<PlayerSideDrawer> {
                     onTap: () => Get.toNamed(AppRoute.privacyPolicyScreen),
                     title: AppStrings.privacyPolicy,
                     icon: Assets.icons.privacy.svg(),
+                    isDevider: true,
+                  ),
+
+                  CustomMenuCard(
+                    onTap: (){
+                      permissionPopUp(
+                          title: 'Are you sure you want to log out',
+                          context: context,
+                          ontapNo: () {
+                            Get.back();
+                          },
+                          ontapYes: () async {
+                            await SharePrefsHelper.remove(
+                                AppConstants.bearerToken);
+                            await SharePrefsHelper.remove(
+                                AppConstants.profileID);
+
+                            print(
+                                'remove token========================"${AppConstants.bearerToken}"');
+                            print(
+                                'remove profileId========================"${AppConstants.profileID}"');
+
+                            Get.offAllNamed(AppRoute.signInScreen);
+                          });
+                    },
+                    title: AppStrings.logout,
+                    icon: Assets.icons.logout.svg(),
                     isDevider: true,
                   ),
                   Gap(40.h), // Use `ScreenUtil` for spacing

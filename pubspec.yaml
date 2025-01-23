@@ -58,6 +58,7 @@ dependencies:
   flutter_stripe: ^11.3.0
   flutter_paypal_payment: ^1.0.8
   change_app_package_name: ^1.4.0
+  jwt_decoder: ^2.0.1
 
 
 

@@ -99,17 +99,17 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourPassword,
                     title: AppStrings.password,
                     controller: authController.passwordController,
-                    // validator: (v){},
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppStrings.passwordMustHaveEightWith;
-                      } else if (value.length < 8 ||
-                          !AppStrings.passRegexp.hasMatch(value)) {
-                        return AppStrings.passwordLengthAndContain;
-                      } else {
-                        return null;
-                      }
-                    },
+                    validator: (v){},
+                    // validator: (value) {
+                    //   if (value!.isEmpty) {
+                    //     return AppStrings.passwordMustHaveEightWith;
+                    //   } else if (value.length < 8 ||
+                    //       !AppStrings.passRegexp.hasMatch(value)) {
+                    //     return AppStrings.passwordLengthAndContain;
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                   ),
 
                   //==============================Forget========================

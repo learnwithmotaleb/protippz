@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/data/services/api_check.dart';
 import 'package:protippz/app/data/services/api_client.dart';
@@ -94,12 +95,27 @@ class AuthController extends GetxController {
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
+      Map<String, dynamic> decodedToken =
+      JwtDecoder.decode(response.body["data"]['accessToken']);
+      print("Decoded Token:========================== $decodedToken");
+      String role = decodedToken['role'];
+
+      print('Role:============================ $role');
       SharePrefsHelper.setString(
           AppConstants.bearerToken, response.body['data']["accessToken"]);
 
       debugPrint(
           '======================token   ${response.body['data']['accessToken']}');
-      Get.toNamed(AppRoute.homeScreen);
+      if (role == 'team') {
+        Get.offAllNamed(AppRoute.playerHomeScreen);
+      } else if (role == 'player') {
+        Get.toNamed(AppRoute.playerHomeScreen);
+      }else if (role == 'user') {
+        Get.toNamed(AppRoute.homeScreen);
+      } else {
+        return null;
+      }
+
       toastMessage(
         message: response.body["message"],
       );
@@ -267,7 +283,6 @@ class AuthController extends GetxController {
 
   ///=========================================Change password===================
   RxBool isChangeLoading = false.obs;
-
   changePassword() async {
     isChangeLoading.value = true;
     refresh();
@@ -293,9 +308,10 @@ class AuthController extends GetxController {
     isChangeLoading.value = false;
   }
 
+
+
   ///=============================================account delete==========================
   RxBool isDeleteLoading = false.obs;
-
   deleteAccount() async {
     isDeleteLoading.value = true;
     refresh();
@@ -315,8 +331,6 @@ class AuthController extends GetxController {
     isDeleteLoading.value = false;
     refresh();
   }
-
-
   ///=============================Resend password========================
   final rxRequestStatus = Status.loading.obs;
 
