@@ -15,6 +15,7 @@ class TaxInformation extends StatelessWidget {
 
   final PlayerTippzHistoryController controller =
       Get.find<PlayerTippzHistoryController>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +28,10 @@ class TaxInformation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Obx(
-           () {
-              return Column(
+          child: Obx(() {
+            return Form(
+              key: formKey,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CustomText(
@@ -44,16 +46,15 @@ class TaxInformation extends StatelessWidget {
 
                   ///=====================fullNameController=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.fullName,
-                      controller: controller.fullNameController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.fullName,
+                    controller: controller.fullNameController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
                     },
-
                   ),
                   SizedBox(
                     height: 12.h,
@@ -61,30 +62,32 @@ class TaxInformation extends StatelessWidget {
 
                   ///=====================taxId=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.taxId,
-                      controller: controller.taxIdController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.taxId,
+                    controller: controller.taxIdController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
 
                   ///=====================address=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.address,
-                      controller: controller.addressController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.address,
+                    controller: controller.addressController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -94,14 +97,16 @@ class TaxInformation extends StatelessWidget {
                       : CustomButton(
                           isRadius: true,
                           onTap: () {
-                            controller.teamTax();
+                            if (formKey.currentState!.validate()) {
+                              controller.teamTax();
+                            }
                           },
                           title: AppStrings.save,
                         )
                 ],
-              );
-            }
-          ),
+              ),
+            );
+          }),
         ),
       ),
     );

@@ -15,6 +15,7 @@ class AddressEdit extends StatelessWidget {
 
   final PlayerTippzHistoryController controller =
       Get.find<PlayerTippzHistoryController>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,10 @@ class AddressEdit extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Obx(
-           () {
-            return SingleChildScrollView(
+        child: Obx(() {
+          return SingleChildScrollView(
+            child: Form(
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,60 +49,64 @@ class AddressEdit extends StatelessWidget {
 
                   ///=====================Street Address=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.streetAddress,
-                      controller: controller.streeAddressController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.streetAddress,
+                    controller: controller.streeAddressController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
 
                   ///=====================City=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.city,
-                      controller: controller.cityController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.city,
+                    controller: controller.cityController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
 
                   ///=====================State=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.state,
-                      controller: controller.stateController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.state,
+                    controller: controller.stateController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
 
                   ///=====================Zip Code=================
                   CustomFromCard(
-                      hinText: AppStrings.typeHere,
-                      title: AppStrings.zipCode,
-                      controller: controller.zipCondeController,
+                    hinText: AppStrings.typeHere,
+                    title: AppStrings.zipCode,
+                    controller: controller.zipCondeController,
                     validator: (value) {
                       if (value == null || value.toString().isEmpty) {
                         return AppStrings.fieldCantBeEmpty;
                       }
                       return null;
-                    },),
+                    },
+                  ),
                   SizedBox(
                     height: 12.h,
                   ),
@@ -109,15 +115,17 @@ class AddressEdit extends StatelessWidget {
                       : CustomButton(
                           isRadius: true,
                           onTap: () {
-                            controller.teamAddressEdit();
+                            if (formKey.currentState!.validate()) {
+                              controller.teamAddressEdit();
+                            }
                           },
                           title: AppStrings.save,
                         )
                 ],
               ),
-            );
-          }
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
