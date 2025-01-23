@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/helper/date_converter/date_converter.dart';
@@ -46,21 +45,36 @@ class PlayerTippzHistory extends StatelessWidget {
             );
 
           case Status.completed:
+            final result = controller.tippzHistoryData.value.result;
+
+            if (result == null || result.isEmpty) {
+              // Show "No Tippz History Found" if the result is empty
+              return const Center(
+                child: Text(
+                  'No Tippz History Found',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: AppColors.blue500,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+
             return ListView.builder(
-              itemCount: controller.tippzHistoryData.value.result?.length,
+              itemCount: result.length,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
               itemBuilder: (context, index) {
-                final data = controller.tippzHistoryData.value.result?[index];
+                final data = result[index];
 
                 // Fix for imageUrl logic
-                String imageUrl =
-                (data?.user?.profileImage?.isEmpty ?? true)
+                String imageUrl = (data.user?.profileImage?.isEmpty ?? true)
                     ? AppConstants.profileImage
-                    : "${ApiUrl.netWorkUrl}${data?.user?.profileImage ?? ""}";
+                    : "${ApiUrl.netWorkUrl}${data.user?.profileImage ?? ""}";
 
                 return TippzHistoryItem(
                   imageUrl: imageUrl,
-                  amount: "\$${data!.amount.toString()}",
+                  amount: "\$${data.amount.toString()}",
                   date: DateConverter.formatDate(data.createdAt),
                   name: data.user?.name ?? "",
                 );
