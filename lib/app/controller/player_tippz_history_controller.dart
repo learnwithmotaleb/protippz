@@ -38,6 +38,13 @@ class PlayerTippzHistoryController extends GetxController {
     }
   }
 
+  RxString role = "team".obs; // Default value team
+  String get addressEditEndpoint {
+    return role.value == "team"
+        ? ApiUrl.addressEditTeam
+        : ApiUrl.addressEditPlayer;
+  }
+
   ///=====================================addressEdi Team===========================
 
   final streeAddressController = TextEditingController();
@@ -49,6 +56,7 @@ class PlayerTippzHistoryController extends GetxController {
   teamAddressEdit() async {
     isAddress.value = true;
     refresh();
+
     Map<String, dynamic> body = {
       "address": {
         "streetAddress": streeAddressController.text,
@@ -57,32 +65,36 @@ class PlayerTippzHistoryController extends GetxController {
         "zipCode": zipCondeController.text
       }
     };
+
+    // Role অনুযায়ী endpoint নির্বাচন
     var response = await ApiClient.patchData(
-      ApiUrl.addressEditTeam,
+      addressEditEndpoint, // Dynamic endpoint
       jsonEncode(body),
     );
-    if (response.statusCode == 200) {
 
-      toastMessage(
-        message: response.body["message"],
-      );
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
-      toastMessage(
-        message: response.body["message"],
-      );
+      toastMessage(message: response.body["message"]);
     } else {
       ApiChecker.checkApi(response);
     }
+
     isAddress.value = false;
     refresh();
   }
+
+
 
   ///=====================================Team Tax===========================
 
 final fullNameController = TextEditingController();
   final taxIdController = TextEditingController();
   final addressController = TextEditingController();
+
+
   RxBool isTeamTax = false.obs;
+
 
   teamTax() async {
     isTeamTax.value = true;
@@ -113,6 +125,8 @@ final fullNameController = TextEditingController();
     isTeamTax.value = false;
     refresh();
   }
+
+
 
 
 

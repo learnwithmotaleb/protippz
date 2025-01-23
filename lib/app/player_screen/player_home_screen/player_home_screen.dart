@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:protippz/app/controller/player_profile_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_home_app_bar.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_side_drawer.dart';
@@ -17,6 +18,9 @@ class PlayerHomeScreen extends StatelessWidget {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final PlayerProfileController profileController =
+      Get.find<PlayerProfileController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +35,15 @@ class PlayerHomeScreen extends StatelessWidget {
               ///===========================Header=================
               PlayerHomeAppBar(
                 scaffoldKey: scaffoldKey,
-
               ),
 
               SizedBox(height: 12.h),
 
               ///===========================Withdraw=================
               PlayerHeaderCard(
-                totalAmount: '\$2550',
+                totalAmount: profileController
+                    .playerGetProfileData.value.totalTips
+                    .toString(),
                 currentAmount: '\$550',
                 onTap: () {
                   Get.toNamed(AppRoute.withdrawScreen);
@@ -61,8 +66,13 @@ class PlayerHomeScreen extends StatelessWidget {
               SizedBox(height: 12.h),
 
               ///===========================Address Section=================
-              const AddressSection(
+              AddressSection(
                 address: '1901 Thornridge Cir. Shiloh, Hawaii 81063, New York',
+                onTap: () {
+                  Get.toNamed(
+                    AppRoute.addressEdit,
+                  );
+                },
               ),
               SizedBox(height: 12.h),
 
