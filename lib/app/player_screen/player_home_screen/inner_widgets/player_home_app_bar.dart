@@ -7,12 +7,8 @@ class PlayerHomeAppBar extends StatelessWidget {
   const PlayerHomeAppBar({
     super.key,
     required this.scaffoldKey,
-    required this.name,
-    required this.image,
   });
 
-  final String name;
-  final String image;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override

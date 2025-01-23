@@ -4,10 +4,7 @@ import 'package:get/get.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_home_app_bar.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_side_drawer.dart';
-import 'package:protippz/app/screens/home_screen/inner_widgets/home_app_bar.dart';
-import 'package:protippz/app/screens/home_screen/inner_widgets/side_drawer.dart';
 import 'package:protippz/app/utils/app_colors.dart';
-import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 
 import 'inner_widgets/address_section.dart';
@@ -33,7 +30,7 @@ class PlayerHomeScreen extends StatelessWidget {
             children: [
               ///===========================Header=================
               PlayerHomeAppBar(
-                scaffoldKey: scaffoldKey, name: '', image: '',
+                scaffoldKey: scaffoldKey,
 
               ),
 
