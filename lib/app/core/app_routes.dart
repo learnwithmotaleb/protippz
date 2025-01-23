@@ -104,7 +104,7 @@ class AppRoute {
     GetPage(name: favoriteScreen, page: () =>  const FavoriteScreen(),),
     GetPage(name: historyScreen, page: () => HistoryScreen(),),
     GetPage(name: profileScreen, page: () =>   ProfileScreen(),),
-    GetPage(name: editProfileScreen, page: () =>  EditProfileScreen(),),
+    GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen(),),
     GetPage(name: settingScreen, page: () =>  SettingScreen(),),
     GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen(),),
     GetPage(name: privacyPolicyScreen, page: () =>  PrivacyPolicyScreen(),),
@@ -123,9 +123,9 @@ class AppRoute {
     GetPage(name: rewardzScreen, page: () =>   const RewardScreen(),),
     GetPage(name: dairekPayScreen, page: () =>    DairekPayScreen(),),
     GetPage(name: playerHomeScreen, page: () =>     PlayerHomeScreen(),),
-    GetPage(name: playerTippzHistory, page: () =>    const PlayerTippzHistory(),),
-    GetPage(name: taxInformation, page: () =>    const TaxInformation(),),
-    GetPage(name: addressEdit, page: () =>    const AddressEdit(),),
+    GetPage(name: playerTippzHistory, page: () =>     PlayerTippzHistory(),),
+    GetPage(name: taxInformation, page: () =>     TaxInformation(),),
+    GetPage(name: addressEdit, page: () =>     AddressEdit(),),
 
 
   ];

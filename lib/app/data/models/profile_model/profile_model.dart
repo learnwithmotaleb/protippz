@@ -30,7 +30,7 @@ class ProfileModel {
 
 class ProfileData {
   String? id;
-  String? user;
+  User? user;
   String? name;
   String? username;
   String? phone;
@@ -65,7 +65,7 @@ class ProfileData {
 
   factory ProfileData.fromJson(Map<String, dynamic> json) => ProfileData(
     id: json["_id"],
-    user: json["user"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
     name: json["name"],
     username: json["username"],
     phone: json["phone"],
@@ -81,7 +81,7 @@ class ProfileData {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user": user,
+    "user": user?.toJson(),
     "name": name,
     "username": username,
     "phone": phone,
@@ -93,5 +93,25 @@ class ProfileData {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
+  };
+}
+
+class User {
+  String? role;
+
+  User({
+    this.role,
+  });
+
+  factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    role: json["role"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "role": role,
   };
 }

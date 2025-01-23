@@ -41,10 +41,7 @@ class HomeAppBar extends StatelessWidget {
                       height: 46,
                       width: 46),
 
-                  SizedBox(
-                    width: 16.w,
-                  ),
-
+                         SizedBox(width: 16.w,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -66,9 +63,7 @@ class HomeAppBar extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
-                width: 65.w,
-              ),
+
 
               ///==========================Drawer button ====================
               GestureDetector(
