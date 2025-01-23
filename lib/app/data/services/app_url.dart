@@ -115,4 +115,7 @@ class ApiUrl {
   ///======================Paypal =============================
   static const paypalIntend = "/deposit/execute-paypal-deposit-app";
 
+  ///user
+  static const addressEditPlayerAndTeam = "/team/edit-address-tax";
+
 }
