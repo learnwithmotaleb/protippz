@@ -10,6 +10,7 @@ import 'package:protippz/app/global/widgets/custom_button/custom_button.dart';
 import 'package:protippz/app/global/widgets/custom_from_card/custom_from_card.dart';
 import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
 import 'package:protippz/app/global/widgets/genarel_error/genarel_error.dart';
+import 'package:protippz/app/global/widgets/toast_message/toast_message.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_home_app_bar.dart';
 import 'package:protippz/app/player_screen/player_home_screen/inner_widgets/player_side_drawer.dart';
 import 'package:protippz/app/screens/no_internet_screen/no_internet_screen.dart';
@@ -23,7 +24,7 @@ import 'inner_widgets/player_header_card.dart';
 import 'inner_widgets/player_info_row.dart';
 
 class PlayerHomeScreen extends StatefulWidget {
-  const PlayerHomeScreen({Key? key}) : super(key: key);
+  const PlayerHomeScreen({super.key});
 
   @override
   _PlayerHomeScreenState createState() => _PlayerHomeScreenState();
@@ -42,15 +43,25 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
 
   Future<void> checkSavedRole() async {
     role.value = await SharePrefsHelper.getString(AppConstants.role) ?? '';
+
     if (role.value == 'player') {
       await profileController.getPlayerProfile();
     } else if (role.value == 'team') {
       await profileController.getTeamProfile();
     }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showEmailDialog();
+      final user = profileController.teamGetProfileData.value.user;
+      final email = user?.email;
+
+      if (email == null || email.isEmpty) {
+        showEmailDialog();
+      } else {
+        toastMessage(message: 'Email is not empty');
+      }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +110,7 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
           children: [
             PlayerHomeAppBar(scaffoldKey: scaffoldKey),
             SizedBox(height: 12.h),
+            //===========================Header=======================
             PlayerHeaderCard(
               totalAmount: role.value == 'player'
                   ? profileController.playerGetProfileData.value.totalTips.toString()
@@ -109,12 +121,16 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
               onTap: () => Get.toNamed(AppRoute.withdrawScreen),
             ),
             SizedBox(height: 12.h),
+            //===========================Name=======================
             _buildDynamicName(),
             SizedBox(height: 12.h),
+            //===========================Address=======================
             _buildAddressSection(),
             SizedBox(height: 12.h),
+            //===========================tippzHistory=======================
             _buildNavigationTile(AppStrings.tippzHistory, AppRoute.playerTippzHistory),
             SizedBox(height: 12.h),
+            //===========================taxInformation=======================
             _buildNavigationTile(AppStrings.taxInformation, AppRoute.taxInformation, arguments: role.value),
           ],
         ),
