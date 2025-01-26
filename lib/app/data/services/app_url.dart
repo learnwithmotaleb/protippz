@@ -42,6 +42,7 @@ class ApiUrl {
 
   ///===========================Withdraw=====================
   static const withdrawFunds = "/withdraw/create";
+  static const stripeConnect = "/stripe/connect-stripe";
 
   ///===========================Notification===========================
   static const notification = "/notification/get-notifications";
@@ -118,5 +119,8 @@ class ApiUrl {
   ///user
   static const addressEditTeam = "/team/edit-address-tax";
   static const addressEditPlayer = "/player/edit-address-tax";
+  static const addEmail = "/user/add-email-address";
+  static const addEmailVerify = "/user/verify-add-email";
+  static const withdrawCreate = "/withdraw/create";
 
 }

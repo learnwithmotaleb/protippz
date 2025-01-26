@@ -124,7 +124,7 @@ class PlayerTippzHistoryController extends GetxController {
     isTeamTax.value = false;
     refresh();
   }
-
+  ///=====================================getPlayerProfile===========================
   final Rx<PlayerGetProfileData> playerGetProfileData =
       PlayerGetProfileData().obs; // Holds profile data
   getPlayerProfile() async {
@@ -148,7 +148,7 @@ class PlayerTippzHistoryController extends GetxController {
       ApiChecker.checkApi(response);
     }
   }
-
+  ///====================================getTeamProfile===========================
   final Rx<TeamGetProfileData> teamGetProfileData =
       TeamGetProfileData().obs; // Holds profile data
   getTeamProfile() async {

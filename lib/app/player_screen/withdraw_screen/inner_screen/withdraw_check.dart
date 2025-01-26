@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:protippz/app/controller/withdraw_controller.dart';
+import 'package:protippz/app/controller/withdraw_team_and_player_controller.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
 import 'package:protippz/app/global/widgets/custom_button/custom_button.dart';
 import 'package:protippz/app/global/widgets/custom_from_card/custom_from_card.dart';
@@ -14,7 +14,7 @@ import 'package:protippz/app/utils/app_strings.dart';
 class WithdrawCheck extends StatelessWidget {
    WithdrawCheck({super.key});
 
-  final WithdrawController withdrawController = Get.find<WithdrawController>();
+  final WithdrawTeamAndPlayerController withdrawController = Get.find<WithdrawTeamAndPlayerController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class WithdrawCheck extends StatelessWidget {
                   CustomFromCard(
                       hinText: AppStrings.typeHere,
                       title: AppStrings.streetAddress,
-                      controller: withdrawController.addressController,
+                      controller: withdrawController.streetAddressController,
                       validator: (v) {}),
 
                   Gap(12.h),

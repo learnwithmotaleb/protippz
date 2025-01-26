@@ -20,7 +20,8 @@ class PlayerInfoRow extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText(
             text: label,
@@ -28,11 +29,14 @@ class PlayerInfoRow extends StatelessWidget {
             fontWeight: FontWeight.w400,
             color: AppColors.blue500,
           ),
-          CustomText(
-            text: value,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: AppColors.green500,
+          Expanded(
+            child: CustomText(
+              maxLines: 5,
+              text: value,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: AppColors.green500,
+            ),
           ),
         ],
       ),

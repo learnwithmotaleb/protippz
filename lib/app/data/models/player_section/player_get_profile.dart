@@ -78,7 +78,7 @@ class PlayerGetProfileData {
   factory PlayerGetProfileData.fromJson(Map<String, dynamic> json) => PlayerGetProfileData(
     id: json["_id"],
     name: json["name"],
-    league: json["league"],
+    league:json["league"] != null ? jsonEncode(json["league"]) : null,
     team: json["team"] == null ? null : Team.fromJson(json["team"]),
     position: json["position"],
     playerImage: json["player_image"],
@@ -214,9 +214,11 @@ class Team {
 
 class User {
   String? role;
+  String? email;
 
   User({
     this.role,
+    this.email
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -225,9 +227,11 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     role: json["role"],
+    email: json["email"],
   );
 
   Map<String, dynamic> toJson() => {
     "role": role,
+    "email": email,
   };
 }
