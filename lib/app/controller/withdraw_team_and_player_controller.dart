@@ -6,6 +6,7 @@ import 'package:protippz/app/data/services/api_check.dart';
 import 'package:protippz/app/data/services/api_client.dart';
 import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/widgets/toast_message/toast_message.dart';
+import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/webview_screen.dart';
 
 class WithdrawTeamAndPlayerController extends GetxController {
   ///=====================================CheckWithdraw===========================
@@ -55,22 +56,28 @@ class WithdrawTeamAndPlayerController extends GetxController {
  }
 
 
+
  ///================================StripeConnect===============================
  RxBool isStripConnect = false.obs;
 
  stripeConnect() async {
    isStripConnect.value = true;
    refresh();
-   Map<String, dynamic> body = {
-   };
+
+   Map<String, dynamic> body = {};
    var response = await ApiClient.postData(
      ApiUrl.stripeConnect,
      jsonEncode(body),
    );
+
    if (response.statusCode == 201) {
+     String generatedLink = response.body["data"]; // Get the link from response
      toastMessage(
        message: response.body["message"],
      );
+
+     // Navigate to WebView to show the link
+     Get.to(() => WebViewScreen(url: generatedLink));
    } else if (response.statusCode == 401) {
      ApiChecker.checkApi(response);
      toastMessage(
@@ -79,11 +86,10 @@ class WithdrawTeamAndPlayerController extends GetxController {
    } else {
      ApiChecker.checkApi(response);
    }
+
    isStripConnect.value = false;
    refresh();
  }
-
-
 
 
 
