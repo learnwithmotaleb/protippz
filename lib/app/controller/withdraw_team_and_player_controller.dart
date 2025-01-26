@@ -55,5 +55,36 @@ class WithdrawTeamAndPlayerController extends GetxController {
  }
 
 
+ ///================================StripeConnect===============================
+ RxBool isStripConnect = false.obs;
+
+ stripeConnect() async {
+   isStripConnect.value = true;
+   refresh();
+   Map<String, dynamic> body = {
+   };
+   var response = await ApiClient.postData(
+     ApiUrl.stripeConnect,
+     jsonEncode(body),
+   );
+   if (response.statusCode == 201) {
+     toastMessage(
+       message: response.body["message"],
+     );
+   } else if (response.statusCode == 401) {
+     ApiChecker.checkApi(response);
+     toastMessage(
+       message: response.body["message"],
+     );
+   } else {
+     ApiChecker.checkApi(response);
+   }
+   isStripConnect.value = false;
+   refresh();
+ }
+
+
+
+
 
 }

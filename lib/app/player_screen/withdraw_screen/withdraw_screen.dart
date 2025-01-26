@@ -85,7 +85,7 @@ class WithdrawScreen extends StatelessWidget {
                     bool isTeamStripeConnected = profileController.teamGetProfileData.value.isStripeConnected ?? false;
 
                     if (!isPlayerStripeConnected && !isTeamStripeConnected) {
-                      withdrawController.stripeConnected();
+                      withdrawController.stripeConnect();
 
                     } else if (isPlayerStripeConnected || isTeamStripeConnected) {
                       toastMessage(message: "Stripe is already connected.");
