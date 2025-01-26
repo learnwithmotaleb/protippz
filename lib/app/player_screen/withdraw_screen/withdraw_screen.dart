@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/controller/withdraw_team_and_player_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
@@ -20,8 +21,10 @@ class WithdrawScreen extends StatelessWidget {
   final RxString selectedPaymentMethod =
       "Stripe".obs; // To track the selected payment method
 
-
-  final WithdrawTeamAndPlayerController withdrawController = Get.find<WithdrawTeamAndPlayerController>();
+  final PlayerTippzHistoryController profileController = Get.find<
+      PlayerTippzHistoryController>();
+  final WithdrawTeamAndPlayerController withdrawController = Get.find<
+      WithdrawTeamAndPlayerController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class WithdrawScreen extends StatelessWidget {
         iconData: Icons.arrow_back,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +62,7 @@ class WithdrawScreen extends StatelessWidget {
                 isSelected: selectedPaymentMethod.value == "Ach",
                 onTap: () {
                   selectedPaymentMethod.value =
-                      "Ach"; // Set selected payment method to Stripe
+                  "Ach"; // Set selected payment method to Stripe
                 },
               ),
 
@@ -70,7 +73,7 @@ class WithdrawScreen extends StatelessWidget {
                 isSelected: selectedPaymentMethod.value == "Check",
                 onTap: () {
                   selectedPaymentMethod.value =
-                      "Check"; // Set selected payment method to PayPal
+                  "Check"; // Set selected payment method to PayPal
                 },
               ),
               Gap(12.h),
@@ -78,10 +81,19 @@ class WithdrawScreen extends StatelessWidget {
                 isRadius: true,
                 onTap: () {
                   if (selectedPaymentMethod.value == "Ach") {
-                    Get.toNamed(AppRoute.withdrawAch);
+                    bool isPlayerStripeConnected = profileController.playerGetProfileData.value.isStripeConnected ?? false;
+                    bool isTeamStripeConnected = profileController.teamGetProfileData.value.isStripeConnected ?? false;
+
+                    if (!isPlayerStripeConnected && !isTeamStripeConnected) {
+                      withdrawController.stripeConnected();
+
+                    } else if (isPlayerStripeConnected || isTeamStripeConnected) {
+                      toastMessage(message: "Stripe is already connected.");
+                    } else {
+                      toastMessage(message: "Unable to determine Stripe connection status.");
+                    }
                   } else if (selectedPaymentMethod.value == "Check") {
                     Get.toNamed(AppRoute.withdrawCheck);
-                    // Call PayPal payment method
                   } else {
                     toastMessage(message: "Please enter a valid amount");
                   }
@@ -89,6 +101,8 @@ class WithdrawScreen extends StatelessWidget {
                 title: AppStrings.continues,
                 fillColor: AppColors.green500,
               )
+
+
             ],
           );
         }),
