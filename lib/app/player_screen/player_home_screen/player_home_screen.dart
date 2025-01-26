@@ -32,7 +32,8 @@ class PlayerHomeScreen extends StatefulWidget {
 
 class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final PlayerTippzHistoryController profileController = Get.find<PlayerTippzHistoryController>();
+  final PlayerTippzHistoryController profileController = Get.find<
+      PlayerTippzHistoryController>();
   final RxString role = ''.obs;
 
   @override
@@ -113,11 +114,15 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
             //===========================Header=======================
             PlayerHeaderCard(
               totalAmount: role.value == 'player'
-                  ? profileController.playerGetProfileData.value.totalTips.toString()
-                  : profileController.teamGetProfileData.value.totalTips.toString(),
+                  ? profileController.playerGetProfileData.value.totalTips
+                  .toString()
+                  : profileController.teamGetProfileData.value.totalTips
+                  .toString(),
               currentAmount: role.value == 'player'
-                  ? profileController.playerGetProfileData.value.dueAmount.toString()
-                  : profileController.teamGetProfileData.value.dueAmount.toString(),
+                  ? profileController.playerGetProfileData.value.dueAmount
+                  .toString()
+                  : profileController.teamGetProfileData.value.dueAmount
+                  .toString(),
               onTap: () => Get.toNamed(AppRoute.withdrawScreen),
             ),
             SizedBox(height: 12.h),
@@ -128,10 +133,13 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
             _buildAddressSection(),
             SizedBox(height: 12.h),
             //===========================tippzHistory=======================
-            _buildNavigationTile(AppStrings.tippzHistory, AppRoute.playerTippzHistory),
+            _buildNavigationTile(
+                AppStrings.tippzHistory, AppRoute.playerTippzHistory),
             SizedBox(height: 12.h),
             //===========================taxInformation=======================
-            _buildNavigationTile(AppStrings.taxInformation, AppRoute.taxInformation, arguments: role.value),
+            _buildNavigationTile(
+                AppStrings.taxInformation, AppRoute.taxInformation,
+                arguments: role.value),
           ],
         ),
       ),
@@ -140,7 +148,8 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
 
   Widget _buildDynamicName() {
     return PlayerInfoRow(
-      label: role.value == 'player' ? AppStrings.playerName : AppStrings.teamName,
+      label: role.value == 'player' ? AppStrings.playerName : AppStrings
+          .teamName,
       value: role.value == 'player'
           ? profileController.playerGetProfileData.value.name ?? ''
           : profileController.teamGetProfileData.value.name ?? '',
@@ -150,11 +159,18 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
   Widget _buildAddressSection() {
     return AddressSection(
       address: role.value == 'player'
-          ? profileController.playerGetProfileData.value.address?.streetAddress ?? ''
-          : profileController.teamGetProfileData.value.address?.streetAddress ?? '',
+          ? '${profileController.playerGetProfileData.value.address?.streetAddress ?? ''} '
+          '${profileController.playerGetProfileData.value.address?.city ?? ''} '
+          '${profileController.playerGetProfileData.value.address?.state ?? ''} '
+          '${profileController.playerGetProfileData.value.address?.zipCode ?? ''}'
+          : '${profileController.teamGetProfileData.value.address?.streetAddress ?? ''} '
+          '${profileController.teamGetProfileData.value.address?.city ?? ''} '
+          '${profileController.teamGetProfileData.value.address?.state ?? ''} '
+          '${profileController.teamGetProfileData.value.address?.zipCode ?? ''}',
       onTap: () => Get.toNamed(AppRoute.addressEdit, arguments: role.value),
     );
   }
+
 
   Widget _buildNavigationTile(String title, String route, {dynamic arguments}) {
     return NavigationTile(
@@ -179,7 +195,8 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
                 title: AppStrings.enterYourEmail,
                 controller: controller.emailController,
                 validator: (value) {
-                  if (value!.isEmpty || !AppStrings.emailRegexp.hasMatch(value)) {
+                  if (value!.isEmpty ||
+                      !AppStrings.emailRegexp.hasMatch(value)) {
                     return AppStrings.enterValidEmail;
                   }
                   return null;
