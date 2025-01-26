@@ -93,6 +93,8 @@ class _PlayerSideDrawerState extends State<PlayerSideDrawer> {
                                 'remove token========================"${AppConstants.bearerToken}"');
                             print(
                                 'remove profileId========================"${AppConstants.profileID}"');
+                            print(
+                                'role========================"${AppConstants.role}"');
 
                             Get.offAllNamed(AppRoute.signInScreen);
                           });

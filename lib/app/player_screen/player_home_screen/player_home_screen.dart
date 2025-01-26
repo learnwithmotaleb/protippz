@@ -137,9 +137,11 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
                 AppStrings.tippzHistory, AppRoute.playerTippzHistory),
             SizedBox(height: 12.h),
             //===========================taxInformation=======================
-            _buildNavigationTile(
-                AppStrings.taxInformation, AppRoute.taxInformation,
-                arguments: role.value),
+            // _buildNavigationTile(
+            //     AppStrings.taxInformation, AppRoute.taxInformation,
+            //     arguments: role.value),
+
+            _buildTextSection()
           ],
         ),
       ),
@@ -167,7 +169,20 @@ class _PlayerHomeScreenState extends State<PlayerHomeScreen> {
           '${profileController.teamGetProfileData.value.address?.city ?? ''} '
           '${profileController.teamGetProfileData.value.address?.state ?? ''} '
           '${profileController.teamGetProfileData.value.address?.zipCode ?? ''}',
-      onTap: () => Get.toNamed(AppRoute.addressEdit, arguments: role.value),
+      onTap: () => Get.toNamed(AppRoute.addressEdit, arguments: role.value), title: AppStrings.addressColon,
+    );
+  }
+
+  Widget _buildTextSection() {
+    return AddressSection(
+      address: role.value == 'player'
+          ? '${profileController.playerGetProfileData.value.taxInfo?.address ?? ''} '
+          '${profileController.playerGetProfileData.value.taxInfo?.fullname ?? ''} '
+          '${profileController.playerGetProfileData.value.taxInfo?.taxId ?? ''} '
+          : '${profileController.teamGetProfileData.value.taxInfo?.address ?? ''} '
+          '${profileController.teamGetProfileData.value.taxInfo?.fullname ?? ''} '
+          '${profileController.teamGetProfileData.value.taxInfo?.taxId ?? ''} ',
+      onTap: () => Get.toNamed(AppRoute.taxInformation, arguments: role.value), title: AppStrings.taxInformation,
     );
   }
 

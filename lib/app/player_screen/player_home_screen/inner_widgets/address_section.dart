@@ -7,10 +7,16 @@ import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 
 class AddressSection extends StatelessWidget {
-  const AddressSection({super.key, required this.address, required this.onTap});
+  const AddressSection(
+      {super.key,
+      required this.address,
+      required this.onTap,
+      required this.title});
 
   final String address;
+  final String title;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +31,8 @@ class AddressSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CustomText(
-                text: AppStrings.addressColon,
+               CustomText(
+                text: title,
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: AppColors.blue500,
@@ -37,7 +43,7 @@ class AddressSection extends StatelessWidget {
               ),
             ],
           ),
-           CustomText(
+          CustomText(
             top: 12,
             textAlign: TextAlign.start,
             maxLines: 10,
