@@ -120,5 +120,6 @@ class ApiUrl {
   static const addressEditPlayer = "/player/edit-address-tax";
   static const addEmail = "/user/add-email-address";
   static const addEmailVerify = "/user/verify-add-email";
+  static const withdrawCreate = "/withdraw/create";
 
 }

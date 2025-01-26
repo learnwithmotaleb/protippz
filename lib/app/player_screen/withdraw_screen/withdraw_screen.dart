@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:protippz/app/controller/withdraw_team_and_player_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
@@ -18,6 +19,9 @@ class WithdrawScreen extends StatelessWidget {
 
   final RxString selectedPaymentMethod =
       "Stripe".obs; // To track the selected payment method
+
+
+  final WithdrawTeamAndPlayerController withdrawController = Get.find<WithdrawTeamAndPlayerController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class WithdrawScreen extends StatelessWidget {
             children: [
               CustomFromCard(
                   title: 'Enter Amount',
-                  controller: TextEditingController(),
+                  controller: withdrawController.amountController,
                   validator: (v) {}),
               const CustomText(
                 top: 10,

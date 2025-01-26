@@ -15,6 +15,7 @@ import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/controller/profile_controller.dart';
 import 'package:protippz/app/controller/team_controller.dart';
 import 'package:protippz/app/controller/withdraw_controller.dart';
+import 'package:protippz/app/controller/withdraw_team_and_player_controller.dart';
 import 'package:protippz/app/global/controllers/auth_controller/auth_controller.dart';
 import 'package:protippz/app/global/controllers/genarel_controller/genarel_controller.dart';
 
@@ -39,5 +40,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => WithdrawController(), fenix: true);
     Get.lazyPut(() => PlayerTippzHistoryController(), fenix: true);
     Get.lazyPut(() => EmailAddController(), fenix: true);
+    Get.lazyPut(() => WithdrawTeamAndPlayerController(), fenix: true);
   }
 }

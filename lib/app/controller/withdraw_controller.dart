@@ -59,40 +59,40 @@ class WithdrawController extends GetxController {
   }
 
 
-  ///================================Withdraw Check===============================
-  RxBool isCheckLoading = false.obs;
-
-  withdrawCheckMethod() async {
-    isCheckLoading.value = true;
-    refresh();
-    Map<String, dynamic> body = {
-      "amount": int.tryParse(amountController.text),
-      "withdrawOption": "Check",
-      "fullName":fullNameController.text,
-      "streetAddress": addressController.text,
-      "city": cityController.text,
-      "state": stateController.text,
-      "zipCode": int.tryParse(zipCodeController.text),
-      "email": emailController.text
-    };
-    var response = await ApiClient.postData(
-      ApiUrl.withdrawFunds,
-      jsonEncode(body),
-    );
-    if (response.statusCode == 200) {
-      Get.back();
-      toastMessage(
-        message: response.body["message"],
-      );
-    } else if (response.statusCode == 401) {
-      ApiChecker.checkApi(response);
-      toastMessage(
-        message: response.body["message"],
-      );
-    } else {
-      ApiChecker.checkApi(response);
-    }
-    isCheckLoading.value = false;
-    refresh();
-  }
+  // ///================================Withdraw Check===============================
+  // RxBool isCheckLoading = false.obs;
+  //
+  // withdrawCheckMethod() async {
+  //   isCheckLoading.value = true;
+  //   refresh();
+  //   Map<String, dynamic> body = {
+  //     "amount": int.tryParse(amountController.text),
+  //     "withdrawOption": "Check",
+  //     "fullName":fullNameController.text,
+  //     "streetAddress": addressController.text,
+  //     "city": cityController.text,
+  //     "state": stateController.text,
+  //     "zipCode": int.tryParse(zipCodeController.text),
+  //     "email": emailController.text
+  //   };
+  //   var response = await ApiClient.postData(
+  //     ApiUrl.withdrawFunds,
+  //     jsonEncode(body),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     Get.back();
+  //     toastMessage(
+  //       message: response.body["message"],
+  //     );
+  //   } else if (response.statusCode == 401) {
+  //     ApiChecker.checkApi(response);
+  //     toastMessage(
+  //       message: response.body["message"],
+  //     );
+  //   } else {
+  //     ApiChecker.checkApi(response);
+  //   }
+  //   isCheckLoading.value = false;
+  //   refresh();
+  // }
 }
