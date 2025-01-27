@@ -88,13 +88,13 @@ class _SideDrawerState extends State<SideDrawer> {
                     isDevider: true,
                   ),
 
-                  ///=======================Withdraw==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.withdrawScreen),
-                    title: AppStrings.withdrawFunds,
-                    icon: Assets.icons.withdraw.svg(),
-                    isDevider: true,
-                  ),
+                  // ///=======================Withdraw==================
+                  // CustomMenuCard(
+                  //   onTap: () => Get.toNamed(AppRoute.withdrawScreen),
+                  //   title: AppStrings.withdrawFunds,
+                  //   icon: Assets.icons.withdraw.svg(),
+                  //   isDevider: true,
+                  // ),
 
                   ///=======================Transaction==================
                   CustomMenuCard(
