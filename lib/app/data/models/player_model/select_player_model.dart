@@ -92,9 +92,9 @@ class SelectedPlayerList {
   String? position;
   String? playerImage;
   String? playerBgImage;
-  int? totalTips;
+  double? totalTips;
   int? paidAmount;
-  int? dueAmount;
+  double? dueAmount;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -129,9 +129,9 @@ class SelectedPlayerList {
     position: json["position"],
     playerImage: json["player_image"],
     playerBgImage: json["player_bg_image"],
-    totalTips: json["totalTips"],
+    totalTips: json["totalTips"]?.toDouble(),
     paidAmount: json["paidAmount"],
-    dueAmount: json["dueAmount"],
+    dueAmount: json["dueAmount"]?.toDouble(),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],

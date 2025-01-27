@@ -4,7 +4,6 @@ import 'package:protippz/app/player_screen/address_edit/address_edit.dart';
 import 'package:protippz/app/player_screen/player_home_screen/player_home_screen.dart';
 import 'package:protippz/app/player_screen/player_tippz_history/player_tippz_history.dart';
 import 'package:protippz/app/player_screen/tax_inforamation/tax_information.dart';
-import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_ach.dart';
 import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/withdraw_check.dart';
 import 'package:protippz/app/player_screen/withdraw_screen/withdraw_screen.dart';
 import 'package:protippz/app/screens/authentication_screen/forgot_password_screen/forgot_password_screen.dart';
@@ -70,7 +69,6 @@ class AppRoute {
   static const String withdrawScreen = '/WithdrawScreen';
   static const String depositeScreen = '/DepositeScreen';
   static const String tipzScreen = '/TipzScreen';
-  static const String withdrawAch = '/WithdrawAch';
   static const String withdrawCheck = '/WithdrawCheck';
   static const String playerzScreen = '/PlayerzScreen';
   static const String teamzScreen = '/TeamzScreen';
@@ -115,14 +113,13 @@ class AppRoute {
     GetPage(name: transactionScreen, page: () =>  TransactionScreen(),),
     GetPage(name: withdrawScreen, page: () =>  WithdrawScreen(),),
     GetPage(name: withdrawCheck, page: () =>   WithdrawCheck(),),
-    GetPage(name: withdrawAch, page: () =>   WithdrawAch(),),
     GetPage(name: depositeScreen, page: () =>  DepositeScreen(),),
     GetPage(name: tipzScreen, page: () =>   const TipzScreen(),),
     GetPage(name: playerzScreen, page: () =>  const PlayerScreen(),),
     GetPage(name: teamzScreen, page: () =>   const TeamScreen(),),
     GetPage(name: rewardzScreen, page: () =>   const RewardScreen(),),
     GetPage(name: dairekPayScreen, page: () =>    DairekPayScreen(),),
-    GetPage(name: playerHomeScreen, page: () =>     PlayerHomeScreen(),),
+    GetPage(name: playerHomeScreen, page: () =>     const PlayerHomeScreen(),),
     GetPage(name: playerTippzHistory, page: () =>     PlayerTippzHistory(),),
     GetPage(name: taxInformation, page: () =>     TaxInformation(),),
     GetPage(name: addressEdit, page: () =>     AddressEdit(),),

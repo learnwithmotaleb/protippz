@@ -1,8 +1,10 @@
 class ApiUrl {
 
-  static const baseUrl = "http://18.218.23.153:5000";
+  // static const baseUrl = "http://18.218.23.153:5000";
+  static const baseUrl = "https://api.protippz.com";
 
-  static const netWorkUrl = "http://18.218.23.153:5000/";
+  // static const netWorkUrl = "http://18.218.23.153:5000/";
+  static const netWorkUrl = "https://api.protippz.com/";
 
   ///================================= User Authentication url==========================
   static const signupAuth = "/user/register-user";
@@ -43,6 +45,8 @@ class ApiUrl {
   ///===========================Withdraw=====================
   static const withdrawFunds = "/withdraw/create";
   static const stripeConnect = "/stripe/connect-stripe";
+  static const withdrawAch = "/withdraw/ach-withdraw";
+  static const stripeUpdate = "/stripe/update-connected-account";
 
   ///===========================Notification===========================
   static const notification = "/notification/get-notifications";

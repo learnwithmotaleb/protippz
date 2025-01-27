@@ -9,6 +9,7 @@ import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
 import 'package:protippz/app/global/widgets/custom_button/custom_button.dart';
 import 'package:protippz/app/global/widgets/custom_from_card/custom_from_card.dart';
+import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
 import 'package:protippz/app/global/widgets/custom_payment_card/custom_payment_card.dart';
 import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
 import 'package:protippz/app/global/widgets/toast_message/toast_message.dart';
@@ -18,20 +19,16 @@ import 'package:protippz/app/utils/app_strings.dart';
 class WithdrawScreen extends StatelessWidget {
   WithdrawScreen({super.key});
 
-  final RxString selectedPaymentMethod =
-      "Stripe".obs; // To track the selected payment method
-
-  final PlayerTippzHistoryController profileController = Get.find<
-      PlayerTippzHistoryController>();
-  final WithdrawTeamAndPlayerController withdrawController = Get.find<
-      WithdrawTeamAndPlayerController>();
+  final PlayerTippzHistoryController profileController =
+  Get.find<PlayerTippzHistoryController>();
+  final WithdrawTeamAndPlayerController withdrawController =
+  Get.find<WithdrawTeamAndPlayerController>();
+  final RxString selectedPaymentMethod = "Ach".obs; // Default to "Ach"
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg500,
-
-      ///========================Withdraw funds========================
       appBar: const CustomAppBar(
         appBarContent: AppStrings.withdrawFunds,
         iconData: Icons.arrow_back,
@@ -39,74 +36,98 @@ class WithdrawScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomFromCard(
+          bool isAmountEntered =
+              withdrawController.amountController.text.isNotEmpty;
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomFromCard(
                   title: 'Enter Amount',
                   controller: withdrawController.amountController,
-                  validator: (v) {}),
-              const CustomText(
-                top: 10,
-                bottom: 10,
-                text: AppStrings.withdrawOptions,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.gray500,
-              ),
-
-              ///===========================Ach=======================
-              CustomPaymentCard(
-                title: "Ach",
-                icon: Assets.images.ach.image(),
-                isSelected: selectedPaymentMethod.value == "Ach",
-                onTap: () {
-                  selectedPaymentMethod.value =
-                  "Ach"; // Set selected payment method to Stripe
-                },
-              ),
-
-              ///===========================Check=======================
-              CustomPaymentCard(
-                title: "Check",
-                icon: Assets.images.check.image(),
-                isSelected: selectedPaymentMethod.value == "Check",
-                onTap: () {
-                  selectedPaymentMethod.value =
-                  "Check"; // Set selected payment method to PayPal
-                },
-              ),
-              Gap(12.h),
-              CustomButton(
-                isRadius: true,
-                onTap: () {
-                  if (selectedPaymentMethod.value == "Ach") {
-                    bool isPlayerStripeConnected = profileController.playerGetProfileData.value.isStripeConnected ?? false;
-                    bool isTeamStripeConnected = profileController.teamGetProfileData.value.isStripeConnected ?? false;
-
-                    if (!isPlayerStripeConnected && !isTeamStripeConnected) {
-                      withdrawController.stripeConnect();
-
-                    } else if (isPlayerStripeConnected || isTeamStripeConnected) {
-                      toastMessage(message: "Stripe is already connected.");
-                    } else {
-                      toastMessage(message: "Unable to determine Stripe connection status.");
+                  validator: (v) {
+                    if (v == null || v.isEmpty) {
+                      return 'Please enter an amount';
                     }
-                  } else if (selectedPaymentMethod.value == "Check") {
-                    Get.toNamed(AppRoute.withdrawCheck);
-                  } else {
-                    toastMessage(message: "Please enter a valid amount");
-                  }
-                },
-                title: AppStrings.continues,
-                fillColor: AppColors.green500,
-              )
+                    return null;
+                  },
+                ),
+                const CustomText(
+                  top: 10,
+                  bottom: 10,
+                  text: AppStrings.withdrawOptions,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.gray500,
+                ),
+                CustomPaymentCard(
+                  title: "Ach",
+                  icon: Assets.images.ach.image(),
+                  isSelected: selectedPaymentMethod.value == "Ach",
+                  onTap: () {
+                    selectedPaymentMethod.value = "Ach";
+                  },
+                ),
+                CustomPaymentCard(
+                  title: "Check",
+                  icon: Assets.images.check.image(),
+                  isSelected: selectedPaymentMethod.value == "Check",
+                  onTap: () {
+                    selectedPaymentMethod.value = "Check";
+                  },
+                ),
+                Gap(12.h),
+                withdrawController.isAchLoading.value
+                    ? const CustomLoader()
+                    : CustomButton(
+                  isRadius: true,
+                  onTap: () {
+                    double amount = double.tryParse(
+                        withdrawController.amountController.text) ??
+                        0;
 
+                    if (amount > 0) {
+                      if (selectedPaymentMethod.value == "Ach") {
+                        bool isPlayerStripeConnected = profileController
+                            .playerGetProfileData
+                            .value
+                            .isStripeConnected ??
+                            false;
+                        bool isTeamStripeConnected = profileController
+                            .teamGetProfileData
+                            .value
+                            .isStripeConnected ??
+                            false;
 
-            ],
+                        if (!isPlayerStripeConnected &&
+                            !isTeamStripeConnected) {
+                          withdrawController.stripeConnect();
+                        } else {
+                          withdrawController.withdrawAch();
+                        }
+                      } else if (selectedPaymentMethod.value == "Check") {
+                        Get.toNamed(AppRoute.withdrawCheck);
+                      } else {
+                        toastMessage(
+                          message: "Please select a payment method",
+                        );
+                      }
+                    } else {
+                      toastMessage(
+                        message: "Please enter a valid amount",
+                      );
+                    }
+                  },
+                  title: AppStrings.continues,
+                  fillColor: AppColors.green500,
+                ),
+              ],
+            ),
           );
         }),
       ),
     );
   }
 }
+

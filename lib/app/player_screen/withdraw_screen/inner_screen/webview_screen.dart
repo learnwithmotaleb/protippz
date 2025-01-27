@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protippz/app/core/app_routes.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/utils/app_colors.dart';
@@ -53,8 +54,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
             });
           },
           onNavigationRequest: (request) {
-            // Block specific URLs if needed
-            if (request.url.startsWith('https://www.youtube.com/')) {
+            if (request.url.contains("http://localhost:3000/player-withdraw")) {
+              _showRedirectDialog();
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -62,6 +63,32 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
+  }
+
+  void _showRedirectDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Success'),
+          content: const Text(
+              'Your onboarding process is complete. Click below to return to the home page.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.toNamed(AppRoute.playerHomeScreen);
+                // Get.offAllNamed('/home'); // Replace '/home' with your home page route
+              },
+              child: const Text(
+                'Go to Home',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

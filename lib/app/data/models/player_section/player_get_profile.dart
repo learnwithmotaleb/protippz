@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../favorite_model/favorite_team_model.dart';
+
 class PlayerGetProfile {
   bool? success;
   String? message;
@@ -32,20 +34,22 @@ class PlayerGetProfileData {
   String? id;
   String? name;
   String? league;
-  Team? team;
+  dynamic team;
   String? position;
   String? playerImage;
   String? playerBgImage;
-  int? totalTips;
+  double? totalTips;
   int? paidAmount;
-  int? dueAmount;
+  double? dueAmount;
   bool? isStripeConnected;
+  int? jerceyNumber;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
   String? invitedPassword;
   User? user;
   String? username;
+  String? stripAccountId;
   Address? address;
   TaxInfo? taxInfo;
 
@@ -61,12 +65,14 @@ class PlayerGetProfileData {
     this.paidAmount,
     this.dueAmount,
     this.isStripeConnected,
+    this.jerceyNumber,
     this.createdAt,
     this.updatedAt,
     this.v,
     this.invitedPassword,
     this.user,
     this.username,
+    this.stripAccountId,
     this.address,
     this.taxInfo,
   });
@@ -83,16 +89,18 @@ class PlayerGetProfileData {
     position: json["position"],
     playerImage: json["player_image"],
     playerBgImage: json["player_bg_image"],
-    totalTips: json["totalTips"],
+    totalTips: json["totalTips"]?.toDouble(),
     paidAmount: json["paidAmount"],
-    dueAmount: json["dueAmount"],
+    dueAmount: json["dueAmount"]?.toDouble(),
     isStripeConnected: json["isStripeConnected"],
+    jerceyNumber: json["jerceyNumber"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
     invitedPassword: json["invitedPassword"],
     user: json["user"] == null ? null : User.fromJson(json["user"]),
     username: json["username"],
+    stripAccountId: json["stripAccountId"],
     address: json["address"] == null ? null : Address.fromJson(json["address"]),
     taxInfo: json["taxInfo"] == null ? null : TaxInfo.fromJson(json["taxInfo"]),
   );
@@ -101,7 +109,7 @@ class PlayerGetProfileData {
     "_id": id,
     "name": name,
     "league": league,
-    "team": team?.toJson(),
+    "team": team,
     "position": position,
     "player_image": playerImage,
     "player_bg_image": playerBgImage,
@@ -109,12 +117,14 @@ class PlayerGetProfileData {
     "paidAmount": paidAmount,
     "dueAmount": dueAmount,
     "isStripeConnected": isStripeConnected,
+    "jerceyNumber": jerceyNumber,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
     "invitedPassword": invitedPassword,
     "user": user?.toJson(),
     "username": username,
+    "stripAccountId": stripAccountId,
     "address": address?.toJson(),
     "taxInfo": taxInfo?.toJson(),
   };
@@ -188,37 +198,11 @@ class TaxInfo {
   };
 }
 
-class Team {
-  String? id;
-  String? name;
-
-  Team({
-    this.id,
-    this.name,
-  });
-
-  factory Team.fromRawJson(String str) => Team.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Team.fromJson(Map<String, dynamic> json) => Team(
-    id: json["_id"],
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-  };
-}
-
 class User {
   String? role;
-  String? email;
 
   User({
     this.role,
-    this.email
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -227,11 +211,9 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     role: json["role"],
-    email: json["email"],
   );
 
   Map<String, dynamic> toJson() => {
     "role": role,
-    "email": email,
   };
 }
