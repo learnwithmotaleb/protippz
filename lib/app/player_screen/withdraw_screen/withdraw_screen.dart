@@ -19,8 +19,11 @@ import 'package:protippz/app/utils/app_strings.dart';
 class WithdrawScreen extends StatelessWidget {
   WithdrawScreen({super.key});
 
-  final PlayerTippzHistoryController profileController = Get.find<PlayerTippzHistoryController>();
-  final WithdrawTeamAndPlayerController withdrawController = Get.find<WithdrawTeamAndPlayerController>();
+  final PlayerTippzHistoryController profileController =
+  Get.find<PlayerTippzHistoryController>();
+  final WithdrawTeamAndPlayerController withdrawController =
+  Get.find<WithdrawTeamAndPlayerController>();
+  final RxString selectedPaymentMethod = "Ach".obs; // Default to "Ach"
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,8 @@ class WithdrawScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
-          bool isAmountEntered = withdrawController.amountController.text.isNotEmpty;
+          bool isAmountEntered =
+              withdrawController.amountController.text.isNotEmpty;
 
           return SingleChildScrollView(
             child: Column(
@@ -57,55 +61,67 @@ class WithdrawScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: AppColors.gray500,
                 ),
-                Obx(() => CustomPaymentCard(
+                CustomPaymentCard(
                   title: "Ach",
                   icon: Assets.images.ach.image(),
-                  isSelected: withdrawController.selectedPaymentMethod.value == "Ach",
-                  onTap: isAmountEntered
-                      ? () {
-                    withdrawController.selectedPaymentMethod.value = "Ach";
-                  }
-                      : null,
-                )),
-                Obx(() => CustomPaymentCard(
+                  isSelected: selectedPaymentMethod.value == "Ach",
+                  onTap: () {
+                    selectedPaymentMethod.value = "Ach";
+                  },
+                ),
+                CustomPaymentCard(
                   title: "Check",
                   icon: Assets.images.check.image(),
-                  isSelected: withdrawController.selectedPaymentMethod.value == "Check",
-                  onTap: isAmountEntered
-                      ? () {
-                    withdrawController.selectedPaymentMethod.value = "Check";
-                  }
-                      : null,
-                )),
+                  isSelected: selectedPaymentMethod.value == "Check",
+                  onTap: () {
+                    selectedPaymentMethod.value = "Check";
+                  },
+                ),
                 Gap(12.h),
                 withdrawController.isAchLoading.value
                     ? const CustomLoader()
                     : CustomButton(
                   isRadius: true,
                   onTap: () {
-                    if (!isAmountEntered) {
-                      toastMessage(message: "Please enter a valid amount");
-                      return;
-                    }
+                    double amount = double.tryParse(
+                        withdrawController.amountController.text) ??
+                        0;
 
-                    if (withdrawController.selectedPaymentMethod.value == "Ach") {
-                      bool isPlayerStripeConnected = profileController.playerGetProfileData.value.isStripeConnected ?? false;
-                      bool isTeamStripeConnected = profileController.teamGetProfileData.value.isStripeConnected ?? false;
+                    if (amount > 0) {
+                      if (selectedPaymentMethod.value == "Ach") {
+                        bool isPlayerStripeConnected = profileController
+                            .playerGetProfileData
+                            .value
+                            .isStripeConnected ??
+                            false;
+                        bool isTeamStripeConnected = profileController
+                            .teamGetProfileData
+                            .value
+                            .isStripeConnected ??
+                            false;
 
-                      if (!isPlayerStripeConnected && !isTeamStripeConnected) {
-                        withdrawController.stripeConnect();
+                        if (!isPlayerStripeConnected &&
+                            !isTeamStripeConnected) {
+                          withdrawController.stripeConnect();
+                        } else {
+                          withdrawController.withdrawAch();
+                        }
+                      } else if (selectedPaymentMethod.value == "Check") {
+                        Get.toNamed(AppRoute.withdrawCheck);
                       } else {
-                        withdrawController.withdrawAch();
+                        toastMessage(
+                          message: "Please select a payment method",
+                        );
                       }
-                    } else if (withdrawController.selectedPaymentMethod.value == "Check") {
-                      Get.toNamed(AppRoute.withdrawCheck);
                     } else {
-                      toastMessage(message: "Please select a payment method");
+                      toastMessage(
+                        message: "Please enter a valid amount",
+                      );
                     }
                   },
                   title: AppStrings.continues,
                   fillColor: AppColors.green500,
-                )
+                ),
               ],
             ),
           );
@@ -114,6 +130,4 @@ class WithdrawScreen extends StatelessWidget {
     );
   }
 }
-
-
 
