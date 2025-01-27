@@ -65,31 +65,31 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourEmailOrUser,
                     title: AppStrings.userNameOrEmail,
                     controller: authController.emailController,
-                    // validator: (v){},
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings
-                            .enterValidEmailOrUserName; // General error
-                      }
-
-                      // Check if input contains "@" to identify email
-                      if (value.contains('@')) {
-                        // Email validation
-                        if (!AppStrings.emailRegexp.hasMatch(value)) {
-                          return AppStrings
-                              .enterValidEmail; // Invalid email message
-                        } else {
-                          return null; // Valid email
-                        }
-                      } else {
-                        // Username validation
-                        if (value.length < 4) {
-                          return 'UserNameToShort'; // "Username must be at least 4 characters"
-                        } else {
-                          return null; // Valid username
-                        }
-                      }
-                    },
+                    validator: (v){},
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return AppStrings
+                    //         .enterValidEmailOrUserName; // General error
+                    //   }
+                    //
+                    //   // Check if input contains "@" to identify email
+                    //   if (value.contains('@')) {
+                    //     // Email validation
+                    //     if (!AppStrings.emailRegexp.hasMatch(value)) {
+                    //       return AppStrings
+                    //           .enterValidEmail; // Invalid email message
+                    //     } else {
+                    //       return null; // Valid email
+                    //     }
+                    //   } else {
+                    //     // Username validation
+                    //     if (value.length < 4) {
+                    //       return 'UserNameToShort'; // "Username must be at least 4 characters"
+                    //     } else {
+                    //       return null; // Valid username
+                    //     }
+                    //   }
+                    // },
                   ),
 
                   Gap(12.h),

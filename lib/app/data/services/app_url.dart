@@ -43,6 +43,7 @@ class ApiUrl {
   ///===========================Withdraw=====================
   static const withdrawFunds = "/withdraw/create";
   static const stripeConnect = "/stripe/connect-stripe";
+  static const withdrawAch = "/withdraw/ach-withdraw";
 
   ///===========================Notification===========================
   static const notification = "/notification/get-notifications";

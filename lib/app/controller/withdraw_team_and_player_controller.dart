@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/data/services/api_check.dart';
 import 'package:protippz/app/data/services/api_client.dart';
 import 'package:protippz/app/data/services/app_url.dart';
@@ -18,6 +19,7 @@ class WithdrawTeamAndPlayerController extends GetxController {
  final zipCodeController = TextEditingController();
  final emailController = TextEditingController();
 
+ final PlayerTippzHistoryController profileController = Get.find<PlayerTippzHistoryController>();
  ///================================Withdraw Check===============================
  RxBool isCheckLoading = false.obs;
 
@@ -91,6 +93,39 @@ class WithdrawTeamAndPlayerController extends GetxController {
    refresh();
  }
 
+ ///================================Withdraw Ach===============================
+ final RxString selectedPaymentMethod = "Stripe".obs;
 
+
+ RxBool isAchLoading = false.obs;
+
+ withdrawAch() async {
+   isAchLoading.value = true;
+   refresh();
+   Map<String, dynamic> body = {
+     "amount": int.tryParse(amountController.text),
+   };
+   var response = await ApiClient.postData(
+     ApiUrl.withdrawAch,
+     jsonEncode(body),
+   );
+   if (response.statusCode == 200) {
+     profileController.getTeamProfile();
+     profileController.getPlayerProfile();
+     Get.back();
+     toastMessage(
+       message: response.body["message"],
+     );
+   } else if (response.statusCode == 401) {
+     ApiChecker.checkApi(response);
+     toastMessage(
+       message: response.body["message"],
+     );
+   } else {
+     ApiChecker.checkApi(response);
+   }
+   isAchLoading.value = false;
+   refresh();
+ }
 
 }
