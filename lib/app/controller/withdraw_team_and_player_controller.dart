@@ -93,6 +93,40 @@ class WithdrawTeamAndPlayerController extends GetxController {
    refresh();
  }
 
+ ///================================Strip Update===============================
+ RxBool isStripUpdate = false.obs;
+
+ stripeUpdate() async {
+   isStripUpdate.value = true;
+   refresh();
+
+   Map<String, dynamic> body = {};
+   var response = await ApiClient.postData(
+     ApiUrl.stripeUpdate,
+     jsonEncode(body),
+   );
+
+   if (response.statusCode == 201) {
+     String generatedLink = response.body["data"]['link']; // Get the link from response
+     toastMessage(
+       message: response.body["message"],
+     );
+
+     // Navigate to WebView to show the link
+     Get.to(() => WebViewScreen(url: generatedLink));
+   } else if (response.statusCode == 401) {
+     ApiChecker.checkApi(response);
+     toastMessage(
+       message: response.body["message"],
+     );
+   } else {
+     ApiChecker.checkApi(response);
+   }
+
+   isStripUpdate.value = false;
+   refresh();
+ }
+
  ///================================Withdraw Ach===============================
  final RxString selectedPaymentMethod = "Stripe".obs;
 
@@ -116,7 +150,10 @@ class WithdrawTeamAndPlayerController extends GetxController {
      toastMessage(
        message: response.body["message"],
      );
-   } else if (response.statusCode == 401) {
+   } else if(response.statusCode ==400){
+     stripeUpdate();
+   }
+   else if (response.statusCode == 401) {
      ApiChecker.checkApi(response);
      toastMessage(
        message: response.body["message"],
