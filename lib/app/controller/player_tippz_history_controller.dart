@@ -110,6 +110,8 @@ class PlayerTippzHistoryController extends GetxController {
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
+      getPlayerProfile();
+      getTeamProfile();
       Get.back();
       toastMessage(
         message: response.body["message"],
