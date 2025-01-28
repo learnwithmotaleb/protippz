@@ -218,7 +218,8 @@ class WithdrawTeamAndPlayerController extends GetxController {
                 color: Colors.white,
                 fontSize: 16,
                 maxLines: 10,
-                text: 'Please complete your bank information.'),
+                text:
+                    'Something missing in your connected Account, Please complete your bank information.'),
             const SizedBox(
               height: 15,
             ),
