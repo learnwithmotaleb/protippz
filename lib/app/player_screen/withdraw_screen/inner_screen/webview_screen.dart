@@ -55,10 +55,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
           onNavigationRequest: (request) {
             if (request.url.contains("")) {
+              print("====================${request.url}");
               _showRedirectDialog();
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
+
           },
         ),
       )
@@ -98,7 +100,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         backgroundColor: AppColors.white600,
         centerTitle: true,
         title: Text(
-          widget.title ?? 'Stripe Connect',
+          widget.title ?? 'Stripe',
           style: const TextStyle(color: Colors.black),
         ),
         leading: IconButton(
