@@ -14,6 +14,7 @@ class WebViewScreen extends StatefulWidget {
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
 
+
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   var loadingPercentage = 0;
@@ -54,11 +55,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
             });
           },
           onNavigationRequest: (request) {
-            if (request.url.contains("http://localhost:3000/player-withdraw")) {
+            if (request.url.contains("")) {
+              print("====================${request.url}");
               _showRedirectDialog();
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
+
           },
         ),
       )
@@ -98,7 +101,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         backgroundColor: AppColors.white600,
         centerTitle: true,
         title: Text(
-          widget.title ?? 'Stripe Connect',
+          widget.title ?? 'Stripe',
           style: const TextStyle(color: Colors.black),
         ),
         leading: IconButton(
@@ -123,3 +126,5 @@ class _WebViewScreenState extends State<WebViewScreen> {
     );
   }
 }
+
+

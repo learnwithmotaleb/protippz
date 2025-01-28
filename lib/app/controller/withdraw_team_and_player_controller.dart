@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/controller/player_tippz_history_controller.dart';
 import 'package:protippz/app/data/services/api_check.dart';
 import 'package:protippz/app/data/services/api_client.dart';
 import 'package:protippz/app/data/services/app_url.dart';
+import 'package:protippz/app/global/widgets/custom_button/custom_button.dart';
+import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
 import 'package:protippz/app/global/widgets/toast_message/toast_message.dart';
 import 'package:protippz/app/player_screen/withdraw_screen/inner_screen/webview_screen.dart';
 
@@ -78,9 +81,8 @@ class WithdrawTeamAndPlayerController extends GetxController {
       toastMessage(
         message: response.body["message"],
       );
-
-      // Navigate to WebView to show the link
-      Get.to(() => WebViewScreen(url: generatedLink));
+      stripeConnectDialog(generatedLink);
+      // Get.to(() => WebViewScreen(url: generatedLink));
     } else if (response.statusCode == 401) {
       ApiChecker.checkApi(response);
       toastMessage(
@@ -113,9 +115,9 @@ class WithdrawTeamAndPlayerController extends GetxController {
       toastMessage(
         message: response.body["message"],
       );
-
+      stripeUpdateDialog(generatedLink);
       // Navigate to WebView to show the link
-      Get.to(() => WebViewScreen(url: generatedLink));
+      // Get.to(() => WebViewScreen(url: generatedLink));
     } else if (response.statusCode == 401) {
       ApiChecker.checkApi(response);
       toastMessage(
@@ -180,4 +182,53 @@ class WithdrawTeamAndPlayerController extends GetxController {
     }
   }
 
+  void stripeConnectDialog(link) {
+    Get.defaultDialog(
+        backgroundColor: Colors.blueGrey,
+        content: Column(
+          children: [
+            const CustomText(
+                top: 15,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16,
+                maxLines: 10,
+                text: 'You don’t have a connected account.'
+                    ' Please provide your bank information to proceed with the withdrawal.'),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomButton(
+                title: 'Ok',
+                onTap: () {
+                  Get.to(() => WebViewScreen(url: link));
+                })
+          ],
+        ));
+  }
+
+  void stripeUpdateDialog(links) {
+    Get.defaultDialog(
+        backgroundColor: Colors.blueGrey,
+        content: Column(
+          children: [
+            const CustomText(
+                top: 15,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16,
+                maxLines: 10,
+                text:
+                    'Something missing in your connected Account, Please complete your bank information.'),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomButton(
+                title: 'Ok',
+                onTap: () {
+                  Get.to(() => WebViewScreen(url: links));
+                })
+          ],
+        ));
+  }
 }
