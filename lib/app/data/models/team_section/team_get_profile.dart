@@ -31,29 +31,33 @@ class TeamGetProfile {
 class TeamGetProfileData {
   String? id;
   String? name;
-  String? teamLogo;
-  League? league;
-  String? teamBgImage;
-  String? sport;
-  int? totalTips;
+  String? league;
+  Team? team;
+  String? position;
+  String? playerImage;
+  String? playerBgImage;
+  double? totalTips;
   int? paidAmount;
-  int? dueAmount;
+  double? dueAmount;
   bool? isStripeConnected;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
+  String? invitedPassword;
   User? user;
-  String? stripAccountId;
+  String? username;
   Address? address;
   TaxInfo? taxInfo;
+  String? stripAccountId;
 
   TeamGetProfileData({
     this.id,
     this.name,
-    this.teamLogo,
     this.league,
-    this.teamBgImage,
-    this.sport,
+    this.team,
+    this.position,
+    this.playerImage,
+    this.playerBgImage,
     this.totalTips,
     this.paidAmount,
     this.dueAmount,
@@ -61,10 +65,12 @@ class TeamGetProfileData {
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.invitedPassword,
     this.user,
-    this.stripAccountId,
+    this.username,
     this.address,
     this.taxInfo,
+    this.stripAccountId,
   });
 
   factory TeamGetProfileData.fromRawJson(String str) => TeamGetProfileData.fromJson(json.decode(str));
@@ -74,32 +80,34 @@ class TeamGetProfileData {
   factory TeamGetProfileData.fromJson(Map<String, dynamic> json) => TeamGetProfileData(
     id: json["_id"],
     name: json["name"],
-    teamLogo: json["team_logo"],
-    league: json["league"] is Map<String, dynamic>
-        ? League.fromJson(json["league"])
-        : null,
-    teamBgImage: json["team_bg_image"],
-    sport: json["sport"],
-    totalTips: json["totalTips"],
+    league: json["league"] != null ? jsonEncode(json["league"]) : null,
+    team: json["team"] == null ? null : Team.fromJson(json["team"]),
+    position: json["position"],
+    playerImage: json["player_image"],
+    playerBgImage: json["player_bg_image"],
+    totalTips: json["totalTips"]?.toDouble(),
     paidAmount: json["paidAmount"],
-    dueAmount: json["dueAmount"],
+    dueAmount: json["dueAmount"]?.toDouble(),
     isStripeConnected: json["isStripeConnected"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
     v: json["__v"],
+    invitedPassword: json["invitedPassword"],
     user: json["user"] == null ? null : User.fromJson(json["user"]),
-    stripAccountId: json["stripAccountId"],
+    username: json["username"],
     address: json["address"] == null ? null : Address.fromJson(json["address"]),
     taxInfo: json["taxInfo"] == null ? null : TaxInfo.fromJson(json["taxInfo"]),
+    stripAccountId: json["stripAccountId"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "name": name,
-    "team_logo": teamLogo,
-    "league": league?.toJson(),
-    "team_bg_image": teamBgImage,
-    "sport": sport,
+    "league": league,
+    "team": team?.toJson(),
+    "position": position,
+    "player_image": playerImage,
+    "player_bg_image": playerBgImage,
     "totalTips": totalTips,
     "paidAmount": paidAmount,
     "dueAmount": dueAmount,
@@ -107,10 +115,12 @@ class TeamGetProfileData {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
+    "invitedPassword": invitedPassword,
     "user": user?.toJson(),
-    "stripAccountId": stripAccountId,
+    "username": username,
     "address": address?.toJson(),
     "taxInfo": taxInfo?.toJson(),
+    "stripAccountId": stripAccountId,
   };
 }
 
@@ -150,30 +160,6 @@ class Address {
   };
 }
 
-class League {
-  String? id;
-  String? name;
-
-  League({
-    this.id,
-    this.name,
-  });
-
-  factory League.fromRawJson(String str) => League.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory League.fromJson(Map<String, dynamic> json) => League(
-    id: json["_id"],
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-  };
-}
-
 class TaxInfo {
   String? address;
   String? fullname;
@@ -206,13 +192,37 @@ class TaxInfo {
   };
 }
 
+class Team {
+  String? id;
+  String? name;
+
+  Team({
+    this.id,
+    this.name,
+  });
+
+  factory Team.fromRawJson(String str) => Team.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Team.fromJson(Map<String, dynamic> json) => Team(
+    id: json["_id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "name": name,
+  };
+}
+
 class User {
   String? role;
   String? email;
 
   User({
     this.role,
-    this.email
+    this.email,
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));

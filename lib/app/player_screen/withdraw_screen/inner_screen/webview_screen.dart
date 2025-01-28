@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             });
           },
           onNavigationRequest: (request) {
-            if (request.url.contains("http://localhost:3000/player-withdraw")) {
+            if (request.url.contains("")) {
               _showRedirectDialog();
               return NavigationDecision.prevent;
             }

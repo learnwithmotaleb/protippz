@@ -200,9 +200,11 @@ class TaxInfo {
 
 class User {
   String? role;
+  String? email;
 
   User({
     this.role,
+    this.email
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -211,9 +213,11 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     role: json["role"],
+    email: json["email"],
   );
 
   Map<String, dynamic> toJson() => {
     "role": role,
+    "email": email,
   };
 }
