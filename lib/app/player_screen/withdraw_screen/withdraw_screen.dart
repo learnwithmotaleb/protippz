@@ -102,6 +102,7 @@ class WithdrawScreen extends StatelessWidget {
 
                         if (!isPlayerStripeConnected &&
                             !isTeamStripeConnected) {
+
                           withdrawController.stripeConnect();
                         } else {
                           withdrawController.withdrawAch();
