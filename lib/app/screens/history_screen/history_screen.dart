@@ -69,7 +69,9 @@ class HistoryScreen extends StatelessWidget {
                   final item = historyController.tipsHistoryList[index];
                   return HistoryCard(
                     isImage: true,
-                    imageUrl: "${ApiUrl.netWorkUrl}${item.entity?.playerImage ?? ""}",
+                    imageUrl: item.entity?.playerImage?.isNotEmpty == true
+                        ? "${ApiUrl.netWorkUrl}${item.entity!.playerImage}"
+                        : AppConstants.profileImage,
                     title: item.entity?.name ?? "",
                     date: DateConverter.formatDate(item.createdAt.toString()),
                     points: item.point,
