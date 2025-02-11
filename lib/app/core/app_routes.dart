@@ -34,7 +34,6 @@ import 'package:protippz/app/screens/tipz_screen/tipz_screen.dart';
 import 'package:protippz/app/screens/transaction_screen/transaction_screen.dart';
 
 
-
 class AppRoute {
   AppRoute._();
   ///==================== Initial Routes ====================
