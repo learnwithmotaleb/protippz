@@ -25,12 +25,15 @@ class CustomImageCard extends StatelessWidget {
             height: 105,
             width: 105,
           ),
-          CustomText(
-            top: 10,
-            text: title,
-            color: AppColors.gray500,
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
+          SizedBox(
+            width: 105,
+            child: CustomText(
+              top: 10,
+              text: title,
+              color: AppColors.gray500,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),

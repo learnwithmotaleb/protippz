@@ -79,67 +79,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ///=============================Tippz now =====================
-                      _buildSectionTitle(AppStrings.tippzNow,),
-                      _buildTippzNowSection(),
+                    ///=============================Tippz now =====================
+                    _buildSectionTitle(
+                      AppStrings.tippzNow,
+                    ),
+                    _buildTippzNowSection(),
 
-                      ///============================= Reward======================
-                      _buildRewardzHeader(() {
-                        Get.toNamed(AppRoute.rewardzScreen);
-                      }),
-                      Obx(() {
-                        return  homeController.rewardList.isEmpty
-                            ? const Center(
-                              child: CustomText(
-                                                    text: "No Reward Founded",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.gray500,
-                                                  ),
-                            )
-                            : SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                                homeController.rewardList.length, (index) {
-                              return CustomImageCard(
-                                  imageUrl:
-                                      "${ApiUrl.netWorkUrl}${homeController.rewardList[index].image ?? ""}",
-                                  title:
-                                      homeController.rewardList[index].name ?? "");
-                            }),
-                          ),
-                        );
-                      }),
+                    ///============================= Reward======================
+                    _buildRewardzHeader(() {
+                      Get.toNamed(AppRoute.rewardzScreen);
+                    }),
+                    Rewardz(homeController: homeController),
 
-                      ///=========================Top Sports League==================
-                      _buildSectionTitle(AppStrings.topSportsLeague),
-                      Obx(() {
-                        return _generalController.leagueList.isEmpty
-                            ? const Center(
-                              child: CustomText(
-                                  text: "No League Founded",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.gray500,
-                                ),
-                            )
-                            : SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: List.generate(
-                                      _generalController.leagueList.length, (index) {
-                                    return CustomImageCard(
-                                        imageUrl:
-                                            "${ApiUrl.netWorkUrl}${_generalController.leagueList[index].leagueImage ?? ""}",
-                                        title:
-                                        _generalController.leagueList[index].name ??
-                                                "");
-                                  }),
-                                ),
-                              );
-                      }),
-                    ],
+                    ///=========================Top Sports League==================
+                    _buildSectionTitle(AppStrings.topSportsLeague),
+                    TopSportLeague(generalController: _generalController),
+
+                  ],
                   ),
                 ),
               ],
@@ -223,5 +179,80 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+}
+
+class Rewardz extends StatelessWidget {
+  const Rewardz({
+    super.key,
+    required this.homeController,
+  });
+
+  final HomeController homeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return homeController.rewardList.isEmpty
+          ? const Center(
+              child: CustomText(
+                text: "No Reward Founded",
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.gray500,
+              ),
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children:
+                    List.generate(homeController.rewardList.length, (index) {
+                  return CustomImageCard(
+                      imageUrl:
+                          "${ApiUrl.netWorkUrl}${homeController.rewardList[index].image ?? ""}",
+                      title: homeController.rewardList[index].name ?? "");
+                }),
+              ),
+            );
+    });
+  }
+}
+
+class TopSportLeague extends StatelessWidget {
+  const TopSportLeague({
+    super.key,
+    required GeneralController generalController,
+  }) : _generalController = generalController;
+
+  final GeneralController _generalController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return _generalController.leagueList.isEmpty
+          ? const Center(
+              child: CustomText(
+                text: "No League Founded",
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.gray500,
+              ),
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(_generalController.leagueList.length,
+                    (index) {
+                  return CustomImageCard(
+                      imageUrl: _generalController
+                                  .leagueList[index].leagueImage?.isNotEmpty ==
+                              true
+                          ? "${ApiUrl.netWorkUrl}${_generalController.leagueList[index].leagueImage}"
+                          : AppConstants.profileImage,
+                      title: _generalController.leagueList[index].name ?? "");
+                }),
+              ),
+            );
+    });
   }
 }

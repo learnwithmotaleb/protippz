@@ -65,28 +65,24 @@ class SignInScreen extends StatelessWidget {
                     hinText: AppStrings.enterYourEmailOrUser,
                     title: AppStrings.userNameOrEmail,
                     controller: authController.emailController,
-                    // validator: (v){},
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return AppStrings
                             .enterValidEmailOrUserName; // General error
                       }
 
-                      // Check if input contains "@" to identify email
                       if (value.contains('@')) {
-                        // Email validation
                         if (!AppStrings.emailRegexp.hasMatch(value)) {
                           return AppStrings
-                              .enterValidEmail; // Invalid email message
+                              .enterValidEmail;
                         } else {
-                          return null; // Valid email
+                          return null;
                         }
                       } else {
-                        // Username validation
                         if (value.length < 4) {
-                          return 'UserNameToShort'; // "Username must be at least 4 characters"
+                          return 'UserNameToShort';
                         } else {
-                          return null; // Valid username
+                          return null;
                         }
                       }
                     },
@@ -98,8 +94,8 @@ class SignInScreen extends StatelessWidget {
                   CustomFromCard(
                     hinText: AppStrings.enterYourPassword,
                     title: AppStrings.password,
+                    isPassword: true,
                     controller: authController.passwordController,
-                    // validator: (v){},
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppStrings.passwordMustHaveEightWith;
