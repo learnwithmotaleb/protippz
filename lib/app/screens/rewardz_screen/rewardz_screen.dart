@@ -95,7 +95,11 @@ class _RewardScreenState extends State<RewardScreen> {
                           children: [
                             // Reward Image
                             CustomNetworkImage(
-                              imageUrl: "${ApiUrl.netWorkUrl}${item.image ?? ""}",
+                              imageUrl: item.image?.isNotEmpty ==
+                                  true
+                                  ? "${ApiUrl.netWorkUrl}${item.image ?? ""}"
+                                  : AppConstants.profileImage,
+                              // imageUrl: "${ApiUrl.netWorkUrl}${}",
                               height: 72,
                               width: 73,
                               borderRadius: BorderRadius.circular(8),
