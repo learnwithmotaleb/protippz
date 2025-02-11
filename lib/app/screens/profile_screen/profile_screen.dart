@@ -102,21 +102,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               CustomNetworkImage(
                 boxShape: BoxShape.circle,
-                // imageUrl: AppConstants.profileImage,
-                // imageUrl: data.profileImage != null && data.profileImage!.isNotEmpty
-                //     ? '${ApiUrl.netWorkUrl}${data.profileImage}'
-                //     : AppConstants.profileImage,
-
-                imageUrl: data.profileImage?.isNotEmpty ==
-                    true
+                imageUrl: (data.profileImage != null && data.profileImage!.isNotEmpty)
+                    ? (data.profileImage!.startsWith('https')
                     ? data.profileImage!
-                    .startsWith('https')
-                    ? "${data.profileImage}"
-                    : "${ApiUrl.baseUrl}/${"${data.profileImage}"}"
+                    : "${ApiUrl.baseUrl}/${data.profileImage!}")
                     : AppConstants.profileImage,
                 height: 94.h,
                 width: 94.h,
               ),
+
 
 
               ///=========================Name===============
