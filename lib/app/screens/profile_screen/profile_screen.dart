@@ -34,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
     super.initState();
   }
+
   final ProfileController profileController = Get.find<ProfileController>();
 
   @override

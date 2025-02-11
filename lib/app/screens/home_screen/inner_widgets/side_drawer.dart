@@ -41,44 +41,50 @@ class _SideDrawerState extends State<SideDrawer> {
       child: Column(
         children: [
           // Header Container
-          Container(
-            padding: const EdgeInsets.only(
-              right: 10,
-              top: 30,
-            ),
-            color: AppColors.white50,
-            // height: 180.h,
+          Expanded(
+            flex: 2,
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1.3,
+              padding: const EdgeInsets.only(
+                right: 20,
+                top: 50,
+              ),
+              color: AppColors.white50,
+              // height: 180.h,
 
-            child: Column(
-              children: [
-                Assets.images.ptis.image(),
-                // Scrollable Row Container
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildStatCard(
-                          icon: Assets.icons.dolar,
-                          text: _profileController
-                              .profileModel.value.totalAmount
-                              .toString()),
-                      _buildStatCard(
-                          icon: Assets.icons.star,
-                          text: _profileController.profileModel.value.totalPoint
-                              .toString()),
-                    ],
+              child: Column(
+                children: [
+                  Assets.images.ptis.image(),
+                  // Scrollable Row Container
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _buildStatCard(
+                            icon: Assets.icons.dolar,
+                            text: _profileController
+                                .profileModel.value.totalAmount
+                                .toString()),
+                        _buildStatCard(
+                            icon: Assets.icons.star,
+                            text: _profileController
+                                .profileModel.value.totalPoint
+                                .toString()),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
           // Main Menu
           Expanded(
+            flex: 8,
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               color: AppColors.bg500,
-              child: ListView(
+              child: Column(
                 children: [
                   ///=======================Deposit screen==================
                   CustomMenuCard(
@@ -87,14 +93,6 @@ class _SideDrawerState extends State<SideDrawer> {
                     icon: Assets.icons.deposite.svg(),
                     isDevider: true,
                   ),
-
-                  // ///=======================Withdraw==================
-                  // CustomMenuCard(
-                  //   onTap: () => Get.toNamed(AppRoute.withdrawScreen),
-                  //   title: AppStrings.withdrawFunds,
-                  //   icon: Assets.icons.withdraw.svg(),
-                  //   isDevider: true,
-                  // ),
 
                   ///=======================Transaction==================
                   CustomMenuCard(
