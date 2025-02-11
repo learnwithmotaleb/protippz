@@ -276,7 +276,7 @@ class PaymentController extends GetxController {
     if (response.statusCode == 200) {
       transactionList.value = List<TransactionList>.from(
           response.body["data"]["result"].map((x) => TransactionList.fromJson(x)));
-
+      print("Transaction Length=>>>>>>>>>>>>>>>>>>>>${transactionList.length}");
       setRxRequestStatus(Status.completed);
       refresh();
     } else {

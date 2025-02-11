@@ -56,7 +56,7 @@ class TransactionScreen extends StatelessWidget {
                 );
               }
               return ListView.builder(
-                itemCount: 4,
+                itemCount:  paymentController.transactionList.length,
                 itemBuilder: (context, index) {
                   final item = paymentController.transactionList[index];
                   return HistoryCard(
