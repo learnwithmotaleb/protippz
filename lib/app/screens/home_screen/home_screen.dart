@@ -208,8 +208,11 @@ class Rewardz extends StatelessWidget {
                 children:
                     List.generate(homeController.rewardList.length, (index) {
                   return CustomImageCard(
-                      imageUrl:
-                          "${ApiUrl.netWorkUrl}${homeController.rewardList[index].image ?? ""}",
+
+                      imageUrl: homeController.rewardList[index].image?.isNotEmpty ==
+                          true
+                          ? "${ApiUrl.netWorkUrl}${homeController.rewardList[index].image}"
+                          : AppConstants.profileImage,
                       title: homeController.rewardList[index].name ?? "");
                 }),
               ),
