@@ -122,21 +122,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           children: [
                             // League Image
                             CustomNetworkImage(
-                              imageUrl:
-                                  "${ApiUrl.netWorkUrl}${item.leagueImage ?? ""}",
+                              imageUrl: item.leagueImage?.isNotEmpty == true
+                                  ? "${ApiUrl.netWorkUrl}${item.leagueImage}"
+                                  : AppConstants.profileImage,
+
                               height: 72,
-                              width: 73,
+                              width: 73.w,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             SizedBox(height: 10.h),
                             // League Name
-                            Text(
-                              item.name ?? "",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                color: AppColors.gray500,
-                              ),
+                            SizedBox(
+                              width: 73.w,
+                              child: CustomText(text: item.name ?? "",fontSize: 13,)
                             ),
                           ],
                         ),
