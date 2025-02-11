@@ -122,8 +122,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           children: [
                             // League Image
                             CustomNetworkImage(
-                              imageUrl: item.leagueImage?.isNotEmpty == true
-                                  ? "${ApiUrl.netWorkUrl}${item.leagueImage}"
+
+
+                              imageUrl: item.leagueImage?.isNotEmpty ==
+                                  true
+                                  ? item.leagueImage!
+                                  .startsWith('https')
+                                  ? "${item.leagueImage}"
+                                  : "${ApiUrl.baseUrl}/${"${item.leagueImage}"}"
                                   : AppConstants.profileImage,
 
                               height: 72,
@@ -293,13 +299,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           itemBuilder: (context, index) {
                             final data =
                                 _playerController.selectPlayerList[index];
-                            String imageUrl =
-                                "${ApiUrl.netWorkUrl}${data.playerImage}";
+                            // String imageUrl =
+                            //     "${ApiUrl.netWorkUrl}${data.playerImage}";
+                            //
 
+                            String imageUrl =  data.playerImage?.isNotEmpty ==
+                                true
+                                ? data.playerImage!
+                                .startsWith('https')
+                                ? "${data.playerImage}"
+                                : "${ApiUrl.baseUrl}/${"${data.playerImage}"}"
+                                : AppConstants.profileImage;
                             if (data.playerImage == null ||
                                 data.playerImage!.isEmpty) {
                               imageUrl = AppConstants.profileImage;
                             }
+
 
                             RxBool isBookmarked =
                                 (data.isBookmark ?? false).obs;

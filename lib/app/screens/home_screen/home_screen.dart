@@ -56,11 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ///=====================Home Appbar==================
                 HomeAppBar(
                   scaffoldKey: scaffoldKey,
-                  name: _profileController.profileModel.value.name ?? "",
-                  image: _profileController.profileModel.value.profileImage != null && _profileController.profileModel.value.profileImage!.isNotEmpty
-                      ? "${ApiUrl.netWorkUrl}${_profileController.profileModel.value.profileImage}"
-                      : AppConstants.profileImage, // Use your default image here (local asset or network image)
-                ),
+                name: _profileController.profileModel.value.name ?? "",
+                image: _profileController
+                            .profileModel.value.profileImage?.isNotEmpty ==
+                        true
+                    ? _profileController.profileModel.value.profileImage!
+                            .startsWith('https')
+                        ? "${_profileController.profileModel.value.profileImage}"
+                        : "${ApiUrl.baseUrl}/${"${_profileController.profileModel.value.profileImage}"}"
+                    : AppConstants.profileImage,
+              ),
 
                 SizedBox(height: 10.w),
 
@@ -208,10 +213,13 @@ class Rewardz extends StatelessWidget {
                 children:
                     List.generate(homeController.rewardList.length, (index) {
                   return CustomImageCard(
-
-                      imageUrl: homeController.rewardList[index].image?.isNotEmpty ==
-                          true
-                          ? "${ApiUrl.netWorkUrl}${homeController.rewardList[index].image}"
+                      imageUrl: homeController
+                                  .rewardList[index].image?.isNotEmpty ==
+                              true
+                          ? homeController.rewardList[index].image!
+                                  .startsWith('https')
+                              ? "${homeController.rewardList[index].image}"
+                              : "${ApiUrl.baseUrl}/${"${homeController.rewardList[index].image}"}"
                           : AppConstants.profileImage,
                       title: homeController.rewardList[index].name ?? "");
                 }),
@@ -247,10 +255,18 @@ class TopSportLeague extends StatelessWidget {
                 children: List.generate(_generalController.leagueList.length,
                     (index) {
                   return CustomImageCard(
+
+
                       imageUrl: _generalController
-                                  .leagueList[index].leagueImage?.isNotEmpty ==
-                              true
-                          ? "${ApiUrl.netWorkUrl}${_generalController.leagueList[index].leagueImage}"
+                          .leagueList[index].leagueImage?.isNotEmpty ==
+                          true
+                          ? _generalController
+                          .leagueList[index].leagueImage!
+                          .startsWith('https')
+                          ? "${_generalController
+                          .leagueList[index].leagueImage}"
+                          : "${ApiUrl.baseUrl}/${"${_generalController
+                          .leagueList[index].leagueImage}"}"
                           : AppConstants.profileImage,
                       title: _generalController.leagueList[index].name ?? "");
                 }),
