@@ -11,11 +11,23 @@ import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 
-class TermsConditionScreen extends StatelessWidget {
+class TermsConditionScreen extends StatefulWidget {
   TermsConditionScreen({super.key});
 
+  @override
+  State<TermsConditionScreen> createState() => _TermsConditionScreenState();
+}
+
+class _TermsConditionScreenState extends State<TermsConditionScreen> {
   final InfoController infoController = Get.find<InfoController>();
 
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      infoController.getTerms();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
