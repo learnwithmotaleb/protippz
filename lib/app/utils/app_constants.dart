@@ -10,8 +10,10 @@ class AppConstants {
   static String stripePublishableKey = "pk_test_51NEO3gEODmIkbEGgyx7lG0t9UooE6pPTiE2fLb0cLVlR9OqK8cki4fkp82R4qHgkzBK1mW3h72RLfRkZdEXI9LDQ00zO32x6Mo";
   static String isRememberMe = "isRememberMe";
   //=======================Paypal==================
-  static String clientId = "AZYc33dTh6N8OxVI9QdcfAIHqZjl7tFpV_lH1AKDJlurVuv1h1Do92CE9bCWnKSmJpPd4JbKlYHW_tT2";
-  static String clientSecret = "EJ6xzlWDhKSfIYO9K0zlO2bhh5-9abyYWqbG65nYCAoXu3V_Nw3T9Mh32prOZApMt5rn0bCEvxETFYT8";
+  static String clientId = "Ac3Goaw8Yq3Q6IwydXM978Pal56HsTNzmQdqhhnqobrHyGR6rDoL_Q0DVI2xuih3oLz3UkVbVVry2mM1";
+  // static String clientId = "AZYc33dTh6N8OxVI9QdcfAIHqZjl7tFpV_lH1AKDJlurVuv1h1Do92CE9bCWnKSmJpPd4JbKlYHW_tT2";
+  static String clientSecret = "EIltQb7_hiXrI13ZvA7DGofNnEuzBYqS4QDXfbxDEpR7-RIpSLNz7Bon2NaOtEv_Ue1pihn3zWFX_CXA";
+  // static String clientSecret = "EJ6xzlWDhKSfIYO9K0zlO2bhh5-9abyYWqbG65nYCAoXu3V_Nw3T9Mh32prOZApMt5rn0bCEvxETFYT8";
 
 
 
