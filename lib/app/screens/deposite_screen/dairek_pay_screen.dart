@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/controller/dairek_pay_controller.dart';
-import 'package:protippz/app/controller/player_controller.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/global/controllers/genarel_controller/genarel_controller.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
@@ -23,10 +22,8 @@ class DairekPayScreen extends StatelessWidget {
       "Stripe".obs; // To track the selected payment method
   final GeneralController generalController = Get.find<GeneralController>();
 
-  // final PlayerController _playerController = Get.find<PlayerController>();
   final List<dynamic> arguments = Get.arguments;
 
-  // Access individual arguments by index
   final String id = Get.arguments[0];   // Assuming 'id' is at index 0
   final String type = Get.arguments[1];
   // final String id = Get.arguments ?? ''; // Default to empty string if id is not passed

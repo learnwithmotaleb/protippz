@@ -122,21 +122,25 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           children: [
                             // League Image
                             CustomNetworkImage(
-                              imageUrl:
-                                  "${ApiUrl.netWorkUrl}${item.leagueImage ?? ""}",
+
+
+                              imageUrl: item.leagueImage?.isNotEmpty ==
+                                  true
+                                  ? item.leagueImage!
+                                  .startsWith('https')
+                                  ? "${item.leagueImage}"
+                                  : "${ApiUrl.baseUrl}/${"${item.leagueImage}"}"
+                                  : AppConstants.profileImage,
+
                               height: 72,
-                              width: 73,
+                              width: 73.w,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             SizedBox(height: 10.h),
                             // League Name
-                            Text(
-                              item.name ?? "",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                color: AppColors.gray500,
-                              ),
+                            SizedBox(
+                              width: 73.w,
+                              child: CustomText(text: item.name ?? "",fontSize: 13,)
                             ),
                           ],
                         ),
@@ -295,13 +299,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           itemBuilder: (context, index) {
                             final data =
                                 _playerController.selectPlayerList[index];
-                            String imageUrl =
-                                "${ApiUrl.netWorkUrl}${data.playerImage}";
+                            // String imageUrl =
+                            //     "${ApiUrl.netWorkUrl}${data.playerImage}";
+                            //
 
+                            String imageUrl =  data.playerImage?.isNotEmpty ==
+                                true
+                                ? data.playerImage!
+                                .startsWith('https')
+                                ? "${data.playerImage}"
+                                : "${ApiUrl.baseUrl}/${"${data.playerImage}"}"
+                                : AppConstants.profileImage;
                             if (data.playerImage == null ||
                                 data.playerImage!.isEmpty) {
                               imageUrl = AppConstants.profileImage;
                             }
+
 
                             RxBool isBookmarked =
                                 (data.isBookmark ?? false).obs;

@@ -34,80 +34,82 @@ class DepositeScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(
           () {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomText(
-                  top: 10,
-                  text: "Select Amount :",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.gray500,
-                  bottom: 20,
-                ),
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomText(
+                    top: 10,
+                    text: "Select Amount :",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.gray500,
+                    bottom: 20,
+                  ),
 
-                CustomTextField(
-                  inputTextStyle: const TextStyle(color: Colors.black),
-                  hintText: "Type Amount....",
-                  textEditingController: amountController,  // Assign controller to capture the amount
-                  fillColor: AppColors.white50,
-                  fieldBorderColor: AppColors.gray500,
-                ),
+                  CustomTextField(
+                    inputTextStyle: const TextStyle(color: Colors.black),
+                    hintText: "Type Amount....",
+                    textEditingController: amountController,  // Assign controller to capture the amount
+                    fillColor: AppColors.white50,
+                    fieldBorderColor: AppColors.gray500,
+                  ),
 
-                ///===========================Deposit Options=======================
-                const CustomText(
-                  top: 10,
-                  text: "Choose Payment Option :",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.gray500,
-                  bottom: 20,
-                ),
+                  ///===========================Deposit Options=======================
+                  const CustomText(
+                    top: 10,
+                    text: "Choose Payment Option :",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.gray500,
+                    bottom: 20,
+                  ),
 
-                ///==============================Stripe=====================
-                CustomPaymentCard(
-                  title: "Card",
-                  icon: Assets.images.stripee.image(),
-                  isSelected: selectedPaymentMethod.value == "Stripe",
-                  onTap: () {
-                    selectedPaymentMethod.value = "Stripe";  // Set selected payment method to Stripe
-                  },
-                ),
+                  ///==============================Stripe=====================
+                  CustomPaymentCard(
+                    title: "Card",
+                    icon: Assets.images.stripee.image(),
+                    isSelected: selectedPaymentMethod.value == "Stripe",
+                    onTap: () {
+                      selectedPaymentMethod.value = "Stripe";  // Set selected payment method to Stripe
+                    },
+                  ),
 
-                ///===========================Paypal=======================
-                CustomPaymentCard(
-                  title: "Paypal",
-                  icon: Assets.images.paypal.image(),
-                  isSelected: selectedPaymentMethod.value == "Paypal",
-                  onTap: () {
-                    selectedPaymentMethod.value = "Paypal";  // Set selected payment method to PayPal
-                  },
-                ),
+                  ///===========================Paypal=======================
+                  CustomPaymentCard(
+                    title: "Paypal",
+                    icon: Assets.images.paypal.image(),
+                    isSelected: selectedPaymentMethod.value == "Paypal",
+                    onTap: () {
+                      selectedPaymentMethod.value = "Paypal";  // Set selected payment method to PayPal
+                    },
+                  ),
 
-                Gap(20.h),
+                  Gap(20.h),
 
-                ///=============================Continue Button======================
-                CustomButton(
-                  isRadius: true,
-                  onTap: () {
-                    double amount = double.tryParse(amountController.text) ?? 0;
+                  ///=============================Continue Button======================
+                  CustomButton(
+                    isRadius: true,
+                    onTap: () {
+                      double amount = double.tryParse(amountController.text) ?? 0;
 
-                    if (amount > 0) {
-                      if (selectedPaymentMethod.value == "Stripe") {
-                        // Call Stripe payment method
-                        paymentController.makePayment(amount: (amount).toInt());  // Convert to cents for Stripe
-                      } else if (selectedPaymentMethod.value == "Paypal") {
-                        // Call PayPal payment method
-                        paymentController.paymentPaypal(amount: amount);
+                      if (amount > 0) {
+                        if (selectedPaymentMethod.value == "Stripe") {
+                          // Call Stripe payment method
+                          paymentController.makePayment(amount: (amount).toInt());  // Convert to cents for Stripe
+                        } else if (selectedPaymentMethod.value == "Paypal") {
+                          // Call PayPal payment method
+                          paymentController.paymentPaypal(amount: amount);
+                        }
+                      } else {
+                        toastMessage(message: "Please enter a valid amount");
                       }
-                    } else {
-                      toastMessage(message: "Please enter a valid amount");
-                    }
-                  },
-                  title: AppStrings.continues,
-                  fillColor: AppColors.green500,
-                )
-              ],
+                    },
+                    title: AppStrings.continues,
+                    fillColor: AppColors.green500,
+                  )
+                ],
+              ),
             );
           }
         ),

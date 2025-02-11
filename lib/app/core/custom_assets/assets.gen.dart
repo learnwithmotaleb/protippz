@@ -12,6 +12,17 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsAnimationGen {
+  const $AssetsAnimationGen();
+
+  /// File path: assets/animation/prizeanimation.gif
+  AssetGenImage get prizeanimation =>
+      const AssetGenImage('assets/animation/prizeanimation.gif');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [prizeanimation];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -193,6 +204,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/check.png
   AssetGenImage get check => const AssetGenImage('assets/images/check.png');
 
+  /// File path: assets/images/chosse.png
+  AssetGenImage get chosse => const AssetGenImage('assets/images/chosse.png');
+
   /// File path: assets/images/earning.png
   AssetGenImage get earning => const AssetGenImage('assets/images/earning.png');
 
@@ -216,6 +230,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/playerz.png
   AssetGenImage get playerz => const AssetGenImage('assets/images/playerz.png');
 
+  /// File path: assets/images/protips.png
+  AssetGenImage get protips => const AssetGenImage('assets/images/protips.png');
+
   /// File path: assets/images/pt.png
   AssetGenImage get pt => const AssetGenImage('assets/images/pt.png');
 
@@ -224,6 +241,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/reward.png
   AssetGenImage get reward => const AssetGenImage('assets/images/reward.png');
+
+  /// File path: assets/images/send.png
+  AssetGenImage get send => const AssetGenImage('assets/images/send.png');
 
   /// File path: assets/images/star_selected.png
   AssetGenImage get starSelected =>
@@ -253,6 +273,7 @@ class $AssetsImagesGen {
         ach,
         bgImage,
         check,
+        chosse,
         earning,
         indiana22,
         logo,
@@ -260,9 +281,11 @@ class $AssetsImagesGen {
         paypal,
         player,
         playerz,
+        protips,
         pt,
         ptis,
         reward,
+        send,
         starSelected,
         startUnselected,
         stripe,
@@ -276,6 +299,7 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const $AssetsAnimationGen animation = $AssetsAnimationGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }

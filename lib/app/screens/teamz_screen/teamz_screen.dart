@@ -123,21 +123,26 @@ class _TeamScreenState extends State<TeamScreen> {
                           children: [
                             // League Image
                             CustomNetworkImage(
-                              imageUrl:
-                                  "${ApiUrl.netWorkUrl}${item.leagueImage ?? ""}",
+
+                              imageUrl: item.leagueImage?.isNotEmpty ==
+                                  true
+                                  ? item.leagueImage!
+                                  .startsWith('https')
+                                  ? "${item.leagueImage}"
+                                  : "${ApiUrl.baseUrl}/${"${item.leagueImage}"}"
+                                  : AppConstants.profileImage,
+                              // imageUrl: item.leagueImage?.isNotEmpty == true
+                              //     ? "${ApiUrl.netWorkUrl}${item.leagueImage}"
+                              //     : AppConstants.profileImage,
                               height: 72,
-                              width: 73,
+                              width: 73.w,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             SizedBox(height: 10.h),
                             // League Name
-                            Text(
-                              item.name ?? "",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                color: AppColors.gray500,
-                              ),
+                            SizedBox(
+                                width: 73.w,
+                                child: CustomText(text: item.name ?? "",fontSize: 13,)
                             ),
                           ],
                         ),
@@ -296,7 +301,16 @@ class _TeamScreenState extends State<TeamScreen> {
                   ),
                   itemBuilder: (context, index) {
                     var data = teamController.selectTeamList[index];
-                    String imageUrl = "${ApiUrl.netWorkUrl}${data.teamLogo}";
+                    String imageUrl = data.teamLogo?.isNotEmpty ==
+                    true
+                    ? data.teamLogo!
+                        .startsWith('https')
+                    ? "${data.teamLogo}"
+                        : "${ApiUrl.baseUrl}/${"${data.teamLogo}"}"
+                        : AppConstants.profileImage;
+
+                    // String imageUrl =
+                    //     "${ApiUrl.netWorkUrl}${data.teamLogo}";
                     if (data.teamLogo == null || data.teamLogo!.isEmpty) {
                       imageUrl = AppConstants.profileImage; // Default image
                     }

@@ -21,7 +21,7 @@ class CustomMenuCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: [
             Row(

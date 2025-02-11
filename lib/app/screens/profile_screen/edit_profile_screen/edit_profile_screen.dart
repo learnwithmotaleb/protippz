@@ -27,10 +27,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    profileController.fullNameController.text = profileController.profileModel.value.name!;
-    profileController.phoneNumberController.text = profileController.profileModel.value.phone!;
-    profileController.addressController.text = profileController.profileModel.value.address!;
-    profileController.image.value= profileController.profileModel.value.profileImage!;
+    profileController.fullNameController.text = profileController.profileModel.value.name??'';
+    profileController.phoneNumberController.text = profileController.profileModel.value.phone??'';
+    profileController.addressController.text = profileController.profileModel.value.address??'';
+    profileController.image.value= profileController.profileModel.value.profileImage??'';
     super.initState();
   }
   @override
@@ -51,54 +51,49 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: GestureDetector(
-                      onTap: () {
-                        profileController.selectImage();
-                      },
-                      child: profileController.image.isNotEmpty
-                          ? Container(
-                              height: 94.h,
-                              width: 94.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey,
-                                image: DecorationImage(
-                                  image: FileImage(
-                                    File(profileController.image.value),
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : Stack(
-                              children: [
-                                CustomNetworkImage(
-                                  boxShape: BoxShape.circle,
-                                  imageUrl: AppConstants.profileImage,
-                                  backgroundColor: AppColors.green50,
-                                  // imageUrl: (profileController
-                                  //     .profileModel.value.profileImage
-                                  //     ?.startsWith('https') ??
-                                  //     false)
-                                  //     ? profileController.profileModel.value
-                                  //     .profileImage ??
-                                  //     ""
-                                  //     : "${ApiUrl.baseUrl}${profileController.profileModel.value?.profileImage ?? ""}",
-                                  height: 94.h,
-                                  width: 94.w,
-                                ),
-                                Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                        height: 30.h,
-                                        width: 30.w,
-                                        decoration: const BoxDecoration(
-                                            color: AppColors.green500,
-                                            shape: BoxShape.circle),
-                                        child: Assets.icons.photoCamera.svg()))
-                              ],
-                            )),
+                    onTap: () {
+                      profileController.selectImage();
+                    },
+                    child: (profileController.image.value.isNotEmpty)
+                        ? Container(
+                      height: 94.h,
+                      width: 94.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                        image: DecorationImage(
+                          image: FileImage(File(profileController.image.value)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                        : Stack(
+                      children: [
+                        CustomNetworkImage(
+                          boxShape: BoxShape.circle,
+                          imageUrl: AppConstants.profileImage,
+                          backgroundColor: AppColors.green50,
+                          height: 94.h,
+                          width: 94.w,
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            height: 30.h,
+                            width: 30.w,
+                            decoration: const BoxDecoration(
+                              color: AppColors.green500,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Assets.icons.photoCamera.svg(),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
+
 
                 ///================== Form Fields ==================
                 Column(

@@ -161,7 +161,6 @@ class HomeController extends GetxController {
 
     if (response.statusCode == 201) {
       emailController.clear();
-      // Save the rewardId globally (using RxString for reactive state)
       this.rewardIdd.value = response.body['data']['_id'];
       print("Id=================================$rewardIdd");
 

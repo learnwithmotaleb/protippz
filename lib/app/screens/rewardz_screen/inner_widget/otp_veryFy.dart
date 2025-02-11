@@ -57,43 +57,41 @@ class OtpVeryEmail extends StatelessWidget {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               bottom: 10,
-            ),       Expanded(
-              child: PinCodeTextField(
-                textStyle: const TextStyle(color: AppColors.gray500),
-                keyboardType: TextInputType.phone,
-                autoDisposeControllers: false,
-                cursorColor: AppColors.gray500,
-                appContext: context,
-                controller: pinController,
-                onCompleted: (value) {
-                  homeController.resetCodeInput = value;
-                },
-                validator: (value) {
-                  if (value != null && value.length == 5) {
-                    return null;
-                  } else {
-                    return "Please enter a valid 5-digit OTP code";
-                  }
-                },
-                autoFocus: true,
-                pinTheme: PinTheme(
-                  disabledColor: Colors.transparent,
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(12),
-                  fieldHeight: 49.h,
-                  fieldWidth: 47.w,
-                  activeFillColor: AppColors.white50,
-                  selectedFillColor: AppColors.white50,
-                  inactiveFillColor: AppColors.white50,
-                  borderWidth: 0.5,
-                  activeBorderWidth: 2.0, // Thicker border when active
-                  selectedColor: AppColors.blue500, // Border color when selected
-                  inactiveColor: AppColors.gray300, // Border color when inactive
-                  activeColor: AppColors.blue500, // Active border color
-                ),
-                length: 5, // Ensure length is 6 for OTP input
-                enableActiveFill: true,
+            ),       PinCodeTextField(
+              textStyle: const TextStyle(color: AppColors.gray500),
+              keyboardType: TextInputType.phone,
+              autoDisposeControllers: false,
+              cursorColor: AppColors.gray500,
+              appContext: context,
+              controller: pinController,
+              onCompleted: (value) {
+                homeController.resetCodeInput = value;
+              },
+              validator: (value) {
+                if (value != null && value.length == 5) {
+                  return null;
+                } else {
+                  return "Please enter a valid 5-digit OTP code";
+                }
+              },
+              autoFocus: true,
+              pinTheme: PinTheme(
+                disabledColor: Colors.transparent,
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(12),
+                fieldHeight: 49.h,
+                fieldWidth: 35.w,
+                activeFillColor: AppColors.white50,
+                selectedFillColor: AppColors.white50,
+                inactiveFillColor: AppColors.white50,
+                borderWidth: 0.5,
+                activeBorderWidth: 2.0, // Thicker border when active
+                selectedColor: AppColors.blue500, // Border color when selected
+                inactiveColor: AppColors.gray300, // Border color when inactive
+                activeColor: AppColors.blue500, // Active border color
               ),
+              length: 5, // Ensure length is 6 for OTP input
+              enableActiveFill: true,
             ),
 
             SizedBox(height: 20.h),

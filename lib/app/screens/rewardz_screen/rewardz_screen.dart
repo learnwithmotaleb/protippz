@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/controller/home_controller.dart';
+import 'package:protippz/app/controller/profile_controller.dart';
 import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
 import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
@@ -29,13 +30,15 @@ class RewardScreen extends StatefulWidget {
 
 class _RewardScreenState extends State<RewardScreen> {
   final HomeController homeController = Get.find<HomeController>();
-
+  final ProfileController profileController = Get.find<ProfileController>();
   final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    // Ensure that the first reward is selected when the screen is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      profileController.getProfile();
+    });
     if (homeController.rewardList.isNotEmpty) {
       homeController.selectedIndex.value = 0; // Select the first reward
       homeController.selectedReward(id: homeController.rewardList[0].id ?? ""); // Fetch the data for the selected reward
@@ -92,7 +95,11 @@ class _RewardScreenState extends State<RewardScreen> {
                           children: [
                             // Reward Image
                             CustomNetworkImage(
-                              imageUrl: "${ApiUrl.netWorkUrl}${item.image ?? ""}",
+                              imageUrl: item.image?.isNotEmpty ==
+                                  true
+                                  ? "${ApiUrl.netWorkUrl}${item.image ?? ""}"
+                                  : AppConstants.profileImage,
+                              // imageUrl: "${ApiUrl.netWorkUrl}${}",
                               height: 72,
                               width: 73,
                               borderRadius: BorderRadius.circular(8),
@@ -205,12 +212,19 @@ class _RewardScreenState extends State<RewardScreen> {
                       describe: data.description ?? "",
                       points: data.pointRequired.toString(),
                       onTap: () {
-                        if (data.category?.deliveryOption == "Shipping Address") {
-                          whenShirtDialog(context);
-                        } else if (data.category?.deliveryOption == "Email") {
-                          infoDialogue(context);
+                        var userPoint = profileController.profileModel.value.totalPoint;
+
+                        if (userPoint! >= data.pointRequired!.toInt()) { // ইউজারের পয়েন্ট যথেষ্ট কি না চেক
+                          if (data.category?.deliveryOption == "Shipping Address") {
+                            whenShirtDialog(context);
+                          } else if (data.category?.deliveryOption == "Email") {
+                            infoDialogue(context);
+                          }
+                        } else {
+                          Get.snackbar("Insufficient Points", "You don't have enough points.");
                         }
                       },
+
                     );
                   },
                 );

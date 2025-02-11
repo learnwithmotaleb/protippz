@@ -158,8 +158,16 @@ class FavoriteScreen extends StatelessWidget {
 
                       ///================================Player=========================
                       return CustomPlayerCard(
-                        imageUrl:
-                            "${ApiUrl.netWorkUrl}${playerData.player?.playerImage ?? ""}",
+                        imageUrl: playerData.player?.playerImage?.isNotEmpty ==
+                            true
+                            ? playerData.player!.playerImage
+                            !.startsWith('https')
+                            ? "${playerData.player?.playerImage}"
+                            : "${ApiUrl.baseUrl}/${"${playerData.player?.playerImage}"}"
+                            : AppConstants.profileImage,
+                        // imageUrl: playerData.player?.playerImage?.isNotEmpty == true
+                        //     ? "${ApiUrl.netWorkUrl}${playerData.player?.playerImage}"
+                        //     : AppConstants.profileImage,
                         name: playerData.player?.name ?? "",
                         team: playerData.player?.team?.name ?? "",
                         position: playerData.player?.position ?? "",
@@ -193,8 +201,16 @@ class FavoriteScreen extends StatelessWidget {
 
                       ///=============================Team==========================
                       return CustomTeamCard(
-                        imageUrl:
-                            "${ApiUrl.netWorkUrl}${teamData.team?.teamLogo ?? ""}",
+                        imageUrl: teamData.team?.teamLogo?.isNotEmpty ==
+                            true
+                            ? teamData.team!.teamLogo
+                            !.startsWith('https')
+                            ? "${teamData.team?.teamLogo}"
+                            : "${ApiUrl.baseUrl}/${"${teamData.team?.teamLogo}"}"
+                            : AppConstants.profileImage,
+                        // imageUrl: teamData.team?.teamLogo?.isNotEmpty == true
+                        //     ? "${ApiUrl.netWorkUrl}${teamData.team?.teamLogo}"
+                        //     : AppConstants.profileImage,
                         name: teamData.team?.name ?? "",
                         sport: teamData.team?.league?.sport ?? "",
                         onTap: () {
