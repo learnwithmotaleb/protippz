@@ -31,19 +31,24 @@ android {
     }
 
     signingConfigs {
-        debug {
+        release {
             keyAlias "uploadkeystore"
             keyPassword "123456"
             storeFile file('upload-keystore.jks')
             storePassword "123456"
         }
     }
+//    buildTypes {
+//        release {
+//            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.release
+//        }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 
