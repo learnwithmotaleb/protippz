@@ -201,8 +201,7 @@ class _RewardScreenState extends State<RewardScreen> {
                     crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
                     crossAxisSpacing: 16.w,
                     mainAxisSpacing: 16.h,
-                    // mainAxisExtent: MediaQuery.of(context).size.height >600?280:400
-                    childAspectRatio: 1 / 2,
+                    childAspectRatio: 1 / 1.9,
                   ),
                   itemBuilder: (context, index) {
                     var data = homeController.selectRewardList[index];
@@ -214,7 +213,7 @@ class _RewardScreenState extends State<RewardScreen> {
                       onTap: () {
                         var userPoint = profileController.profileModel.value.totalPoint;
 
-                        if (userPoint! >= data.pointRequired!.toInt()) { // ইউজারের পয়েন্ট যথেষ্ট কি না চেক
+                        if (userPoint! >= data.pointRequired!.toInt()) {
                           if (data.category?.deliveryOption == "Shipping Address") {
                             whenShirtDialog(context);
                           } else if (data.category?.deliveryOption == "Email") {

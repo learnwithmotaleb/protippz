@@ -81,102 +81,104 @@ class _SideDrawerState extends State<SideDrawer> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               color: AppColors.bg500,
-              child: Column(
-                children: [
-                  ///=======================Deposit screen==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.depositeScreen),
-                    title: AppStrings.depositeFund,
-                    icon: Assets.icons.deposite.svg(),
-                    isDevider: true,
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ///=======================Deposit screen==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.depositeScreen),
+                      title: AppStrings.depositeFund,
+                      icon: Assets.icons.deposite.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Transaction==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.transactionScreen),
-                    title: AppStrings.transactionLog,
-                    icon: Assets.icons.transactionLog.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Transaction==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.transactionScreen),
+                      title: AppStrings.transactionLog,
+                      icon: Assets.icons.transactionLog.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Invite==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.inviteScreen),
-                    title: AppStrings.inviteFriends,
-                    icon: Assets.icons.inviteFriends.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Invite==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.inviteScreen),
+                      title: AppStrings.inviteFriends,
+                      icon: Assets.icons.inviteFriends.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Faq==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.faqScreen),
-                    title: AppStrings.faqs,
-                    icon: Assets.icons.faqs.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Faq==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.faqScreen),
+                      title: AppStrings.faqs,
+                      icon: Assets.icons.faqs.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Contact==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.contactScreen),
-                    title: AppStrings.contactUs,
-                    icon: Assets.icons.contacts.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Contact==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.contactScreen),
+                      title: AppStrings.contactUs,
+                      icon: Assets.icons.contacts.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Terms==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.termsConditionScreen),
-                    title: AppStrings.termsAndCondition,
-                    icon: Assets.icons.terms.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Terms==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.termsConditionScreen),
+                      title: AppStrings.termsAndCondition,
+                      icon: Assets.icons.terms.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================Privacy==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.privacyPolicyScreen),
-                    title: AppStrings.privacyPolicy,
-                    icon: Assets.icons.privacy.svg(),
-                    isDevider: true,
-                  ),
+                    ///=======================Privacy==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.privacyPolicyScreen),
+                      title: AppStrings.privacyPolicy,
+                      icon: Assets.icons.privacy.svg(),
+                      isDevider: true,
+                    ),
 
-                  ///=======================setting==================
-                  CustomMenuCard(
-                    onTap: () => Get.toNamed(AppRoute.settingScreen),
-                    title: AppStrings.settings,
-                    icon: Assets.icons.settings.svg(),
-                    isDevider: true,
-                  ),
-                  Gap(50.h),
+                    ///=======================setting==================
+                    CustomMenuCard(
+                      onTap: () => Get.toNamed(AppRoute.settingScreen),
+                      title: AppStrings.settings,
+                      icon: Assets.icons.settings.svg(),
+                      isDevider: true,
+                    ),
+                    Gap(50.h),
 
-                  ///=======================logout==================
-                  CustomMenuCard(
-                    onTap: () {
-                      permissionPopUp(
-                          title: 'Are you sure you want to log out',
-                          context: context,
-                          ontapNo: () {
-                            Get.back();
-                          },
-                          ontapYes: () async {
-                            GoogleSignInService.logout();
-                            await SharePrefsHelper.remove(
-                                AppConstants.bearerToken);
-                            await SharePrefsHelper.remove(
-                                AppConstants.profileID);
+                    ///=======================logout==================
+                    CustomMenuCard(
+                      onTap: () {
+                        permissionPopUp(
+                            title: 'Are you sure you want to log out',
+                            context: context,
+                            ontapNo: () {
+                              Get.back();
+                            },
+                            ontapYes: () async {
+                              GoogleSignInService.logout();
+                              await SharePrefsHelper.remove(
+                                  AppConstants.bearerToken);
+                              await SharePrefsHelper.remove(
+                                  AppConstants.profileID);
 
-                            print(
-                                'remove token========================"${AppConstants.bearerToken}"');
-                            print(
-                                'remove profileId========================"${AppConstants.profileID}"');
+                              print(
+                                  'remove token========================"${AppConstants.bearerToken}"');
+                              print(
+                                  'remove profileId========================"${AppConstants.profileID}"');
 
-                            Get.offAllNamed(AppRoute.signInScreen);
-                          });
-                    },
-                    title: AppStrings.logout,
-                    icon: Assets.icons.logout.svg(),
-                    isDevider: false,
-                  ),
-                ],
+                              Get.offAllNamed(AppRoute.signInScreen);
+                            });
+                      },
+                      title: AppStrings.logout,
+                      icon: Assets.icons.logout.svg(),
+                      isDevider: false,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
