@@ -297,7 +297,7 @@ class _TeamScreenState extends State<TeamScreen> {
                         MediaQuery.of(context).size.width > 600 ? 3 : 2,
                     crossAxisSpacing: 16.w,
                     mainAxisSpacing: 16.h,
-                    childAspectRatio: 1 / 2,
+                    childAspectRatio: 1 /1.9,
                   ),
                   itemBuilder: (context, index) {
                     var data = teamController.selectTeamList[index];
