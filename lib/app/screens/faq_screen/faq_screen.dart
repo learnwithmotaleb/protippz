@@ -43,6 +43,15 @@ class FaqScreen extends StatelessWidget {
             );
 
           case Status.completed:
+            if (infoController.faqList.isEmpty) {
+              return const Center(
+                child: CustomText(
+                  text: "No Data found",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              );
+            }
             return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: infoController.faqList.length,
@@ -50,7 +59,8 @@ class FaqScreen extends StatelessWidget {
                 final item = infoController.faqList[index];
                 return Obx(() {
                   // Check if the current FAQ is selected
-                  final isSelected = infoController.selectedIndex.value == index;
+                  final isSelected =
+                      infoController.selectedIndex.value == index;
 
                   return Container(
                     margin: const EdgeInsets.all(10),

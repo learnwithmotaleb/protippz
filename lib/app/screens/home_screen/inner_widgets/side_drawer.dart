@@ -41,40 +41,37 @@ class _SideDrawerState extends State<SideDrawer> {
       child: Column(
         children: [
           // Header Container
-          Expanded(
-            flex: 2,
-            child: Container(
-              width: MediaQuery.of(context).size.width / 1.3,
-              padding: const EdgeInsets.only(
-                right: 20,
-                top: 50,
-              ),
-              color: AppColors.white50,
-              // height: 180.h,
+          Container(
+            width: MediaQuery.of(context).size.width / 1.3,
+            padding: const EdgeInsets.only(
+              right: 20,
+              top: 50,
+            ),
+            color: AppColors.white50,
+            // height: 180.h,
 
-              child: Column(
-                children: [
-                  Assets.images.ptis.image(),
-                  // Scrollable Row Container
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        _buildStatCard(
-                            icon: Assets.icons.dolar,
-                            text: _profileController
-                                .profileModel.value.totalAmount
-                                .toString()),
-                        _buildStatCard(
-                            icon: Assets.icons.star,
-                            text: _profileController
-                                .profileModel.value.totalPoint
-                                .toString()),
-                      ],
-                    ),
+            child: Column(
+              children: [
+                Assets.images.ptis.image(),
+                // Scrollable Row Container
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildStatCard(
+                          icon: Assets.icons.dolar,
+                          text: _profileController
+                              .profileModel.value.totalAmount
+                              .toString()),
+                      _buildStatCard(
+                          icon: Assets.icons.star,
+                          text: _profileController
+                              .profileModel.value.totalPoint
+                              .toString()),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
