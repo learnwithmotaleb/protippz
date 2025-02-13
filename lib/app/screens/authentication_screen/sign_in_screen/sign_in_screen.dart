@@ -184,7 +184,7 @@ class SignInScreen extends StatelessWidget {
                     firstText: AppStrings.dontHaveAnAccount,
                     linkText: AppStrings.signUp,
                     linkRoute: AppRoute
-                        .signUpScreen, // Route you want to navigate to on tap
+                        .signUpScreen,
                   ),
                 ],
               ),

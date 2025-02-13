@@ -286,38 +286,31 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     // Responsive GridView
                     return LayoutBuilder(
                       builder: (context, constraints) {
-                        int crossAxisCount = constraints.maxWidth > 640 ? 3 : 2;
+                        int crossAxisCount = constraints.maxWidth > 640 ? 3 : 2; // Adjust columns based on width
+                        double cardWidth = constraints.maxWidth / crossAxisCount;
+                        double cardHeight = constraints.maxHeight / 3; // Adjust height of cards dynamically
+
+                        // Calculate dynamic childAspectRatio based on width and height of the card
+                        double childAspectRatio = cardWidth / cardHeight;
+
                         return GridView.builder(
                           itemCount: _playerController.selectPlayerList.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: crossAxisCount,
                             crossAxisSpacing: 16.w,
                             mainAxisSpacing: 16.h,
-                            childAspectRatio: 1 / 2.2,
+                            childAspectRatio: 1 / 2, // Use the dynamic ratio
                           ),
                           itemBuilder: (context, index) {
-                            final data =
-                                _playerController.selectPlayerList[index];
-                            // String imageUrl =
-                            //     "${ApiUrl.netWorkUrl}${data.playerImage}";
-                            //
+                            final data = _playerController.selectPlayerList[index];
 
-                            String imageUrl =  data.playerImage?.isNotEmpty ==
-                                true
+                            String imageUrl = data.playerImage?.isNotEmpty == true
+                                ? data.playerImage!.startsWith('https')
                                 ? data.playerImage!
-                                .startsWith('https')
-                                ? "${data.playerImage}"
-                                : "${ApiUrl.baseUrl}/${"${data.playerImage}"}"
+                                : "${ApiUrl.baseUrl}/${data.playerImage}"
                                 : AppConstants.profileImage;
-                            if (data.playerImage == null ||
-                                data.playerImage!.isEmpty) {
-                              imageUrl = AppConstants.profileImage;
-                            }
 
-
-                            RxBool isBookmarked =
-                                (data.isBookmark ?? false).obs;
+                            RxBool isBookmarked = (data.isBookmark ?? false).obs;
 
                             return CustomPlayerCard(
                               imageUrl: imageUrl,
@@ -336,11 +329,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               },
                               onBookMarkTab: () {
                                 if (isBookmarked.value) {
-                                  _playerController.playerBookmarkDelete(
-                                      id: data.id ?? "");
+                                  _playerController.playerBookmarkDelete(id: data.id ?? "");
                                 } else {
-                                  _playerController.playerBookMark(
-                                      playerId: data.id ?? "");
+                                  _playerController.playerBookMark(playerId: data.id ?? "");
                                 }
                                 isBookmarked.value = !isBookmarked.value;
                               },
@@ -354,7 +345,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     return const SizedBox.shrink();
                 }
               }),
-            ),
+            )
+
+
           ],
         ),
       ),

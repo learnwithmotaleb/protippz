@@ -9,14 +9,14 @@ import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 import 'package:get/get.dart';
 
-class CustomPlayerCard extends StatefulWidget {
+class CustomPlayerCard extends StatelessWidget {
   final String imageUrl;
   final String name;
   final String? team;
   final String? position;
   final VoidCallback onTap;
-  final VoidCallback onBookMarkTab; // Callback for bookmark action
-  final RxBool isBookmark; // Pass the bookmark state
+  final VoidCallback onBookMarkTab;
+  final RxBool isBookmark;
 
   const CustomPlayerCard({
     super.key,
@@ -30,133 +30,133 @@ class CustomPlayerCard extends StatefulWidget {
   });
 
   @override
-  _CustomPlayerCardState createState() => _CustomPlayerCardState();
-}
-
-class _CustomPlayerCardState extends State<CustomPlayerCard> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: AppColors.green500),
-        image: DecorationImage(
-          image: AssetImage(Assets.images.playerz.path),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // Allow column to adjust to its content
-        children: [
-          Stack(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double width = constraints.maxWidth; // Get the width of the available space
+        double height = constraints.maxHeight; // Get the height of the available space
+
+        return Container(
+          // width: width * 0.45, // Adjust width dynamically
+          // height: height * 0.55, // Adjust height dynamically
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(color: AppColors.green500),
+            image: DecorationImage(
+              image: AssetImage(Assets.images.playerz.path),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
-                child: CachedNetworkImage(
-                  imageUrl: widget.imageUrl,
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height/7,
-                  width: 95,
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      height: height * 0.3, // Dynamic image height
+                      width: width * 0.45, // Dynamic image width
+                    ),
+                  ),
+                  Positioned(
+                    top: 10, // Adjust this to position the icon above the card
+                    right: 1.w, // Adjust for right positioning
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      child: GestureDetector(
+                        onTap: onBookMarkTab, // Trigger bookmark action
+                        child: Obx(() {
+                          return isBookmark.value
+                              ? Assets.images.starSelected.image()
+                              : Assets.images.startUnselected.image();
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Gap(8.h),
+              Center(
+                child: CustomText(
+                  text: name,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: AppColors.blue500,
                 ),
               ),
-              // CustomNetworkImage(
-              //
-              //   borderRadius: BorderRadius.circular(5),
-              //   backgroundColor: AppColors.green100,
-              //   imageUrl: widget.imageUrl,
-              //   width: MediaQuery.of(context).size.width,
-              //   height: 110,
-              // ),
-              Positioned(
-                top: 10, // Adjust this to position the icon above the card
-                right: -1.w, // Adjust for right positioning
-                child: GestureDetector(
-                  onTap: widget.onBookMarkTab, // Trigger bookmark action
-                  child: Obx(() {
-                    return widget.isBookmark.value
-                        ? Assets.images.starSelected.image()
-                        : Assets.images.startUnselected.image();
-                  }),
+              Gap(4.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: RichText(
+                  textAlign: TextAlign.start,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: AppStrings.team,
+                        style: TextStyle(
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.green500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: team,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blue500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Gap(8.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: RichText(
+                  textAlign: TextAlign.start,
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: AppStrings.position,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.green500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: position,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blue500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Gap(10.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomButton(
+                  fillColor: AppColors.blue500,
+                  onTap: onTap,
+                  title: AppStrings.sendTippz,
                 ),
               ),
             ],
           ),
-          Gap(8.h),
-          Center(
-            child: CustomText(
-              text: widget.name,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              color: AppColors.blue500,
-            ),
-          ),
-          Gap(4.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: AppStrings.team,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.green500,
-                    ),
-                  ),
-                  TextSpan(
-                    text: widget.team,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.blue500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Gap(4.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: AppStrings.position,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.green500,
-                    ),
-                  ),
-                  TextSpan(
-                    text: widget.position,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.blue500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Gap(20.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: CustomButton(
-              fillColor: AppColors.blue500,
-              onTap: widget.onTap,
-              title: AppStrings.sendTippz,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
+
