@@ -5,7 +5,6 @@ import 'package:protippz/app/controller/home_controller.dart';
 import 'package:protippz/app/controller/profile_controller.dart';
 import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
-import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/controllers/genarel_controller/genarel_controller.dart';
 import 'package:protippz/app/global/widgets/custom_image_card/custom_image_card.dart';
 import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
@@ -13,8 +12,8 @@ import 'package:protippz/app/global/widgets/nav_bar/nav_bar.dart';
 import 'package:protippz/app/screens/home_screen/inner_widgets/home_app_bar.dart';
 import 'package:protippz/app/screens/home_screen/inner_widgets/side_drawer.dart';
 import 'package:protippz/app/utils/app_colors.dart';
-import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
+import 'package:protippz/app/utils/image_utils.dart';
 
 import 'inner_widgets/tipping_card.dart';
 
@@ -27,91 +26,73 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.find<HomeController>();
-
   final GeneralController _generalController = Get.find<GeneralController>();
   final ProfileController _profileController = Get.find<ProfileController>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _profileController.getProfile();
     });
-    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg500,
       key: scaffoldKey,
-
-      ///==========================Side Drawer===================
       drawer: const SideDrawer(),
       bottomNavigationBar: const NavBar(currentIndex: 0),
-      body: Obx(
-    () {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///=====================Home Appbar==================
-                HomeAppBar(
-                  scaffoldKey: scaffoldKey,
-                name: _profileController.profileModel.value.name ?? "",
-                image: _profileController
-                            .profileModel.value.profileImage?.isNotEmpty ==
-                        true
-                    ? _profileController.profileModel.value.profileImage!
-                            .startsWith('https')
-                        ? "${_profileController.profileModel.value.profileImage}"
-                        : "${ApiUrl.baseUrl}/${"${_profileController.profileModel.value.profileImage}"}"
-                    : AppConstants.profileImage,
+      body: Obx(() {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///================== Home AppBar ==================
+              HomeAppBar(
+                scaffoldKey: scaffoldKey,
+                name: _profileController.profileModel.value.name ?? '',
+                image: _profileController.profileModel.value.profileImage,
               ),
 
-                SizedBox(height: 10.w),
+              SizedBox(height: 10.w),
 
-                ///======================Tip Information======================
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: TippingCard(
-                    onTap: () {
-                      Get.toNamed(AppRoute.tipzScreen);
-                    },
-                  ),
+              ///================== Tip Information ==================
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TippingCard(
+                  onTap: () => Get.toNamed(AppRoute.tipzScreen),
                 ),
+              ),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    ///=============================Tippz now =====================
-                    _buildSectionTitle(
-                      AppStrings.tippzNow,
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///================== Tippz Now ==================
+                    _buildSectionTitle(AppStrings.tippzNow),
                     _buildTippzNowSection(),
 
-                    ///============================= Reward======================
-                    _buildRewardzHeader(() {
-                      Get.toNamed(AppRoute.rewardzScreen);
-                    }),
+                    ///================== Rewardz ==================
+                    _buildRewardzHeader(() => Get.toNamed(AppRoute.rewardzScreen)),
                     Rewardz(homeController: homeController),
 
-                    ///=========================Top Sports League==================
+                    ///================== Top Sports League ==================
                     _buildSectionTitle(AppStrings.topSportsLeague),
                     TopSportLeague(generalController: _generalController),
-
                   ],
-                  ),
                 ),
-              ],
-            ),
-          );
-        }
-      ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
-//==================title======================
   Widget _buildSectionTitle(String title) {
     return CustomText(
       top: 24,
@@ -123,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //=========================Tip Now======================
   Widget _buildTippzNowSection() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -132,11 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
           return Padding(
             padding: const EdgeInsets.only(left: 10),
             child: GestureDetector(
-              onTap: () {
-                index == 0
-                    ? Get.toNamed(AppRoute.playerzScreen,arguments: 'Player')
-                    : Get.toNamed(AppRoute.teamzScreen,arguments: "Team");
-              },
+              onTap: () => index == 0
+                  ? Get.toNamed(AppRoute.playerzScreen, arguments: 'Player')
+                  : Get.toNamed(AppRoute.teamzScreen, arguments: 'Team'),
               child: Column(
                 children: [
                   index == 0
@@ -158,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //=================View All================
   Widget _buildRewardzHeader(VoidCallback onTap) {
     return Row(
       children: [
@@ -188,43 +165,34 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Rewardz extends StatelessWidget {
-  const Rewardz({
-    super.key,
-    required this.homeController,
-  });
+  const Rewardz({super.key, required this.homeController});
 
   final HomeController homeController;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return homeController.rewardList.isEmpty
-          ? const Center(
-              child: CustomText(
-                text: "No Reward Founded",
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.gray500,
-              ),
-            )
-          : SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children:
-                    List.generate(homeController.rewardList.length, (index) {
-                  return CustomImageCard(
-                      imageUrl: homeController
-                                  .rewardList[index].image?.isNotEmpty ==
-                              true
-                          ? homeController.rewardList[index].image!
-                                  .startsWith('https')
-                              ? "${homeController.rewardList[index].image}"
-                              : "${ApiUrl.baseUrl}/${"${homeController.rewardList[index].image}"}"
-                          : AppConstants.profileImage,
-                      title: homeController.rewardList[index].name ?? "");
-                }),
-              ),
+      if (homeController.rewardList.isEmpty) {
+        return const Center(
+          child: CustomText(
+            text: 'No Reward Founded',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: AppColors.gray500,
+          ),
+        );
+      }
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(homeController.rewardList.length, (index) {
+            return CustomImageCard(
+              imageUrl: resolveImageUrl(homeController.rewardList[index].image), // ✅
+              title: homeController.rewardList[index].name ?? '',
             );
+          }),
+        ),
+      );
     });
   }
 }
@@ -240,38 +208,27 @@ class TopSportLeague extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return _generalController.leagueList.isEmpty
-          ? const Center(
-              child: CustomText(
-                text: "No League Founded",
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.gray500,
-              ),
-            )
-          : SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(_generalController.leagueList.length,
-                    (index) {
-                  return CustomImageCard(
-
-
-                      imageUrl: _generalController
-                          .leagueList[index].leagueImage?.isNotEmpty ==
-                          true
-                          ? _generalController
-                          .leagueList[index].leagueImage!
-                          .startsWith('https')
-                          ? "${_generalController
-                          .leagueList[index].leagueImage}"
-                          : "${ApiUrl.baseUrl}/${"${_generalController
-                          .leagueList[index].leagueImage}"}"
-                          : AppConstants.profileImage,
-                      title: _generalController.leagueList[index].name ?? "");
-                }),
-              ),
+      if (_generalController.leagueList.isEmpty) {
+        return const Center(
+          child: CustomText(
+            text: 'No League Founded',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: AppColors.gray500,
+          ),
+        );
+      }
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(_generalController.leagueList.length, (index) {
+            return CustomImageCard(
+              imageUrl: resolveImageUrl(_generalController.leagueList[index].leagueImage), // ✅
+              title: _generalController.leagueList[index].name ?? '',
             );
+          }),
+        ),
+      );
     });
   }
 }

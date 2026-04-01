@@ -62,6 +62,9 @@ dependencies:
   jwt_decoder: ^2.0.1
 #  webview_flutter: ^4.10.0
   webview_flutter: ^4.4.2
+  firebase_auth: ^6.3.0
+  firebase_app_check: ^0.4.2
+  firebase_core: ^4.6.0
 
 
 

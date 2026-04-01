@@ -7,7 +7,6 @@ import 'package:protippz/app/core/app_routes.dart';
 import 'package:protippz/app/core/custom_assets/assets.gen.dart';
 import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
-
 import 'package:protippz/app/global/widgets/custom_network_image/custom_network_image.dart';
 import 'package:protippz/app/global/widgets/custom_text/custom_text.dart';
 import 'package:protippz/app/global/widgets/genarel_error/genarel_error.dart';
@@ -19,50 +18,56 @@ import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
 
 class ProfileScreen extends StatefulWidget {
-   ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final ProfileController profileController = Get.find<ProfileController>();
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       profileController.getProfile();
     });
-    super.initState();
   }
 
-  final ProfileController profileController = Get.find<ProfileController>();
+  /// Resolves any image URL — Google, server-relative, or empty
+  String _resolveImageUrl(String? profileImage) {
+    if (profileImage == null || profileImage.isEmpty) {
+      return AppConstants.profileImage;        // fallback placeholder
+    }
+    if (profileImage.startsWith('http')) {
+      return profileImage;                     // full URL (Google, etc.)
+    }
+    return '${ApiUrl.baseUrl}/$profileImage';  // relative server path
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg500,
-      bottomNavigationBar:  const NavBar(currentIndex: 4,),
-      ///===========================Profile Appbar================
+      bottomNavigationBar: const NavBar(currentIndex: 4),
       appBar: AppBar(
         actions: [
           InkWell(
-            onTap: () {
-              Get.toNamed(AppRoute.editProfileScreen);
-            },
+            onTap: () => Get.toNamed(AppRoute.editProfileScreen),
             child: Container(
               padding: const EdgeInsets.all(5),
-                decoration: const BoxDecoration(
-                    color: AppColors.green50,
-                  shape: BoxShape.circle
-                ),
-                child: Assets.icons.edit.svg())
+              decoration: const BoxDecoration(
+                color: AppColors.green50,
+                shape: BoxShape.circle,
+              ),
+              child: Assets.icons.edit.svg(),
+            ),
           ),
           const SizedBox(width: 25),
         ],
         leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: Get.back,
           icon: const Icon(Icons.arrow_back),
           color: AppColors.green500,
         ),
@@ -75,112 +80,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         centerTitle: true,
       ),
-      body:Obx(() {
-        var data = profileController.profileModel.value;
+      body: Obx(() {
+        final data = profileController.profileModel.value;
+
         switch (profileController.rxRequestStatus.value) {
           case Status.loading:
-            return const CustomLoader(); // Show loading indicator
+            return const CustomLoader();
 
           case Status.internetError:
             return NoInternetScreen(
-                onTap: () {
-              profileController.getProfile();
-            });
+              onTap: profileController.getProfile,
+            );
 
           case Status.error:
             return GeneralErrorScreen(
-              onTap: () {
-                profileController.getProfile(); // Retry fetching data on error
-              },
+              onTap: profileController.getProfile,
             );
 
           case Status.completed:
-            return
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-          child: Column(
-            children: [
-              CustomNetworkImage(
-                boxShape: BoxShape.circle,
-                imageUrl: (data.profileImage != null && data.profileImage!.isNotEmpty)
-                    ? (data.profileImage!.startsWith('https')
-                    ? data.profileImage!
-                    : "${ApiUrl.baseUrl}/${data.profileImage!}")
-                    : AppConstants.profileImage,
-                height: 94.h,
-                width: 94.h,
-              ),
-
-
-
-              ///=========================Name===============
-               CustomText(
-                text: data.name??"",
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray500,
-                top: 12,
-                bottom: 5,
-              ),
-
-              ///======================Email==================
-               CustomText(
-                text: data.email??"",
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: AppColors.gray500,
-                bottom: 35,
-              ),
-              Column(
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
                 children: [
-                  ///=============================User Name===============
-                   ProfileDetailRow(
-                    label: AppStrings.userName,
-                    value: data.username??"",
-                  ),
-                  Gap(20.h),
-
-                  ///===================Phone Number==============
-                   ProfileDetailRow(
-                    label: AppStrings.phoneNumbers,
-                    value: data.phone??"",
+                  ///================== Profile Image ==================
+                  CustomNetworkImage(
+                    boxShape: BoxShape.circle,
+                    imageUrl: _resolveImageUrl(data.profileImage),
+                    height: 94.h,
+                    width: 94.h,
                   ),
 
-                  Gap(20.h),
-                  ///===================address==============
-
-                   ProfileDetailRow(
-                    label: "${AppStrings.address} :",
-                    value: data.address??"",
+                  ///================== Name ==================
+                  CustomText(
+                    text: data.name ?? '',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.gray500,
+                    top: 12,
+                    bottom: 5,
                   ),
 
-                  Gap(20.h),
-                  ///===================Tip==============
-
-                   ProfileDetailRow(
-                    label: 'TotalPoint :',
-                    value: data.totalPoint.toString(),
+                  ///================== Email ==================
+                  CustomText(
+                    text: data.email ?? '',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.gray500,
+                    bottom: 35,
                   ),
 
-                  Gap(20.h),
-                  ///===================Total Amount==============
-
-                   ProfileDetailRow(
-                    label: 'Total Amount :',
-                    value: data.totalAmount.toString(),
+                  ///================== Details ==================
+                  Column(
+                    children: [
+                      ProfileDetailRow(
+                        label: AppStrings.userName,
+                        value: data.username ?? '',
+                      ),
+                      Gap(20.h),
+                      ProfileDetailRow(
+                        label: AppStrings.phoneNumbers,
+                        value: data.phone ?? '',
+                      ),
+                      Gap(20.h),
+                      ProfileDetailRow(
+                        label: '${AppStrings.address} :',
+                        value: data.address ?? '',
+                      ),
+                      Gap(20.h),
+                      ProfileDetailRow(
+                        label: 'Total point :',
+                        value: data.totalPoint.toString(),
+                      ),
+                      Gap(20.h),
+                      ProfileDetailRow(
+                        label: 'Total amount :',
+                        value: data.totalAmount.toString(),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        );
-
+            );
         }
-      })
-
-
+      }),
     );
   }
 }
-
-

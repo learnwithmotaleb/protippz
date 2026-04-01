@@ -37,160 +37,133 @@ class SignInScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-        child: Obx(() {
-          return Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const CustomText(
-                    text: AppStrings.helloAgain,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22,
-                    color: AppColors.blue500,
-                    bottom: 10,
-                  ),
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const CustomText(
+                  text: AppStrings.helloAgain,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22,
+                  color: AppColors.blue500,
+                  bottom: 10,
+                ),
 
-                  const CustomText(
-                    text: AppStrings.welcomeBackToProtippzSignInto,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.green500,
-                    bottom: 40,
-                    maxLines: 3,
-                  ),
+                const CustomText(
+                  text: AppStrings.welcomeBackToProtippzSignInto,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: AppColors.green500,
+                  bottom: 40,
+                  maxLines: 3,
+                ),
 
-                  ///========================Email Field=====================
-                  CustomFromCard(
-                    hinText: AppStrings.enterYourEmailOrUser,
-                    title: AppStrings.userNameOrEmail,
-                    controller: authController.emailController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings
-                            .enterValidEmailOrUserName; // General error
-                      }
+                ///========================Email Field=====================
+                CustomFromCard(
+                  hinText: AppStrings.enterYourEmailOrUser,
+                  title: AppStrings.userNameOrEmail,
+                  controller: authController.emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppStrings
+                          .enterValidEmailOrUserName; // General error
+                    }
 
-                      if (value.contains('@')) {
-                        if (!AppStrings.emailRegexp.hasMatch(value)) {
-                          return AppStrings
-                              .enterValidEmail;
-                        } else {
-                          return null;
-                        }
-                      } else {
-                        if (value.length < 4) {
-                          return 'UserNameToShort';
-                        } else {
-                          return null;
-                        }
-                      }
-                    },
-                  ),
-
-                  Gap(12.h),
-
-                  ///========================Password Field=====================
-                  CustomFromCard(
-                    hinText: AppStrings.enterYourPassword,
-                    title: AppStrings.password,
-                    isPassword: true,
-                    controller: authController.passwordController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppStrings.passwordMustHaveEightWith;
-                      } else if (value.length < 8 ||
-                          !AppStrings.passRegexp.hasMatch(value)) {
-                        return AppStrings.passwordLengthAndContain;
+                    if (value.contains('@')) {
+                      if (!AppStrings.emailRegexp.hasMatch(value)) {
+                        return AppStrings.enterValidEmail;
                       } else {
                         return null;
                       }
-                    },
-                  ),
+                    } else {
+                      if (value.length < 4) {
+                        return 'UserNameToShort';
+                      } else {
+                        return null;
+                      }
+                    }
+                  },
+                ),
 
-                  //==============================Forget========================
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(),
-                      // Row(
-                      //   children: [
-                      //     Checkbox(
-                      //         value: authController.isRemember.value,
-                      //         checkColor: AppColors.white50,
-                      //         activeColor: AppColors.green500,
-                      //         focusColor: Colors.red,
-                      //         onChanged: (value) {
-                      //           authController.toggleRemember();
-                      //         }),
-                      //     const CustomText(
-                      //       text: 'Remember me',
-                      //       color: AppColors.gray500,
-                      //       fontWeight: FontWeight.w400,
-                      //       fontSize: 14,
-                      //     ),
-                      //   ],
-                      // ),
-                      TextButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoute.forgotPasswordScreen);
-                          },
-                          child: const CustomText(
-                            color: AppColors.blue500,
-                            text: AppStrings.forgotPasswordd,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          )),
-                    ],
-                  ),
+                Gap(12.h),
 
-                  ///===========================Sign In Button=================
-                  Gap(30.h),
-                  authController.isSignInLoading.value
-                      ? const CustomLoader()
-                      : CustomButton(
-                          isRadius: true,
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              authController.signInUser();
-                            }
+                ///========================Password Field=====================
+                CustomFromCard(
+                  hinText: AppStrings.enterYourPassword,
+                  title: AppStrings.password,
+                  isPassword: true,
+                  controller: authController.passwordController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return AppStrings.passwordMustHaveEightWith;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
 
-                            // Get.toNamed(AppRoute.playerHomeScreen);
-                          },
-                          title: AppStrings.signIn,
-                        ),
+                //==============================Forget========================
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(),
+                    TextButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoute.forgotPasswordScreen);
+                        },
+                        child: const CustomText(
+                          color: AppColors.blue500,
+                          text: AppStrings.forgotPasswordd,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  ],
+                ),
 
-                  ///===========================Or=================
+                ///===========================Sign In Button=================
+                Gap(30.h),
+                Obx(() => authController.isSignInLoading.value
+                    ? const CustomLoader()
+                    : CustomButton(
+                        isRadius: true,
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            authController.signInUser();
+                          }
+                        },
+                        title: AppStrings.signIn,
+                      )),
 
-                  const CustomText(
-                    text: AppStrings.or,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    bottom: 10,
-                    top: 10,
-                  ),
+                ///===========================Or=================
 
-                  ///======================= Google Auth=====================
-                  _googleAuthController.isGoogleLogin.value
-                      ? const CustomLoader()
-                      : CustomSocialSignInButton(
-                          iconPath: Assets.icons.googleSignIn.svg(),
-                          text: AppStrings.signInGoogle,
-                          onTap: () {
-                            _googleAuthController.googleSignIn();
-                          }),
-                  Gap(15.h),
-                  const CustomRichTextLink(
-                    firstText: AppStrings.dontHaveAnAccount,
-                    linkText: AppStrings.signUp,
-                    linkRoute: AppRoute
-                        .signUpScreen,
-                  ),
-                ],
-              ),
+                const CustomText(
+                  text: AppStrings.or,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  bottom: 10,
+                  top: 10,
+                ),
+
+                ///======================= Google Auth=====================
+                Obx(() => _googleAuthController.isGoogleLogin.value
+                    ? const CustomLoader()
+                    : CustomSocialSignInButton(
+                        iconPath: Assets.icons.googleSignIn.svg(),
+                        text: AppStrings.signInGoogle,
+                        onTap: () {
+                          _googleAuthController.googleSignIn();
+                        })),
+                Gap(15.h),
+                const CustomRichTextLink(
+                  firstText: AppStrings.dontHaveAnAccount,
+                  linkText: AppStrings.signUp,
+                  linkRoute: AppRoute.signUpScreen,
+                ),
+              ],
             ),
-          );
-        }),
+          ),
+        ),
       ),
     );
   }

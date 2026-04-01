@@ -1,4 +1,6 @@
 
+import '../data/services/app_url.dart';
+
 class AppConstants {
 
   static String bearerToken = "BearerToken";
@@ -24,6 +26,9 @@ class AppConstants {
   static String userStatus = "userStatus";
   static String rememberMe = "rememberMe";
   static String profileImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s';
+
+
+
 }
 
 

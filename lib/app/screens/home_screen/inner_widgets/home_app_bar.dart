@@ -7,14 +7,19 @@ import 'package:protippz/app/utils/app_colors.dart';
 
 import 'package:protippz/app/utils/app_strings.dart';
 
+import '../../../utils/image_utils.dart';
+
+
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
-    required this.scaffoldKey, required this.name, required this.image,
+    required this.scaffoldKey,
+    required this.name,
+    required this.image,
   });
 
   final String name;
-  final String image;
+  final String? image; // ← nullable now, resolveImageUrl handles null
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
@@ -22,65 +27,57 @@ class HomeAppBar extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       color: AppColors.white50,
-      margin: EdgeInsets.only(
-        top: 32.h,
-      ),
+      margin: EdgeInsets.only(top: 32.h),
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 15),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ///====================================Top Section================================
+          ///================== Left — avatar + greeting ==================
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              CustomNetworkImage(
+                boxShape: BoxShape.circle,
+                imageUrl:resolveImageUrl(image),
+                height: 46,
+                width: 46,
+              ),
+              SizedBox(width: 16.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///==================== Profile image =====================
-                  CustomNetworkImage(
-                      boxShape: BoxShape.circle,
-                      imageUrl: image,
-                      height: 46,
-                      width: 46),
-
-                         SizedBox(width: 16.w,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CustomText(
-                        text: AppStrings.hello,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.green500,
-                        fontSize: 11,
-                      ),
-
-                      ///=====================user name =======================
-                      CustomText(
-                        text: name,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: AppColors.blue500,
-                      )
-                    ],
-                  )
+                  const CustomText(
+                    text: AppStrings.hello,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.green500,
+                    fontSize: 11,
+                  ),
+                  CustomText(
+                    text: name,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: AppColors.blue500,
+                  ),
                 ],
               ),
-
-
-              ///==========================Drawer button ====================
-              GestureDetector(
-                  onTap: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: AppColors.green500,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Assets.icons.drawer.svg(
-                        colorFilter: const ColorFilter.mode(
-                            AppColors.white50, BlendMode.srcIn),
-                      )))
             ],
+          ),
+
+          ///================== Right — drawer button ==================
+          GestureDetector(
+            onTap: () => scaffoldKey.currentState?.openDrawer(),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                color: AppColors.green500,
+                shape: BoxShape.circle,
+              ),
+              child: Assets.icons.drawer.svg(
+                colorFilter: const ColorFilter.mode(
+                  AppColors.white50,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
           ),
         ],
       ),

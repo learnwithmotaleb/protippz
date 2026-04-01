@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "611004360591",
+    "project_id": "protippz-33c1a",
+    "storage_bucket": "protippz-33c1a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611004360591:android:60e06b0162f74e43ad4dfa",
+        "android_client_info": {
+          "package_name": "com.coryrains.protppz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611004360591-n72rdkqer67f65rrc7nmtan92ab42rvf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coryrains.protppz",
+            "certificate_hash": "af3e7e46461e96405bbd98bef92e08e0ffc4b207"
+          }
+        },
+        {
+          "client_id": "611004360591-rmu9rnkd9fa3to3q19lngg580ir7uirg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX6xEOhBxZWvE4fpEl1TmHSs0xanpPv3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611004360591-rmu9rnkd9fa3to3q19lngg580ir7uirg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "611004360591-o84b71pbkj6g4sqmog0lv5quj2hd3o6g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.coryrains.protppz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -8,14 +9,20 @@ import 'package:protippz/app/core/dependency_injection/dependency.dart';
 import 'package:protippz/app/global/helper/device_utils/device_utils.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 
+import 'firebase_options.dart';
 
 
-void main() {
+
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
   Stripe.publishableKey = AppConstants.stripePublishableKey;
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
       // DevicePreview(
       //   enabled: !kReleaseMode,

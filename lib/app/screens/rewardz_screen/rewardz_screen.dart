@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:protippz/app/controller/home_controller.dart';
 import 'package:protippz/app/controller/profile_controller.dart';
-import 'package:protippz/app/data/services/app_url.dart';
 import 'package:protippz/app/global/widgets/custom_appbar/custom_appbar.dart';
 import 'package:protippz/app/global/widgets/custom_loader/custom_loader.dart';
 import 'package:protippz/app/global/widgets/custom_network_image/custom_network_image.dart';
@@ -16,6 +15,7 @@ import 'package:protippz/app/screens/rewardz_screen/inner_widget/otp_veryFy.dart
 import 'package:protippz/app/utils/app_colors.dart';
 import 'package:protippz/app/utils/app_constants.dart';
 import 'package:protippz/app/utils/app_strings.dart';
+import 'package:protippz/app/utils/image_utils.dart';
 
 import 'inner_widget/email_verification_dialog.dart';
 import 'inner_widget/info_dialoge.dart';
@@ -40,18 +40,15 @@ class _RewardScreenState extends State<RewardScreen> {
       profileController.getProfile();
     });
     if (homeController.rewardList.isNotEmpty) {
-      homeController.selectedIndex.value = 0; // Select the first reward
-      homeController.selectedReward(id: homeController.rewardList[0].id ?? ""); // Fetch the data for the selected reward
+      homeController.selectedIndex.value = 0;
+      homeController.selectedReward(id: homeController.rewardList[0].id ?? '');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print("=====================${MediaQuery.of(context).size.height}");
     return Scaffold(
       backgroundColor: AppColors.bg500,
-
-      ///==============*********>>>>>>>>Reward AppBar<<<<<<<********===
       appBar: const CustomAppBar(
         appBarContent: AppStrings.rewardz,
         iconData: Icons.arrow_back,
@@ -60,11 +57,11 @@ class _RewardScreenState extends State<RewardScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         child: Column(
           children: [
-            /// ========================= Rewardz List =======================
+            /// ================== Reward Category List ==================
             Obx(() {
               if (homeController.rewardList.isEmpty) {
                 return const CustomText(
-                  text: "No Rewards Found",
+                  text: 'No Rewards Found',
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                   color: AppColors.gray500,
@@ -79,10 +76,8 @@ class _RewardScreenState extends State<RewardScreen> {
 
                     return GestureDetector(
                       onTap: () {
-                        // Update selected index and fetch corresponding data
                         homeController.selectedIndex.value = index;
-                        homeController.selectedReward(id: item.id ?? "");
-                        print("Selected Item ID:==================== ${item.id}");
+                        homeController.selectedReward(id: item.id ?? '');
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
@@ -93,21 +88,15 @@ class _RewardScreenState extends State<RewardScreen> {
                         ),
                         child: Column(
                           children: [
-                            // Reward Image
                             CustomNetworkImage(
-                              imageUrl: item.image?.isNotEmpty ==
-                                  true
-                                  ? "${ApiUrl.netWorkUrl}${item.image ?? ""}"
-                                  : AppConstants.profileImage,
-                              // imageUrl: "${ApiUrl.netWorkUrl}${}",
+                              imageUrl: resolveImageUrl(item.image), // ✅
                               height: 72,
                               width: 73,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             SizedBox(height: 10.h),
-                            // Reward Name
                             Text(
-                              item.name ?? "",
+                              item.name ?? '',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12.sp,
@@ -125,42 +114,36 @@ class _RewardScreenState extends State<RewardScreen> {
 
             Gap(24.h),
 
-            /// ========================= Search Input =======================
+            /// ================== Search ==================
             CustomTextField(
               isColor: false,
               inputTextStyle: const TextStyle(color: AppColors.gray500),
               onFieldSubmitted: (value) {
-                // Ensure that the search uses the selected reward's ID
                 String selectedRewardId = homeController.selectedRewardId.value;
                 if (selectedRewardId.isEmpty && homeController.rewardList.isNotEmpty) {
-                  selectedRewardId = homeController.rewardList[0].id ?? "";
+                  selectedRewardId = homeController.rewardList[0].id ?? '';
                 }
-                homeController.searchReward(
-                  search: value,
-                  id: selectedRewardId,
-                );
-                print("Search with selected Reward ID: $selectedRewardId");
+                homeController.searchReward(search: value, id: selectedRewardId);
               },
               textEditingController: homeController.searchController,
               hintText: AppStrings.searchReward,
-              prefixIcon: const Icon(
-                Icons.search,
-                color: AppColors.gray500,
-              ),
+              prefixIcon: const Icon(Icons.search, color: AppColors.gray500),
               fillColor: AppColors.white50,
               fieldBorderColor: AppColors.grey400,
             ),
 
             Gap(14.h),
 
-            /// ======================== Reward Details ======================
+            /// ================== Reward Grid ==================
             Expanded(
               child: Obx(() {
-                if (homeController.rxRequestStatus.value == Status.loading) {
-                  return const CustomLoader(); // Show loading indicator
+                final status = homeController.rxRequestStatus.value;
+
+                if (status == Status.loading) {
+                  return const CustomLoader();
                 }
 
-                if (homeController.rxRequestStatus.value == Status.internetError) {
+                if (status == Status.internetError) {
                   return const Center(
                     child: CustomText(
                       text: 'Please Connect Your Internet',
@@ -171,29 +154,28 @@ class _RewardScreenState extends State<RewardScreen> {
                   );
                 }
 
-                if (homeController.rxRequestStatus.value == Status.error) {
+                if (status == Status.error) {
                   return GeneralErrorScreen(
                     onTap: () {
                       if (homeController.rewardList.isNotEmpty) {
                         homeController.selectedReward(
-                          id: homeController.rewardList[0].id ?? "",
+                          id: homeController.rewardList[0].id ?? '',
                         );
                       }
                     },
                   );
                 }
 
-                if (homeController.rxRequestStatus.value == Status.completed && homeController.selectRewardList.isEmpty) {
+                if (status == Status.completed && homeController.selectRewardList.isEmpty) {
                   return const Center(
                     child: CustomText(
-                      text: "No Rewards Available",
+                      text: 'No Rewards Available',
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: AppColors.gray500,
                     ),
                   );
                 }
-
 
                 return GridView.builder(
                   itemCount: homeController.selectRewardList.length,
@@ -204,26 +186,24 @@ class _RewardScreenState extends State<RewardScreen> {
                     childAspectRatio: 1 / 1.9,
                   ),
                   itemBuilder: (context, index) {
-                    var data = homeController.selectRewardList[index];
+                    final data = homeController.selectRewardList[index];
                     return RewardCard(
-                      imageUrl: "${ApiUrl.netWorkUrl}${data.rewardImage ?? ""}",
-                      name: data.name ?? "",
-                      describe: data.description ?? "",
+                      imageUrl: resolveImageUrl(data.rewardImage), // ✅
+                      name: data.name ?? '',
+                      describe: data.description ?? '',
                       points: data.pointRequired.toString(),
                       onTap: () {
-                        var userPoint = profileController.profileModel.value.totalPoint;
-
+                        final userPoint = profileController.profileModel.value.totalPoint;
                         if (userPoint! >= data.pointRequired!.toInt()) {
-                          if (data.category?.deliveryOption == "Shipping Address") {
+                          if (data.category?.deliveryOption == 'Shipping Address') {
                             whenShirtDialog(context);
-                          } else if (data.category?.deliveryOption == "Email") {
+                          } else if (data.category?.deliveryOption == 'Email') {
                             infoDialogue(context);
                           }
                         } else {
-                          Get.snackbar("Insufficient Points", "You don't have enough points.");
+                          Get.snackbar('Insufficient Points', "You don't have enough points.");
                         }
                       },
-
                     );
                   },
                 );
@@ -235,74 +215,54 @@ class _RewardScreenState extends State<RewardScreen> {
     );
   }
 
-  ///===============================Info Dialogue=======================
   void infoDialogue(BuildContext context) {
-    Get.dialog(
-      InfoDialogBox(
-        onTapClose: () {
-          Get.back(); // Close the dialog
-        },
-        onTapContinue: () {
-          Get.back(); // Close the dialog
-          veryFyEmailAddress(context); // Your continue button action
-        },
-      ),
-    );
+    Get.dialog(InfoDialogBox(
+      onTapClose: Get.back,
+      onTapContinue: () {
+        Get.back();
+        veryFyEmailAddress(context);
+      },
+    ));
   }
 
-  ///============================Email VeryFy =========================
   void veryFyEmailAddress(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-
-    Get.dialog(
-      EmailVerificationDialog(
-        formKey: formKey,
-        emailController: homeController.emailController,
-        onSendCode: () {
-          if (formKey.currentState!.validate()) {
-            Get.back(); // Close the dialog
-            homeController.veryFyEmail(
-              rewardId: homeController.selectRewardList[0].id ?? "",
-              categoryId: homeController.selectRewardList[0].category?.id ?? "",
-            );
-            veryFyOtp(context);
-          }
-        },
-        onClose: () {
-          Get.back(); // Close the dialog
-        },
-      ),
-    );
+    Get.dialog(EmailVerificationDialog(
+      formKey: formKey,
+      emailController: homeController.emailController,
+      onSendCode: () {
+        if (formKey.currentState!.validate()) {
+          Get.back();
+          homeController.veryFyEmail(
+            rewardId: homeController.selectRewardList[0].id ?? '',
+            categoryId: homeController.selectRewardList[0].category?.id ?? '',
+          );
+          veryFyOtp(context);
+        }
+      },
+      onClose: Get.back,
+    ));
   }
 
-  ///=======================VeryFy Otp=========================
   void veryFyOtp(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-
-    Get.dialog(
-      OtpVeryEmail(
-        formKey: formKey,
-        onSendCode: () {
-          if (formKey.currentState!.validate()) {
-            Get.back(); // Close the dialog
-            homeController.veryFyOtp();
-          }
-        },
-        onClose: () {
-          Get.back(); // Close the dialog
-        },
-        pinController: homeController.pinController,
-      ),
-    );
+    Get.dialog(OtpVeryEmail(
+      formKey: formKey,
+      onSendCode: () {
+        if (formKey.currentState!.validate()) {
+          Get.back();
+          homeController.veryFyOtp();
+        }
+      },
+      onClose: Get.back,
+      pinController: homeController.pinController,
+    ));
   }
 
-  /// ===========================Shirt==========================
   void whenShirtDialog(BuildContext context) {
-    Get.dialog(
-      ShirtFormDialog(
-        formKey: formKey,
-        homeController: homeController,
-      ),
-    );
+    Get.dialog(ShirtFormDialog(
+      formKey: formKey,
+      homeController: homeController,
+    ));
   }
 }
