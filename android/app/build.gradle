@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.coryrains.protppz"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "26.1.10909125"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         release {
-            keyAlias "uploadkeystore"
+            keyAlias "upload"
             keyPassword "123456"
             storeFile file('upload-keystore.jks')
             storePassword "123456"
@@ -52,6 +52,8 @@ android {
         }
         release {
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
 

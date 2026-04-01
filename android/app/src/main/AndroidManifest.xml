@@ -1,11 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Internet permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Camera and storage permissions for image_picker -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- Optional: For network state access (Stripe, PayPal, etc.) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:label="protippz"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true"> <!-- এই লাইনটি এখন সঠিকভাবে যুক্ত করা হয়েছে -->
+        android:enableOnBackInvokedCallback="true">
 
+        <!-- Main Flutter Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -26,15 +38,44 @@
             </intent-filter>
         </activity>
 
+        <!-- Required for Flutter embedding v2 -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
+
+        <!-- Stripe authentication activity -->
+        <activity
+            android:name="com.stripe.android.view.AuthActivity"
+            android:exported="true"/>
+
+        <!-- Google Sign-In metadata -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
     </application>
 
+    <!-- Queries for URL schemes, required for payments and text processing -->
     <queries>
+        <!-- Text processing -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+
+        <!-- Payment URL schemes (Stripe, PayPal, Chrome) -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="stripe"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="paypal"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="googlechrome"/>
+        </intent>
     </queries>
+
 </manifest>

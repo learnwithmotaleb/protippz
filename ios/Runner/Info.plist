@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Permissions -->
     <key>NSPhotoLibraryUsageDescription</key>
     <string>We need access to your photo library to select images.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
@@ -14,22 +16,46 @@
     <string>We need access to your location to improve app functionality.</string>
     <key>NSUserTrackingUsageDescription</key>
     <string>We use your data to provide a better app experience.</string>
+    <key>NSApplePayUsageDescription</key>
+    <string>We use Apple Pay for seamless payments.</string>
 
+    <!-- Background modes -->
     <key>UIBackgroundModes</key>
     <array>
         <string>fetch</string>
         <string>remote-notification</string>
     </array>
 
-    <key>NSApplePayUsageDescription</key>
-    <string>We use Apple Pay for seamless payments.</string>
-
+    <!-- App Transport Security -->
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
 
+    <!-- Google Sign-In / Firebase URL schemes -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- Replace with your reversed client ID from GoogleService-Info.plist -->
+                <string>com.googleusercontent.apps.YOUR_CLIENT_ID</string>
+            </array>
+        </dict>
+    </array>
+
+    <!-- Payment URL schemes (Stripe, PayPal) -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>stripe</string>
+        <string>paypal</string>
+        <string>googlechrome</string>
+    </array>
+
+    <!-- Flutter build info -->
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
@@ -46,8 +72,6 @@
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
     <string>$(FLUTTER_BUILD_NAME)</string>
-    <key>CFBundleSignature</key>
-    <string>????</string>
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSRequiresIPhoneOS</key>
@@ -56,6 +80,8 @@
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
+
+    <!-- Supported orientations -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
@@ -69,6 +95,7 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
